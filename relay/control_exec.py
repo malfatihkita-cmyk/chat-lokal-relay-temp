@@ -662,6 +662,60 @@ end tell
         p=run(["/usr/bin/osascript","-e",script],45)
         return {"ok":p.returncode==0,"returncode":p.returncode,"stdout":p.stdout[-20000:],"stderr":p.stderr[-12000:]}
 
+    if a=="chrome_js_apple_events_state":
+        script=r'''
+tell application "Google Chrome" to activate
+delay 1
+tell application "System Events"
+ tell process "Google Chrome"
+  set viewItem to missing value
+  try
+   set viewItem to menu bar item "Lihat" of menu bar 1
+  on error
+   try
+    set viewItem to menu bar item "View" of menu bar 1
+   end try
+  end try
+  if viewItem is missing value then return "VIEW_MENU_NOT_FOUND"
+  click viewItem
+  delay 0.5
+  set devItem to missing value
+  try
+   set devItem to menu item "Pengembang" of menu 1 of viewItem
+  on error
+   try
+    set devItem to menu item "Developer" of menu 1 of viewItem
+   end try
+  end try
+  if devItem is missing value then
+   key code 53
+   return "DEVELOPER_MENU_NOT_FOUND"
+  end if
+  set targetItem to missing value
+  try
+   set targetItem to menu item "Izinkan JavaScript dari Apple Events" of menu 1 of devItem
+  on error
+   try
+    set targetItem to menu item "Allow JavaScript from Apple Events" of menu 1 of devItem
+   end try
+  end try
+  if targetItem is missing value then
+   key code 53
+   return "TARGET_ITEM_NOT_FOUND"
+  end if
+  set markChar to ""
+  try
+   set markChar to value of attribute "AXMenuItemMarkChar" of targetItem
+  end try
+  set en to enabled of targetItem
+  key code 53
+  return "MARK=" & markChar & "|ENABLED=" & en
+ end tell
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],45)
+        return {"ok":p.returncode==0,"returncode":p.returncode,"stdout":(p.stdout or "").strip(),"stderr":p.stderr[-12000:]}
+
     if a=="enable_chrome_js_apple_events":
         script=r'''
 tell application "Google Chrome" to activate

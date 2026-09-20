@@ -1,5 +1,9 @@
 {
   "schema":1,
-  "id":"chatlokal-profile-pref-inventory-20260920-184",
-  "action":"chrome_profile_inventory"
+  "id":"chatlokal-open-copy-profile-fixed-20260920-185",
+  "action":"open_profile_via_menu",
+  "menu_name":"Copy",
+  "url":"https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b",
+  "wait":4,
+  "nav_wait":8
 }

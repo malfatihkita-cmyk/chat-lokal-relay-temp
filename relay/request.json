@@ -1,6 +1,8 @@
 {
   "schema": 1,
-  "id": "chatlokal-select-frontmost-probe-20260920-165",
-  "action": "select_window_frontmost_probe",
-  "title": "Bootstrap Final Berhasil"
+  "id": "chatlokal-agent38-current-chat-probe-20260920-165",
+  "action": "cdp_open_chat_probe",
+  "port": 19438,
+  "url": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b",
+  "wait": 10
 }

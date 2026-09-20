@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-stop-v4-live-20260921-228",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/stop_v4_once.py",
-  "timeout": 60
+  "id": "chatlokal-control-open-current-20260921-229",
+  "action": "control_browser_open",
+  "url": "https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba",
+  "wait": 8
 }

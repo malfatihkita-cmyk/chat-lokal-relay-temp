@@ -67,6 +67,62 @@ end tell
             data={"raw":raw[-20000:],"stderr":p.stderr[-12000:]}
         return {"ok":p.returncode==0 and bool(data.get("ok")),"returncode":p.returncode,"data":data,"stderr":p.stderr[-12000:]}
 
+    if a=="chrome_profile_inventory":
+        import sqlite3
+        base=Path.home()/"Library/Application Support/Google/Chrome"
+        out={}
+        try:
+            ls=json.loads((base/"Local State").read_text(errors="ignore"))
+            prof=(ls.get("profile") or {})
+            out["last_used"]=prof.get("last_used")
+            out["last_active_profiles"]=prof.get("last_active_profiles")
+            info=prof.get("info_cache") or {}
+        except Exception as e:
+            info={}
+            out["local_state_error"]=str(e)
+        rows=[]
+        for p in sorted([x for x in base.iterdir() if x.is_dir() and (x.name=="Default" or x.name.startswith("Profile "))],key=lambda x:x.name):
+            row={"profile":p.name}
+            try:
+                pref=p/"Preferences"
+                if pref.exists():
+                    j=json.loads(pref.read_text(errors="ignore"))
+                    row["name"]=(j.get("profile") or {}).get("name")
+                    row["account_info_count"]=len(j.get("account_info") or [])
+            except Exception as e:
+                row["pref_error"]=str(e)
+            try:
+                inf=info.get(p.name) or {}
+                row["user_name"]=inf.get("user_name")
+                row["gaia_name"]=inf.get("gaia_name")
+            except Exception:
+                pass
+            cp=None
+            for cand in (p/"Network"/"Cookies",p/"Cookies"):
+                if cand.exists():
+                    cp=cand; break
+            row["cookies_path"]=str(cp) if cp else None
+            row["cookies_size"]=cp.stat().st_size if cp else 0
+            if cp:
+                try:
+                    con=sqlite3.connect("file:"+str(cp)+"?mode=ro",uri=True,timeout=2)
+                    cur=con.cursor()
+                    for label,pat in [
+                        ("chatgpt","%chatgpt.com"),
+                        ("openai","%openai.com"),
+                        ("auth0","%auth0.com")
+                    ]:
+                        cur.execute("select count(*), coalesce(sum(length(encrypted_value)),0) from cookies where host_key like ?",(pat,))
+                        n,s=cur.fetchone()
+                        row[label+"_cookie_count"]=n
+                        row[label+"_encrypted_bytes"]=s
+                    con.close()
+                except Exception as e:
+                    row["cookie_query_error"]=type(e).__name__+": "+str(e)
+            rows.append(row)
+        out["profiles"]=rows
+        return {"ok":True,"inventory":out}
+
     if a=="main_chrome_state":
         out={}
         p=run(["/bin/ps","-p","482","-o","pid=,ppid=,command="],15)

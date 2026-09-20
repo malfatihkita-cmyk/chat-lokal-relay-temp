@@ -1,5 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-quick-status-20260920-135",
-  "action": "quick_status"
+  "id": "chatlokal-conversation-probe-20260920-136",
+  "action": "conversation_probe",
+  "port": 19498,
+  "url": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b"
 }

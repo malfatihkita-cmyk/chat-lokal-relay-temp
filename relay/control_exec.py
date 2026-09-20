@@ -1211,6 +1211,30 @@ end tell
                 out[prof+"_error"]=str(e)
         return {"ok":True,"state":out}
 
+    if a=="stop_control_browser":
+        uid=str(os.getuid())
+        label="com.copytolive.chat-lokal-control-browser"
+        rows=[]
+        p=run(["/bin/launchctl","bootout","gui/%s/%s"%(uid,label)],30)
+        rows.append({"stage":"bootout","rc":p.returncode,"stdout":p.stdout[-2000:],"stderr":p.stderr[-2000:]})
+        ps=run(["/bin/ps","-axo","pid=,ppid=,command="],20)
+        killed=[]
+        needle="--user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/chat-local-control-profile"
+        for line in ps.stdout.splitlines():
+            try:
+                parts=line.strip().split(None,2)
+                if len(parts)<3: continue
+                pid=int(parts[0]); cmd=parts[2]
+                if cmd.startswith("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome") and needle in cmd:
+                    os.kill(pid,15); killed.append(pid)
+            except Exception:
+                pass
+        time.sleep(2)
+        # verify only the dedicated control root is gone
+        ps2=run(["/bin/ps","-axo","pid=,ppid=,command="],20)
+        remaining=[line.strip() for line in ps2.stdout.splitlines() if needle in line and "Google Chrome" in line]
+        return {"ok":len(remaining)==0,"killed":killed,"remaining":remaining,"rows":rows}
+
     if a=="browser_inventory":
         out={}
         p=run(["/bin/ps","-axo","pid=,ppid=,command="],30)

@@ -1,18 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-open-current-main-profile-20260921-247",
-  "action": "open_profile_window",
-  "completed_at": "2026-09-20T18:14:45Z",
+  "id": "chatlokal-browser-probe-after-profile15-open-20260921-248",
+  "action": "browser_probe",
+  "completed_at": "2026-09-20T18:15:43Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "open_rc": 0,
-    "open_stderr": "",
-    "start": "NOT_FOUND|\n",
-    "probe": {
-      "raw": "__TARGET_NOT_FOUND__",
-      "stderr": "",
-      "rc": 0
-    }
+    "returncode": 0,
+    "stdout": "WINDOWS=0\n\n",
+    "stderr": ""
   }
 }

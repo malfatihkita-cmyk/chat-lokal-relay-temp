@@ -1,13 +1,15 @@
 {
   "schema": 1,
-  "id": "chatlokal-js-state-20260920-180",
-  "action": "chrome_js_apple_events_state",
-  "completed_at": "2026-09-20T15:45:36Z",
+  "id": "chatlokal-enable-target-js-20260920-181",
+  "action": "enable_js_for_target_url",
+  "completed_at": "2026-09-20T15:47:02Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "returncode": 0,
-    "stdout": "MARK=missing value|ENABLED=true",
+    "focus": "FOUND|7|1",
+    "toggle": "CLICKED",
+    "test_rc": 0,
+    "test": "{\"url\":\"https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b\",\"title\":\"Bootstrap Final Berhasil\",\"ok\":true}",
     "stderr": ""
   }
 }

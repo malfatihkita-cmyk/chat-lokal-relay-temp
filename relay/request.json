@@ -1,6 +1,8 @@
 {
   "schema": 1,
-  "id": "chatlokal-focus-current-chat-20260921-230",
-  "action": "select_window_frontmost_probe",
-  "title": "Lanjutkan Sampai Tuntas"
+  "id": "chatlokal-cdp-current-backend-probe-20260921-230",
+  "action": "cdp_open_chat_probe",
+  "port": 19498,
+  "url": "https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba",
+  "wait": 5
 }

@@ -6,7 +6,13 @@ ROOT=Path("/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool")
 APP=ROOT/"Chat-Lokal"
 DEST=ROOT/"chat-local-control-profile"
 SRCROOT=Path.home()/"Library/Application Support/Google/Chrome"
-SRC=SRCROOT/"Profile 33"
+# Use the profile Chrome reports as last-used; do not assume Profile 33.
+try:
+    _ls=json.loads((SRCROOT/"Local State").read_text(errors="ignore"))
+    PROFILE_NAME=((_ls.get("profile") or {}).get("last_used") or "Default")
+except Exception:
+    PROFILE_NAME="Default"
+SRC=SRCROOT/PROFILE_NAME
 LA=Path.home()/"Library/LaunchAgents"
 LABEL="com.copytolive.chat-lokal-control-browser"
 PLIST=LA/(LABEL+".plist")
@@ -30,7 +36,7 @@ for line in ps.stdout.splitlines():
         pass
 time.sleep(2)
 
-# Snapshot current signed-in Chrome Profile 33 without touching Main Chrome.
+# Snapshot the currently last-used signed-in Chrome profile without touching Main Chrome.
 shutil.rmtree(DEST,ignore_errors=True)
 DEST.mkdir(parents=True,exist_ok=True)
 for name in ["Local State","First Run"]:
@@ -38,7 +44,7 @@ for name in ["Local State","First Run"]:
     if s.exists():
         if s.is_file(): shutil.copy2(s,DEST/name)
 
-dp=DEST/"Profile 33"
+dp=DEST/PROFILE_NAME
 dp.mkdir(parents=True,exist_ok=True)
 cmd=[
     "/usr/bin/rsync","-a",
@@ -101,6 +107,7 @@ while time.time()<deadline:
 print(json.dumps({
     "ok":alive,
     "killed":killed,
+    "profile_name":PROFILE_NAME,
     "source":str(SRC),
     "dest":str(DEST),
     "cookie_meta":cookie_meta,

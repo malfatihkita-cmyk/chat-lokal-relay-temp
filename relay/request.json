@@ -1,9 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-stage-stop-control-profile-20260921-297",
-  "action": "write_file",
+  "id": "chatlokal-run-stop-control-profile-20260921-299",
+  "action": "run_python_file",
   "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/stop_control_profile_once.py",
-  "content_b64": "IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwppbXBvcnQgb3Msc2lnbmFsLHN1YnByb2Nlc3MsdGltZSxqc29uCnRhZz0iLS11c2VyLWRhdGEtZGlyPS9Vc2Vycy9TaGFyZWQvV29ya3NwYWNlQmVyc2FtYS9DaGF0R1BUSGVhZGxlc3NQb29sL2NoYXQtbG9jYWwtY29udHJvbC1wcm9maWxlIgpwcz1zdWJwcm9jZXNzLnJ1bihbIi9iaW4vcHMiLCItYXhvIiwicGlkPSxjb21tYW5kPSJdLGNhcHR1cmVfb3V0cHV0PVRydWUsdGV4dD1UcnVlKS5zdGRvdXQKdGFyZ2V0cz1bXQpmb3IgbGluZSBpbiBwcy5zcGxpdGxpbmVzKCk6CiAgICBpZiB0YWcgaW4gbGluZToKICAgICAgICB0cnk6IHRhcmdldHMuYXBwZW5kKGludChsaW5lLnN0cmlwKCkuc3BsaXQoTm9uZSwxKVswXSkpCiAgICAgICAgZXhjZXB0OiBwYXNzCmZvciBwaWQgaW4gc29ydGVkKHNldCh0YXJnZXRzKSxyZXZlcnNlPVRydWUpOgogICAgdHJ5OiBvcy5raWxsKHBpZCxzaWduYWwuU0lHVEVSTSkKICAgIGV4Y2VwdDogcGFzcwp0aW1lLnNsZWVwKDIpCnBzMj1zdWJwcm9jZXNzLnJ1bihbIi9iaW4vcHMiLCItYXhvIiwicGlkPSxjb21tYW5kPSJdLGNhcHR1cmVfb3V0cHV0PVRydWUsdGV4dD1UcnVlKS5zdGRvdXQKcmVtYWluaW5nPVtsaW5lLnN0cmlwKCkgZm9yIGxpbmUgaW4gcHMyLnNwbGl0bGluZXMoKSBpZiB0YWcgaW4gbGluZV0KcHJpbnQoanNvbi5kdW1wcyh7Im9rIjpub3QgcmVtYWluaW5nLCJ0YXJnZXRzIjp0YXJnZXRzLCJyZW1haW5pbmciOnJlbWFpbmluZ30pKQo=",
-  "backup": false,
-  "mode": "755"
+  "timeout": 30
 }

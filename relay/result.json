@@ -1,17 +1,16 @@
 {
   "schema": 1,
-  "id": "chatlokal-main-tab-api-20260920-180",
-  "action": "main_tab_api_probe",
-  "completed_at": "2026-09-20T15:03:35Z",
+  "id": "chatlokal-enable-js-current-window-20260920-181",
+  "action": "enable_chrome_js_apple_events",
+  "completed_at": "2026-09-20T15:04:27Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": false,
-    "start": "",
-    "probe": {
-      "raw": "",
-      "stderr": "98:236: execution error: Google Chrome mengalami kesalahan: Eksekusi JavaScript melalui AppleScript dinonaktifkan. Untuk mengaktifkannya, buka panel menu lalu pilih View > Developer > Allow JavaScript from Apple Events. Untuk informasi selengkapnya: https://support.google.com/chrome/?p=applescript (12)\n",
-      "rc": 1
-    },
-    "stderr": "98:1100: execution error: Google Chrome mengalami kesalahan: Eksekusi JavaScript melalui AppleScript dinonaktifkan. Untuk mengaktifkannya, buka panel menu lalu pilih View > Developer > Allow JavaScript from Apple Events. Untuk informasi selengkapnya: https://support.google.com/chrome/?p=applescript (12)\n98:236: execution error: Google Chrome mengalami kesalahan: Eksekusi JavaScript melalui AppleScript dinonaktifkan. Untuk mengaktifkannya, buka panel menu lalu pilih View > Developer > Allow JavaScript from Apple Events. Untuk informasi selengkapnya: https://support.google.com/chrome/?p=applescript (12)\n"
+    "toggle_rc": 0,
+    "toggle": "CLICKED",
+    "toggle_err": "",
+    "test_rc": 1,
+    "test": "",
+    "test_err": "98:210: execution error: Google Chrome mengalami kesalahan: Eksekusi JavaScript melalui AppleScript dinonaktifkan. Untuk mengaktifkannya, buka panel menu lalu pilih View > Developer > Allow JavaScript from Apple Events. Untuk informasi selengkapnya: https://support.google.com/chrome/?p=applescript (12)\n"
   }
 }

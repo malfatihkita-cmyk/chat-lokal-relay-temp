@@ -58,6 +58,15 @@ end tell
         return {"ok":p.returncode==0,"returncode":p.returncode,
                 "stdout":p.stdout[-20000:],"stderr":p.stderr[-12000:]}
 
+    if a=="refresh_control_profile":
+        p=run(["/usr/local/bin/python3","relay/refresh_control_profile.py"],700)
+        raw=(p.stdout or "").strip()
+        try:
+            data=json.loads(raw.splitlines()[-1]) if raw else {}
+        except Exception:
+            data={"raw":raw[-20000:],"stderr":p.stderr[-12000:]}
+        return {"ok":p.returncode==0 and bool(data.get("ok")),"returncode":p.returncode,"data":data,"stderr":p.stderr[-12000:]}
+
     if a=="main_chrome_state":
         out={}
         p=run(["/bin/ps","-p","482","-o","pid=,ppid=,command="],15)

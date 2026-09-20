@@ -99,6 +99,31 @@ end tell
         return {"ok":s1.returncode==0 and s2.returncode==0,"open_rc":p.returncode,
                 "open_stderr":p.stderr[-4000:],"start":(s1.stdout or "")[-12000:],"probe":probe}
 
+    if a=="chrome_developer_menu_inventory":
+        script=r'''
+tell application "Google Chrome" to activate
+delay 1
+tell application "System Events"
+ tell process "Google Chrome"
+  set v to menu bar item "Lihat" of menu bar 1
+  click v
+  delay 0.4
+  set d to menu item "Pengembang" of menu 1 of v
+  set outText to ""
+  repeat with mi in every menu item of menu 1 of d
+   try
+    set outText to outText & "|" & (name of mi)
+   end try
+  end repeat
+  key code 53
+  return outText
+ end tell
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],45)
+        return {"ok":p.returncode==0,"returncode":p.returncode,
+                "stdout":p.stdout[-12000:],"stderr":p.stderr[-8000:]}
+
     if a=="chrome_menu_inventory":
         script=r'''
 tell application "Google Chrome" to activate

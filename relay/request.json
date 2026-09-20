@@ -1,7 +1,9 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-stop-control-profile-20260921-299",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/stop_control_profile_once.py",
-  "timeout": 30
+  "id": "chatlokal-stage-disable-control-launcher-20260921-300",
+  "action": "write_file",
+  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/disable_control_launcher_once.py",
+  "content_b64": "IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKaW1wb3J0IG9zLGpzb24sc3VicHJvY2VzcwpoPVBhdGguaG9tZSgpCiM=",
+  "backup": false,
+  "mode": "755"
 }

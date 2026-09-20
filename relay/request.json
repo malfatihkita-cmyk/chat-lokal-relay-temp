@@ -1,6 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-conversation-osa-20260920-137",
-  "action": "conversation_probe_osa",
-  "url": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b"
+  "id": "chatlokal-conversation-api-20260920-138",
+  "action": "conversation_api_probe",
+  "url": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b",
+  "wait": 6
 }

@@ -515,6 +515,58 @@ end tell'''
                 "start":(p1.stdout or "")[-8000:],"probe":data,
                 "stderr":(p1.stderr+p2.stderr)[-8000:]}
 
+    if a=="chrome_ax_probe":
+        script=r'''
+tell application "Google Chrome" to activate
+delay 0.7
+tell application "System Events"
+ tell process "Google Chrome"
+  set outText to "frontmost=" & frontmost & linefeed
+  set outText to outText & "windows=" & (count of windows) & linefeed
+  repeat with wi from 1 to count of windows
+   set w to window wi
+   set outText to outText & "WINDOW|" & wi & "|name=" & (name of w) & linefeed
+   try
+    set outText to outText & "AXDocument=" & (value of attribute "AXDocument" of w as text) & linefeed
+   end try
+   try
+    set outText to outText & "AXRole=" & (value of attribute "AXRole" of w as text) & "|AXSubrole=" & (value of attribute "AXSubrole" of w as text) & linefeed
+   end try
+   try
+    set kids to UI elements of w
+    set outText to outText & "children=" & (count of kids) & linefeed
+    set lim to count of kids
+    if lim > 80 then set lim to 80
+    repeat with i from 1 to lim
+     set e to item i of kids
+     set rn to ""
+     set nm to ""
+     set ds to ""
+     set vl to ""
+     try
+      set rn to role of e as text
+     end try
+     try
+      set nm to name of e as text
+     end try
+     try
+      set ds to description of e as text
+     end try
+     try
+      set vl to value of e as text
+      if (length of vl) > 500 then set vl to text 1 thru 500 of vl
+     end try
+     set outText to outText & "E|" & i & "|role=" & rn & "|name=" & nm & "|desc=" & ds & "|value=" & vl & linefeed
+    end repeat
+   end try
+  end repeat
+  return outText
+ end tell
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],50)
+        return {"ok":p.returncode==0,"returncode":p.returncode,"stdout":p.stdout[-40000:],"stderr":p.stderr[-12000:]}
+
     if a=="browser_probe":
         script=r'''
 tell application "Google Chrome"

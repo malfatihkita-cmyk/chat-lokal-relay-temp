@@ -1,22 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-stop-control-browser-20260920-187",
-  "action": "stop_control_browser",
-  "completed_at": "2026-09-20T15:13:39Z",
+  "id": "chatlokal-devsubmenu-inventory-20260920-175",
+  "action": "chrome_developer_submenu_inventory",
+  "completed_at": "2026-09-20T15:39:40Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "killed": [
-      2003
-    ],
-    "remaining": [],
-    "rows": [
-      {
-        "stage": "bootout",
-        "rc": 0,
-        "stdout": "",
-        "stderr": ""
-      }
-    ]
+    "returncode": 0,
+    "stdout": "Lihat SumberDeveloper ToolsPeriksa ElemenKonsol JavaScriptIzinkan JavaScript dari Apple Events\n",
+    "stderr": ""
   }
 }

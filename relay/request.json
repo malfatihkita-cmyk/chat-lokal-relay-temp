@@ -1,7 +1,11 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-final-preflight-20260921-277",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/final_preflight_once.py",
-  "timeout": 90
+  "id": "chatlokal-read-core-current-20260921-278",
+  "action": "read_files",
+  "paths": [
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_lokal_base.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_transport_v4.py"
+  ],
+  "max_chars_each": 50000
 }

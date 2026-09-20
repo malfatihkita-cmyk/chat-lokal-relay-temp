@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-standby-verify-20260921-292",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/verify_standby_once.py",
-  "timeout": 90
+  "id": "chatlokal-read-pre-reboot-status-292",
+  "action": "read_file",
+  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/pre_reboot_status.json",
+  "max_chars": 30000
 }

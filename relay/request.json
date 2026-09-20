@@ -1,8 +1,9 @@
 {
   "schema": 1,
-  "id": "chatlokal-restart-injector-owner-v4-20260921-223",
-  "action": "restart_services",
-  "labels": [
-    "com.copytolive.chat-lokal-injector"
+  "id": "chatlokal-compile-final-transport-20260921-223",
+  "action": "py_compile",
+  "files": [
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_injector.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_transport_v4.py"
   ]
 }

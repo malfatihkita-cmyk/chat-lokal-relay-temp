@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-tail-diag-correct-20260921-270",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/diag_tail_agents_once.py",
-  "timeout": 60
+  "id": "chatlokal-read-tile-cluster-20260921-271",
+  "action": "read_file",
+  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/tile_cluster.js",
+  "max_chars": 30000
 }

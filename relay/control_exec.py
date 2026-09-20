@@ -9,13 +9,6 @@ ROOT=Path("/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool")
 RUN=Path.home()/".copytolive-chat-lokal"
 LA=Path.home()/"Library/LaunchAgents"
 
-def find_gh():
-    for p in ("/opt/homebrew/bin/gh","/usr/local/bin/gh","/usr/bin/gh"):
-        if Path(p).exists():
-            return p
-    raise RuntimeError("gh_not_found")
-
-GH=find_gh()
 
 def run(argv,timeout=120):
     return subprocess.run(argv,capture_output=True,text=True,timeout=timeout)
@@ -160,29 +153,46 @@ print(json.dumps(out))
 
     return {"ok":False,"error":"UNSUPPORTED_ACTION","action":a}
 
+def gh_rest(method,path,payload=None,timeout=60):
+    if not TOKEN:
+        raise RuntimeError("missing_GITHUB_TOKEN")
+    url="https://api.github.com/"+path.lstrip("/")
+    data=None if payload is None else json.dumps(payload).encode()
+    req=urllib.request.Request(
+        url,data=data,method=method,
+        headers={
+            "Authorization":"Bearer "+TOKEN,
+            "Accept":"application/vnd.github+json",
+            "X-GitHub-Api-Version":"2022-11-28",
+            "User-Agent":"chat-lokal-temp-runner"
+        }
+    )
+    try:
+        with urllib.request.urlopen(req,timeout=timeout) as r:
+            raw=r.read().decode()
+            return json.loads(raw) if raw else {}
+    except urllib.error.HTTPError as e:
+        body=e.read().decode(errors="ignore")
+        raise RuntimeError("github_http_%s: %s"%(e.code,body))
+
 def publish(envelope):
     path="relay/result.json"
     content=base64.b64encode((json.dumps(envelope,ensure_ascii=False,indent=2)+"\n").encode()).decode()
     endpoint="repos/%s/contents/%s"%(REPO,path)
-
-    p=run([GH,"api",endpoint],30)
     sha=""
-    if p.returncode==0:
-        try:
-            sha=json.loads(p.stdout).get("sha","")
-        except Exception:
-            sha=""
-
-    cmd=[GH,"api","--method","PUT",endpoint,
-         "-f","message=relay result %s [skip ci]"%envelope["id"],
-         "-f","content="+content,
-         "-f","branch=main"]
+    try:
+        cur=gh_rest("GET",endpoint+"?ref=main",timeout=30)
+        sha=cur.get("sha","")
+    except Exception:
+        pass
+    payload={
+        "message":"relay result %s [skip ci]"%envelope["id"],
+        "content":content,
+        "branch":"main"
+    }
     if sha:
-        cmd += ["-f","sha="+sha]
-    p=run(cmd,60)
-    if p.returncode:
-        raise RuntimeError("publish_failed: "+(p.stderr or p.stdout).strip())
-    return json.loads(p.stdout)
+        payload["sha"]=sha
+    return gh_rest("PUT",endpoint,payload,timeout=60)
 
 req=json.load(open(sys.argv[1]))
 rid=str(req.get("id",""))

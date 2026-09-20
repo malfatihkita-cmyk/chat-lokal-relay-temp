@@ -33,6 +33,31 @@ def tail(path,n=30000):
 
 def action(req):
     a=req.get("action","")
+    if a=="browser_probe":
+        script=r'''
+tell application "Google Chrome"
+ set outText to ""
+ set wc to count of windows
+ set outText to outText & "WINDOWS=" & wc & linefeed
+ repeat with wi from 1 to wc
+  set outText to outText & "WINDOW " & wi & " TABS=" & (count of tabs of window wi) & linefeed
+  repeat with ti from 1 to count of tabs of window wi
+   try
+    set u to URL of tab ti of window wi
+    set t to title of tab ti of window wi
+    set outText to outText & "TAB " & wi & ":" & ti & " | " & t & " | " & u & linefeed
+   on error errText
+    set outText to outText & "TABERR " & wi & ":" & ti & " | " & errText & linefeed
+   end try
+  end repeat
+ end repeat
+ return outText
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],45)
+        return {"ok":p.returncode==0,"returncode":p.returncode,
+                "stdout":p.stdout[-20000:],"stderr":p.stderr[-12000:]}
+
     if a=="diagnose":
         s=r'''
 APP="/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal"

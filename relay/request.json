@@ -1,7 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-gate-suite-20260920-189",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/final_gate_suite_live.py",
-  "timeout": 900
+  "id": "chatlokal-read-recovery-cluster-20260920-190",
+  "action": "read_files",
+  "max_chars_each": 30000,
+  "paths": [
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/recovery_no_duplicate.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/launch_cluster.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/geometry_live_probe.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/controller_focus_probe.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/controller_shortcut_probe.py"
+  ]
 }

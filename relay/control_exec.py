@@ -58,6 +58,61 @@ end tell
         return {"ok":p.returncode==0,"returncode":p.returncode,
                 "stdout":p.stdout[-20000:],"stderr":p.stderr[-12000:]}
 
+    if a=="conversation_probe":
+        port=int(req.get("port",19498))
+        target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")
+        try:
+            with urllib.request.urlopen("http://127.0.0.1:%d/json/list"%port,timeout=10) as r:
+                pages=json.load(r)
+        except Exception as e:
+            return {"ok":False,"error":type(e).__name__,"message":str(e)}
+        page=None
+        for p in pages:
+            if p.get("type")=="page" and (p.get("url") or "").startswith(target):
+                page=p; break
+        if not page:
+            return {"ok":False,"error":"TARGET_NOT_FOUND","page_count":len(pages),
+                    "chat_pages":[{"title":p.get("title"),"url":p.get("url")} for p in pages if p.get("type")=="page" and "chatgpt.com" in (p.get("url") or "")]}
+        py=r'''
+import sys,json
+sys.path.insert(0,"/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal")
+from cdp_ws import WSClient
+p=json.loads(sys.stdin.read())
+wsurl=p["webSocketDebuggerUrl"]
+expr="""(() => {
+ const A=[...document.querySelectorAll('[data-message-author-role="assistant"]')];
+ const U=[...document.querySelectorAll('[data-message-author-role="user"]')];
+ const body=document.body?.innerText||"";
+ return JSON.stringify({
+   url:location.href,
+   title:document.title,
+   ready:document.readyState,
+   assistants:A.length,
+   users:U.length,
+   composer:!!document.querySelector('#prompt-textarea,[contenteditable="true"][data-virtualkeyboard],[contenteditable="true"][data-testid="prompt-textarea"]'),
+   last_assistant:(A.at(-1)?.innerText||A.at(-1)?.textContent||"").slice(-5000),
+   last_user:(U.at(-1)?.innerText||U.at(-1)?.textContent||"").slice(-3000),
+   has_current_user:body.includes("lanjutkan sampai tuntas"),
+   has_112:body.includes("chatlokal-rendered-proof-20260920-112"),
+   has_117:body.includes("chatlokal-v4-proof-20260920-117"),
+   body_tail:body.slice(-8000)
+ });
+})()"""
+with WSClient(wsurl,timeout=8) as ws:
+    ws.send_json({"id":1,"method":"Runtime.evaluate","params":{"expression":expr,"returnByValue":True,"userGesture":True}})
+    while True:
+        x=ws.recv_json()
+        if x.get("id")==1:
+            print(x.get("result",{}).get("result",{}).get("value",""))
+            break
+'''
+        p2=subprocess.run(["/usr/local/bin/python3","-c",py],input=json.dumps(page),capture_output=True,text=True,timeout=30)
+        try:
+            data=json.loads(p2.stdout)
+        except Exception:
+            data={"raw":p2.stdout[-12000:],"stderr":p2.stderr[-12000:]}
+        return {"ok":p2.returncode==0,"page":{"id":page.get("id"),"url":page.get("url"),"title":page.get("title")},"dom":data}
+
     if a=="control_browser_open":
         port=19498
         url=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")

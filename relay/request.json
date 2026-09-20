@@ -1,5 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-window-menu-inventory-20260920-168",
-  "action": "chrome_window_menu_inventory"
+  "id": "chatlokal-chrome-ax-deep-20260920-168",
+  "action": "chrome_ax_deep_probe",
+  "window": 3,
+  "limit": 900
 }

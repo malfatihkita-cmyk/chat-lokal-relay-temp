@@ -1,16 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-enable-js-visible-submenu-20260920-182",
-  "action": "enable_chrome_js_apple_events",
-  "completed_at": "2026-09-20T15:05:37Z",
+  "id": "chatlokal-js-menu-state-20260920-183",
+  "action": "chrome_js_menu_state",
+  "completed_at": "2026-09-20T15:06:51Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
-    "ok": false,
-    "toggle_rc": 0,
-    "toggle": "CLICKED",
-    "toggle_err": "",
-    "test_rc": 1,
-    "test": "",
-    "test_err": "98:210: execution error: Google Chrome mengalami kesalahan: Eksekusi JavaScript melalui AppleScript dinonaktifkan. Untuk mengaktifkannya, buka panel menu lalu pilih View > Developer > Allow JavaScript from Apple Events. Untuk informasi selengkapnya: https://support.google.com/chrome/?p=applescript (12)\n"
+    "ok": true,
+    "returncode": 0,
+    "stdout": "enabled=false|mark=missing value|role=AXMenuItem|actions=AXCancelAXPressAXPick\n",
+    "stderr": ""
   }
 }

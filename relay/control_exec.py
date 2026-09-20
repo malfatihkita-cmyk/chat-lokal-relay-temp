@@ -33,6 +33,68 @@ def tail(path,n=30000):
 
 def action(req):
     a=req.get("action","")
+    if a=="open_profile_window":
+        profile=str(req.get("profile") or "Profile 33")
+        target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")
+        # Open an additional window in the existing user Chrome profile. Do not stop or replace Main Chrome.
+        p=run(["/usr/bin/open","-a","Google Chrome","--args","--profile-directory="+profile,"--new-window",target],30)
+        time.sleep(float(req.get("wait",6)))
+        js=r'''(() => {
+ const cid=location.pathname.split('/').pop();
+ window.__CTL_PROFILE_PROBE__={done:false};
+ Promise.all([
+   fetch('/backend-api/me',{credentials:'include'}).then(async r=>({name:'me',status:r.status,text:(await r.text()).slice(0,8000)})).catch(e=>({name:'me',error:String(e)})),
+   fetch('/backend-api/conversation/'+cid,{credentials:'include'}).then(async r=>({name:'conversation',status:r.status,text:(await r.text()).slice(-12000)})).catch(e=>({name:'conversation',error:String(e)}))
+ ]).then(x=>window.__CTL_PROFILE_PROBE__={done:true,data:x}).catch(e=>window.__CTL_PROFILE_PROBE__={done:true,error:String(e)});
+ return JSON.stringify({url:location.href,title:document.title,ready:document.readyState,body:(document.body?.innerText||'').slice(-5000)});
+})()'''
+        b=base64.b64encode(js.encode()).decode()
+        uq=target.replace("\\","\\\\").replace('"','\\"')
+        sc=f'''
+tell application "Google Chrome"
+ set outText to ""
+ repeat with wi from 1 to count of windows
+  repeat with ti from 1 to count of tabs of window wi
+   try
+    set u to URL of tab ti of window wi
+    set outText to outText & wi & ":" & ti & "|" & u & linefeed
+    if u is "{uq}" then
+     set r to execute tab ti of window wi javascript "eval(atob('{b}'))"
+     return "FOUND|" & wi & "|" & ti & "|" & r
+    end if
+   end try
+  end repeat
+ end repeat
+ return "NOT_FOUND|" & outText
+end tell
+'''
+        s1=run(["/usr/bin/osascript","-e",sc],45)
+        time.sleep(3)
+        read_js=r'''(() => JSON.stringify(window.__CTL_PROFILE_PROBE__||{}))()'''
+        rb=base64.b64encode(read_js.encode()).decode()
+        sc2=f'''
+tell application "Google Chrome"
+ repeat with wi from 1 to count of windows
+  repeat with ti from 1 to count of tabs of window wi
+   try
+    if URL of tab ti of window wi is "{uq}" then
+     return execute tab ti of window wi javascript "eval(atob('{rb}'))"
+    end if
+   end try
+  end repeat
+ end repeat
+ return "__TARGET_NOT_FOUND__"
+end tell
+'''
+        s2=run(["/usr/bin/osascript","-e",sc2],45)
+        raw=(s2.stdout or "").strip()
+        try:
+            probe=json.loads(raw)
+        except Exception:
+            probe={"raw":raw,"stderr":s2.stderr[-8000:],"rc":s2.returncode}
+        return {"ok":s1.returncode==0 and s2.returncode==0,"open_rc":p.returncode,
+                "open_stderr":p.stderr[-4000:],"start":(s1.stdout or "")[-12000:],"probe":probe}
+
     if a=="browser_probe":
         script=r'''
 tell application "Google Chrome"

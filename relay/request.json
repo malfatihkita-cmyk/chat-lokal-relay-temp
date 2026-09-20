@@ -1,5 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-control-browser-normal-20260920-132",
-  "action": "diagnose"
+  "id": "chatlokal-restart-core-20260920-132",
+  "action": "restart_services",
+  "labels": ["com.copytolive.chat-lokal","com.copytolive.chat-lokal-injector"],
+  "wait": 3
 }

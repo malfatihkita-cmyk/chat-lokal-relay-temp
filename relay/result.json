@@ -1,13 +1,258 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-clusters-cd-20260921-259",
-  "action": "run_python_file",
-  "completed_at": "2026-09-20T18:28:01Z",
+  "id": "chatlokal-cdp-inventory-cd-20260921-260",
+  "action": "cdp_port_inventory",
+  "completed_at": "2026-09-20T18:28:59Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "returncode": 0,
-    "stdout": "{\"launches\": [{\"cluster\": \"C\", \"pid\": 26247}, {\"cluster\": \"D\", \"pid\": 26299}], \"ports\": [{\"port\": 19417, \"alive\": true, \"pages\": [{\"id\": \"DFDC86F23477BC29E7DEEED83036B612\", \"title\": \"ChatGPT: Chat, Work, Create &amp; Code with AI\", \"url\": \"https://chatgpt.com/\"}]}, {\"port\": 19418, \"alive\": true, \"pages\": [{\"id\": \"7D867C0A5B9E452A3B1E5772E6AB8D7E\", \"title\": \"ChatGPT: Chat, Work, Create &amp; Code with AI\", \"url\": \"https://chatgpt.com/\"}]}, {\"port\": 19419, \"alive\": true, \"pages\": [{\"id\": \"9B3E964BF2D4BBF69931C73CF54D0D4D\", \"title\": \"ChatGPT: Chat, Work, Create &amp; Code with AI\", \"url\": \"https://chatgpt.com/\"}]}, {\"port\": 19420, \"alive\": true, \"pages\": [{\"id\": \"8E34467A03DC5E937873A164CD17B11A\", \"title\": \"ChatGPT\", \"url\": \"https://chatgpt.com/\"}]}, {\"port\": 19421, \"alive\": true, \"pages\": [{\"id\": \"B338F80BE98AD8E42DF31E25E4F97A1C\", \"title\": \"ChatGPT: Chat, Work, Create &amp; Code with AI\", \"url\": \"https://chatgpt.com/\"}]}, {\"port\": 19422, \"alive\": true, \"pages\": [{\"id\": \"9F8B04C6BB29BF390A03883A957E160A\", \"title\": \"\", \"url\": \"https://chatgpt.com/\"}]}, {\"port\": 19423, \"alive\": false, \"pages\": [], \"error\": \"URLError\"}, {\"port\": 19424, \"alive\": false, \"pages\": [], \"error\": \"URLError\"}, {\"port\": 19425, \"alive\": false, \"pages\": [], \"error\": \"URLError\"}, {\"port\": 19426, \"alive\": false, \"pages\": [], \"error\": \"URLError\"}, {\"port\": 19427, \"alive\": false, \"pages\": [], \"error\": \"URLError\"}, {\"port\": 19428, \"alive\": true, \"pages\": [{\"id\": \"A2D99CF62545C41245E5864D68AC5A8A\", \"title\": \"ChatGPT\", \"url\": \"https://chatgpt.com/\"}]}, {\"port\": 19429, \"alive\": true, \"pages\": [{\"id\": \"96DED65093822C1E581DBABE984FE91D\", \"title\": \"ChatGPT: Chat, Work, Create &amp; Code with AI\", \"url\": \"https://chatgpt.com/\"}]}, {\"port\": 19430, \"alive\": true, \"pages\": [{\"id\": \"3147E76174E4ED5B1A316027D5DA4C46\", \"title\": \"ChatGPT: Chat, Work, Create &amp; Code with AI\", \"url\": \"https://chatgpt.com/\"}]}, {\"port\": 19431, \"alive\": true, \"pages\": [{\"id\": \"9E3EE648805A5E174C481202DBE2F38E\", \"title\": \"ChatGPT: Chat, Work, Create &amp; Code with AI\", \"url\": \"https://chatgpt.com/\"}]}, {\"port\": 19432, \"alive\": true, \"pages\": [{\"id\": \"3E320221E83577996FDA12C5184F6DA3\", \"title\": \"\", \"url\": \"https://chatgpt.com/\"}]}, {\"port\": 19433, \"alive\": false, \"pages\": [], \"error\": \"URLError\"}, {\"port\": 19434, \"alive\": false, \"pages\": [], \"error\": \"URLError\"}, {\"port\": 19435, \"alive\": false, \"pages\": [], \"error\": \"URLError\"}, {\"port\": 19436, \"alive\": false, \"pages\": [], \"error\": \"URLError\"}, {\"port\": 19437, \"alive\": false, \"pages\": [], \"error\": \"URLError\"}, {\"port\": 19438, \"alive\": false, \"pages\": [], \"error\": \"URLError\"}]}\n",
-    "stderr": ""
+    "rows": [
+      {
+        "port": 19417,
+        "alive": true,
+        "pages": [
+          {
+            "id": "DFDC86F23477BC29E7DEEED83036B612",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19418,
+        "alive": true,
+        "pages": [
+          {
+            "id": "7D867C0A5B9E452A3B1E5772E6AB8D7E",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19419,
+        "alive": true,
+        "pages": [
+          {
+            "id": "9B3E964BF2D4BBF69931C73CF54D0D4D",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19420,
+        "alive": true,
+        "pages": [
+          {
+            "id": "8E34467A03DC5E937873A164CD17B11A",
+            "type": "page",
+            "title": "ChatGPT",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19421,
+        "alive": true,
+        "pages": [
+          {
+            "id": "B338F80BE98AD8E42DF31E25E4F97A1C",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19422,
+        "alive": true,
+        "pages": [
+          {
+            "id": "9F8B04C6BB29BF390A03883A957E160A",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19423,
+        "alive": true,
+        "pages": [
+          {
+            "id": "3D799C4F51892BBFD19270EE529E0BDC",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19424,
+        "alive": true,
+        "pages": [
+          {
+            "id": "1D0CAB69408A14F20411BBCAD1AA3644",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19425,
+        "alive": true,
+        "pages": [
+          {
+            "id": "506ED9C9C85C56AD7F36B20C3356555C",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19426,
+        "alive": true,
+        "pages": [
+          {
+            "id": "E23190F2FBFD0A4756800A96A7DE7C51",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19427,
+        "alive": false,
+        "pages": [],
+        "error": "URLError: <urlopen error [Errno 61] Connection refused>"
+      },
+      {
+        "port": 19428,
+        "alive": true,
+        "pages": [
+          {
+            "id": "A2D99CF62545C41245E5864D68AC5A8A",
+            "type": "page",
+            "title": "ChatGPT",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19429,
+        "alive": true,
+        "pages": [
+          {
+            "id": "96DED65093822C1E581DBABE984FE91D",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19430,
+        "alive": true,
+        "pages": [
+          {
+            "id": "3147E76174E4ED5B1A316027D5DA4C46",
+            "type": "page",
+            "title": "ChatGPT",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19431,
+        "alive": true,
+        "pages": [
+          {
+            "id": "9E3EE648805A5E174C481202DBE2F38E",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19432,
+        "alive": true,
+        "pages": [
+          {
+            "id": "3E320221E83577996FDA12C5184F6DA3",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19433,
+        "alive": true,
+        "pages": [
+          {
+            "id": "70A9C0BE4710A247BB2A4796CF123407",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19434,
+        "alive": true,
+        "pages": [
+          {
+            "id": "F56363FC106D47B6F3150F29A1FEC850",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19435,
+        "alive": true,
+        "pages": [
+          {
+            "id": "0D0677D588EA27EB913C2D954D7748F9",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19436,
+        "alive": true,
+        "pages": [
+          {
+            "id": "890A0E17158EC5360C3787DE3AACF23B",
+            "type": "page",
+            "title": "ChatGPT: Chat, Work, Create &amp; Code with AI",
+            "url": "https://chatgpt.com/"
+          }
+        ]
+      },
+      {
+        "port": 19437,
+        "alive": false,
+        "pages": [],
+        "error": "URLError: <urlopen error [Errno 61] Connection refused>"
+      },
+      {
+        "port": 19438,
+        "alive": false,
+        "pages": [],
+        "error": "URLError: <urlopen error [Errno 61] Connection refused>"
+      }
+    ]
   }
 }

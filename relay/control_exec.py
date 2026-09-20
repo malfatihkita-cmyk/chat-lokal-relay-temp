@@ -160,6 +160,54 @@ end tell
         return {"ok":p.returncode==0,"returncode":p.returncode,
                 "stdout":p.stdout[-30000:],"stderr":p.stderr[-12000:]}
 
+    if a=="chrome_developer_submenu":
+        script=r'''
+tell application "Google Chrome" to activate
+delay 1
+tell application "System Events"
+ tell process "Google Chrome"
+  set viewItem to missing value
+  try
+   set viewItem to menu bar item "Lihat" of menu bar 1
+  on error
+   try
+    set viewItem to menu bar item "View" of menu bar 1
+   end try
+  end try
+  if viewItem is missing value then return "VIEW_MENU_NOT_FOUND"
+  click viewItem
+  delay 0.4
+  set devItem to missing value
+  try
+   set devItem to menu item "Pengembang" of menu 1 of viewItem
+  on error
+   try
+    set devItem to menu item "Developer" of menu 1 of viewItem
+   end try
+  end try
+  if devItem is missing value then
+   key code 53
+   return "DEVELOPER_MENU_NOT_FOUND"
+  end if
+  set outText to "DEVSUB:"
+  try
+   repeat with mi in every menu item of menu 1 of devItem
+    try
+     set outText to outText & "|" & (name of mi)
+    end try
+   end repeat
+  on error errText
+   set outText to outText & "|ERR:" & errText
+  end try
+  key code 53
+  return outText
+ end tell
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],45)
+        return {"ok":p.returncode==0,"returncode":p.returncode,
+                "stdout":p.stdout[-12000:],"stderr":p.stderr[-8000:]}
+
     if a=="enable_chrome_js_apple_events":
         # Toggle Chrome's own scriptability menu only if it is currently off.
         script=r'''

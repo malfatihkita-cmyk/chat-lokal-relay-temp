@@ -1,7 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-read-v4-20260920-162",
-  "action": "read_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_transport_v4.py",
-  "max_chars": 40000
+  "id": "chatlokal-chrome-ax-probe-20260920-163",
+  "action": "chrome_ax_probe"
 }

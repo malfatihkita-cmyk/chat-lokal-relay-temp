@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-chrome-ui-inventory-20260920-158",
+  "id": "chatlokal-chrome-ui-inventory-20260920-159",
   "action": "chrome_ui_inventory",
-  "completed_at": "2026-09-20T02:51:58Z",
+  "completed_at": "2026-09-20T02:53:06Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
-    "ok": false,
-    "returncode": 1,
-    "stdout": "",
-    "stderr": "1084:1086: syntax error: Yang diharapkan nama atau properti variabel tetapi yang ditemukan “st”. (-2741)\n"
+    "ok": true,
+    "returncode": 0,
+    "stdout": "WINDOW_COUNT|3\nWINDOW|1|\nBUTTONS|\nSHEETS|0\nWINDOW|2|\nBUTTONS|\nSHEETS|0\nWINDOW|3|Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)\nBUTTONS|\nSHEETS|0\n\n",
+    "stderr": ""
   }
 }

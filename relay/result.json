@@ -1,78 +1,22 @@
 {
   "schema": 1,
-  "id": "chatlokal-conversation-osa-20260920-137",
-  "action": "conversation_probe_osa",
-  "completed_at": "2026-09-20T02:10:49Z",
+  "id": "chatlokal-conversation-api-20260920-138",
+  "action": "conversation_api_probe",
+  "completed_at": "2026-09-20T02:12:26Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "closed": [
-      {
-        "id": "81AF51EE7F44668688BD63F3E1670BEA",
-        "url": "https://chatgpt.com/c/6aad8160-7254-83ec-9d93-6ad1f3a4e88f"
-      },
-      {
-        "id": "5C699211A6F6CAC4802CDB88D9D5A861",
-        "url": "https://chatgpt.com/c/6aad6065-e04c-83ec-a569-d497c65a39b9"
-      },
-      {
-        "id": "286F4D01905FE36FBD40125FAF0F7BE9",
-        "url": "https://chatgpt.com/c/6aac72b4-d644-83ec-80ca-3b809812a309"
-      },
-      {
-        "id": "307BE6AD1ED7B1098EC9CC6E9416C6A7",
-        "url": "https://chatgpt.com/"
-      },
-      {
-        "id": "02C0FAC2D594863BDC8A648908D6F14C",
-        "url": "https://chatgpt.com/c/6aac72b6-d99c-83ec-9cbe-c39781b5b0a6"
-      },
-      {
-        "id": "9C2D610C3912B14DCCAF9AF8993AA2FF",
-        "url": "https://chatgpt.com/c/6aac72b2-68a4-83ec-b08f-415a7babbfad"
-      },
-      {
-        "id": "62A1AE77293EBF3D889073FFF3CA66DA",
-        "url": "https://chatgpt.com/c/6aac72c2-7868-83ec-83be-2e3aa53c7536"
-      },
-      {
-        "id": "DD6BEB48710AE7C2453995D9072E7B72",
-        "url": "https://chatgpt.com/c/6aac72c0-12b8-83ec-984d-a6329b27931f"
-      },
-      {
-        "id": "EAE9602D92C8D563094D101973F02A49",
-        "url": "https://chatgpt.com/c/6aada022-fd70-83ec-a375-c111e08d4afd"
-      },
-      {
-        "id": "415E90E69369A7FA09CE88AE7A11A182",
-        "url": "https://chatgpt.com/c/6aa92607-2fac-83ec-8362-e0ee7f72616a"
-      },
-      {
-        "id": "EEDDF0EC9212FC5C78AAC5A06A20A87E",
-        "url": "https://docs.google.com/document/d/1JgJVK1YZCmtb6d_xAS3myXnVXPr28P3QuJr9c3lO5_0/edit?pli=1&tab=t.salkf8agozvn"
-      },
-      {
-        "id": "2060CFBB4A1EE10881A50555C0CEDA04",
-        "url": "https://chatgpt.com/c/6aadc3a6-a570-83ec-9c03-4c940ea00291"
-      },
-      {
-        "id": "05A1929DC41030FEFC122EA8AFABF0E7",
-        "url": "https://chatgpt.com/c/6aa92ef0-aa24-83ec-ba1b-53758f0570d7"
-      }
-    ],
-    "dom": {
-      "url": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b",
-      "title": "Bootstrap Final Berhasil",
-      "ready": "interactive",
-      "assistants": 0,
-      "users": 0,
-      "composer": true,
-      "last_assistant": "",
-      "last_user": "",
+    "start": "STARTED",
+    "probe": {
+      "done": true,
+      "status": 404,
+      "len": 168,
+      "error": null,
       "has_current_user": false,
       "has_112": false,
       "has_117": false,
-      "body_tail": "Skip to content\nChat history\nChatGPT\nNew chat\nLibrary\nProjects\nScheduled\nPlugins\nSites\nNEW\nMore\nPinned\nOtak RWA\nRs. Subang Raya\nBuat Handoff Lengkap\ncopytolive lokal\nLanjutkan Screening Penyimpanan\nGOLD10B Final Audit\nRenko BTC Strategy Continuation\nLanjutkan Eksekusi Status\nCek Kepatuhan File\nTambah Cluster Agent 17-25\nRecents\nCurrent chat ping\nCari GPU Termurah Mining PRL\nBootstrap Final Berhasil\nBatch006 adds no unique survivor\nHitung Compounding 500 USD\nPerbaikan Parser JSON\nTebak Masa Depan\nJumlah Pertandingan Real Madrid Barcelona\nCek Kekurangan Fitur\nCek Kelengkapan Sheet\nBiaya Server Pendapatan Snapchat\nEURUSD Final Gate Watch\nLanjutkan Evaluasi Nama\nCek Tuntas 100 Persen\nLanjutkan Evaluasi Versi\nProvider GPU Mining PRL\nPerbaiki Parsing JSON\nMencari Provider GPU Gratis\nCari Promo GPU Match unerquicklich\nBTC 5%\nJumlah pengguna Hyperliquid\nUji integrasi AI\nUji integrasi AI\nUji Kesiapan Lokal\nBalas READY\nUji Final AI Lokal\nBalasan Uji Integrasi\nUji integrasi AI\nCopy Tolive\nPlus\nShare\n\nHigh"
+      "has_bootstrap107": false,
+      "tail": "{\"detail\":{\"message\":\"Log in to view this conversation.\",\"code\":\"conversation_inaccessible\",\"can_retry\":false,\"conversation_id\":\"6aaf2627-1e20-83ec-b0c8-77bc60da329b\"}}"
     }
   }
 }

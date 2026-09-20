@@ -176,23 +176,9 @@ def gh_rest(method,path,payload=None,timeout=60):
         raise RuntimeError("github_http_%s: %s"%(e.code,body))
 
 def publish(envelope):
-    path="relay/result.json"
-    content=base64.b64encode((json.dumps(envelope,ensure_ascii=False,indent=2)+"\n").encode()).decode()
-    endpoint="repos/%s/contents/%s"%(REPO,path)
-    sha=""
-    try:
-        cur=gh_rest("GET",endpoint+"?ref=main",timeout=30)
-        sha=cur.get("sha","")
-    except Exception:
-        pass
-    payload={
-        "message":"relay result %s [skip ci]"%envelope["id"],
-        "content":content,
-        "branch":"main"
-    }
-    if sha:
-        payload["sha"]=sha
-    return gh_rest("PUT",endpoint,payload,timeout=60)
+    out=Path("relay/result.json")
+    out.write_text(json.dumps(envelope,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    return {"path":str(out)}
 
 req=json.load(open(sys.argv[1]))
 rid=str(req.get("id",""))

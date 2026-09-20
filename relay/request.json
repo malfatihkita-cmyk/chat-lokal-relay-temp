@@ -1,5 +1,6 @@
 {
   "schema": 1,
-  "id": "chatlokal-developer-menu-20260920-156",
-  "action": "developer_menu_inventory"
+  "id": "chatlokal-select-bootstrap-window-20260920-162",
+  "action": "select_chrome_window_by_title",
+  "title": "Bootstrap Final Berhasil"
 }

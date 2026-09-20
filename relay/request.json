@@ -1,5 +1,10 @@
 {
   "schema": 1,
-  "id": "chatlokal-quick-status-after-v4-restart-20260921-239",
-  "action": "quick_status"
+  "id": "chatlokal-read-v4-postrestart-20260921-240",
+  "action": "read_files",
+  "paths": [
+    "~/.copytolive-chat-lokal/transport-v4.log",
+    "~/.copytolive-chat-lokal/transport-v4-state.json"
+  ],
+  "max_chars_each": 30000
 }

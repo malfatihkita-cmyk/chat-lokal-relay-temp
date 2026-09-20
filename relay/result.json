@@ -1,15 +1,16 @@
 {
   "schema": 1,
-  "id": "chatlokal-select-current-window-exact-20260921-233",
-  "action": "select_chrome_window_by_title",
-  "completed_at": "2026-09-20T17:55:01Z",
+  "id": "chatlokal-enable-test-active-js-20260921-234",
+  "action": "enable_chrome_js_apple_events",
+  "completed_at": "2026-09-20T17:56:48Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "select": "SELECTED",
-    "select_err": "",
-    "probe_rc": 0,
-    "probe": "windows=1\n1:1|Bootstrap Final Berhasil|https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b\n1:2|Lanjutkan E2E V4|https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba\n1:3|Lanjutkan E2E V4|https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba\n\n",
-    "probe_err": ""
+    "toggle_rc": 0,
+    "toggle": "ALREADY_ENABLED|✓",
+    "toggle_err": "",
+    "test_rc": 0,
+    "test": "{\"url\":\"https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba\",\"title\":\"Lanjutkan E2E V4\",\"ok\":true}",
+    "test_err": ""
   }
 }

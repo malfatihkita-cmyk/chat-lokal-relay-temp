@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "id": "chatlokal-stage-remnant-cleanup-20260921-296",
+  "id": "chatlokal-stage-stop-control-profile-20260921-297",
   "action": "write_file",
-  "completed_at": "2026-09-20T19:25:53Z",
+  "completed_at": "2026-09-20T19:26:20Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/cleanup_remnants_once.py",
-    "bytes": 1015
+    "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/stop_control_profile_once.py",
+    "bytes": 752
   }
 }

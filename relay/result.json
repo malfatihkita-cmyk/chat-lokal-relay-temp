@@ -1,42 +1,16 @@
 {
   "schema": 1,
-  "id": "chatlokal-refresh-control-profile-20260920-143",
-  "action": "refresh_control_profile",
-  "completed_at": "2026-09-20T02:29:50Z",
+  "id": "chatlokal-conversation-api-20260920-144",
+  "action": "conversation_api_probe",
+  "completed_at": "2026-09-20T02:31:27Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "returncode": 0,
-    "data": {
-      "ok": true,
-      "killed": [
-        21282
-      ],
-      "profile_name": "Profile 15",
-      "source": "/Users/antigravity1/Library/Application Support/Google/Chrome/Profile 15",
-      "dest": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/chat-local-control-profile",
-      "cookie_meta": [
-        {
-          "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/chat-local-control-profile/Profile 15/Network/Cookies",
-          "exists": false,
-          "size": 0
-        },
-        {
-          "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/chat-local-control-profile/Profile 15/Cookies",
-          "exists": true,
-          "size": 151552
-        }
-      ],
-      "page_count": 4,
-      "pages": [
-        {
-          "id": "5D3A9D0DFE248253E520302607D19746",
-          "type": "page",
-          "title": "",
-          "url": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b"
-        }
-      ]
-    },
-    "stderr": ""
+    "start": "__TARGET_NOT_FOUND__",
+    "probe": {
+      "raw": "__TARGET_NOT_FOUND__",
+      "stderr": "",
+      "returncode": 0
+    }
   }
 }

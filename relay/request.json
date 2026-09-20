@@ -1,8 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-agent17-current-chat-probe-20260920-167",
-  "action": "cdp_open_chat_probe",
-  "port": 19417,
-  "url": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b",
-  "wait": 10
+  "id": "chatlokal-window-menu-inventory-20260920-168",
+  "action": "chrome_window_menu_inventory"
 }

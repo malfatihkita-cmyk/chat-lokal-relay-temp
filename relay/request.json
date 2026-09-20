@@ -1,5 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-main-tab-api-20260920-180",
-  "action": "main_tab_api_probe"
+  "id": "chatlokal-enable-js-current-window-20260920-181",
+  "action": "enable_chrome_js_apple_events"
 }

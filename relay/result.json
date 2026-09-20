@@ -1,16 +1,18 @@
 {
   "schema": 1,
-  "id": "chatlokal-conversation-api-20260920-144",
-  "action": "conversation_api_probe",
-  "completed_at": "2026-09-20T02:31:27Z",
+  "id": "chatlokal-conversation-cdp-20260920-145",
+  "action": "conversation_probe",
+  "completed_at": "2026-09-20T02:32:12Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
-    "ok": true,
-    "start": "__TARGET_NOT_FOUND__",
-    "probe": {
-      "raw": "__TARGET_NOT_FOUND__",
-      "stderr": "",
-      "returncode": 0
-    }
+    "ok": false,
+    "error": "TARGET_NOT_FOUND",
+    "page_count": 3,
+    "chat_pages": [
+      {
+        "title": "ChatGPT",
+        "url": "https://chatgpt.com/"
+      }
+    ]
   }
 }

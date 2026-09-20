@@ -1,7 +1,12 @@
 {
   "schema": 1,
-  "id": "chatlokal-cdp-inventory-cd-20260921-260",
-  "action": "cdp_port_inventory",
-  "start": 19417,
-  "end": 19438
+  "id": "chatlokal-check-seq253-20260921-254",
+  "action": "read_files",
+  "paths": [
+    "~/.copytolive-chat-lokal/transport-v4.log",
+    "~/.copytolive-chat-lokal/transport-v4-state.json",
+    "~/.copytolive-chat-lokal/requests.jsonl",
+    "~/.copytolive-chat-lokal/results.jsonl"
+  ],
+  "max_chars_each": 16000
 }

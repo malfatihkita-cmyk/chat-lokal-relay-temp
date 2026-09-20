@@ -1,38 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-cdp-session-20260920-146",
-  "action": "cdp_session_probe",
-  "completed_at": "2026-09-20T02:33:23Z",
+  "id": "chatlokal-main-browser-probe-20260920-147",
+  "action": "browser_probe",
+  "completed_at": "2026-09-20T02:34:37Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "page": {
-      "id": "5D3A9D0DFE248253E520302607D19746",
-      "url": "https://chatgpt.com/",
-      "title": "ChatGPT"
-    },
-    "probe": {
-      "first": {
-        "url": "https://chatgpt.com/",
-        "title": "ChatGPT",
-        "ready": "complete",
-        "body": "Lewati ke konten\nRiwayat obrolan\nObrolan baru\nGambar\nPlugin\nRiset mendalam\nLihat paket dan harga\nPengaturan\nBantuan\n\nDapatkan respons yang disesuaikan dengan Anda\n\nMasuk untuk mendapatkan jawaban didasarkan pada obrolan yang disimpan, serta membuat gambar dan mengunggah file.\n\nMasuk\nChatGPT\nMasuk\nDaftar gratis\nApa yang sedang Anda pikirkan hari ini?\n\nChatGPT adalah AI. Dengan menggunakannya, Anda menyetujui Ketentuan & Kebijakan Privasi kami. Chat dapat ditinjau dan digunakan untuk meningkatkan model AI kami. Pelajari selengkapnya"
-      },
-      "second": {
-        "done": true,
-        "data": [
-          {
-            "name": "me",
-            "status": 200,
-            "text": "{\"object\":\"\",\"id\":\"ua-645f3076-571b-494a-a5df-d5df9090d4d4\",\"email\":\"\",\"name\":\"\",\"picture\":\"\",\"created\":1789871600,\"phone_number\":\"\",\"email_domain_type\":\"unknown\",\"country\":\"ID\",\"region\":\"Jakarta\",\"region_code\":\"JK\"}"
-          },
-          {
-            "name": "conversations",
-            "status": 200,
-            "text": "{\"items\":[],\"total\":0,\"limit\":5,\"offset\":0}"
-          }
-        ]
-      }
-    }
+    "returncode": 0,
+    "stdout": "WINDOWS=1\nWINDOW 1 TABS=1\nTAB 1:1 | ChatGPT | https://chatgpt.com/\n\n",
+    "stderr": ""
   }
 }

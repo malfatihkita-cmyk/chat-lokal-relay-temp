@@ -80,6 +80,25 @@ echo "=== SOURCE bridge_v3.py ==="; sed -n '1,320p' "$APP/chat_local_main_bridge
 echo "=== SOURCE transport_v4.py ==="; sed -n '1,320p' "$APP/chat_local_transport_v4.py" 2>&1 || true
 echo "=== STATUS bridge ==="; cat "$APP/main_bridge_status.json" 2>&1 || true; echo
 echo "=== STATUS bridge_v3 ==="; cat "$APP/main_bridge_v3_status.json" 2>&1 || true; echo
+echo "=== CHROME APPLESCRIPT TABS ==="
+osascript <<'APPLESCRIPT' 2>&1 || true
+tell application "Google Chrome"
+ set outText to ""
+ set wc to count of windows
+ set outText to outText & "WINDOWS=" & wc & linefeed
+ repeat with wi from 1 to wc
+  set outText to outText & "WINDOW " & wi & " TABS=" & (count of tabs of window wi) & linefeed
+  repeat with ti from 1 to count of tabs of window wi
+   try
+    set outText to outText & "TAB " & wi & ":" & ti & " | " & title of tab ti of window wi & " | " & URL of tab ti of window wi & linefeed
+   on error errText
+    set outText to outText & "TABERR " & wi & ":" & ti & " | " & errText & linefeed
+   end try
+  end repeat
+ end repeat
+ return outText
+end tell
+APPLESCRIPT
 '''
         p=run(["/bin/bash","-lc",s],180)
         return {"ok":p.returncode==0,"returncode":p.returncode,

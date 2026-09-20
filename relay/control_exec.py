@@ -208,6 +208,60 @@ end tell
         return {"ok":p.returncode==0,"returncode":p.returncode,
                 "stdout":p.stdout[-12000:],"stderr":p.stderr[-8000:]}
 
+    if a=="chrome_ax_deep_probe":
+        wi=int(req.get("window",3))
+        limit=int(req.get("limit",700))
+        script=f'''
+tell application "Google Chrome" to activate
+delay 0.5
+tell application "System Events"
+ tell process "Google Chrome"
+  if (count of windows) < {wi} then return "WINDOW_NOT_FOUND"
+  set w to window {wi}
+  set outText to "WINDOW|" & {wi} & "|"
+  try
+   set outText to outText & (name of w)
+  end try
+  set outText to outText & linefeed
+  set els to entire contents of w
+  set n to count of els
+  set outText to outText & "COUNT|" & n & linefeed
+  set lim to {limit}
+  if n < lim then set lim to n
+  repeat with i from 1 to lim
+   set e to item i of els
+   set r to ""
+   set sr to ""
+   set nm to ""
+   set ds to ""
+   set vl to ""
+   try
+    set r to role of e as text
+   end try
+   try
+    set sr to subrole of e as text
+   end try
+   try
+    set nm to name of e as text
+   end try
+   try
+    set ds to description of e as text
+   end try
+   try
+    set vl to value of e as text
+   end try
+   if (r contains "Web") or (r contains "Text") or (r contains "Button") or (r contains "Group") or (nm is not "") or (ds is not "") or (vl is not "") then
+    set outText to outText & "E|" & i & "|r=" & r & "|sr=" & sr & "|n=" & nm & "|d=" & ds & "|v=" & vl & linefeed
+   end if
+  end repeat
+  return outText
+ end tell
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],90)
+        return {"ok":p.returncode==0,"returncode":p.returncode,
+                "stdout":p.stdout[-60000:],"stderr":p.stderr[-12000:]}
+
     if a=="chrome_ui_inventory":
         script=r'''
 tell application "Google Chrome" to activate

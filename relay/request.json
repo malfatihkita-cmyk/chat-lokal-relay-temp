@@ -1,9 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-restart-v4-injector-20260921-238",
-  "action": "restart_services",
-  "labels": [
-    "com.copytolive.chat-lokal-injector",
-    "com.copytolive.chat-lokal-transport-v4"
-  ]
+  "id": "chatlokal-quick-status-after-v4-restart-20260921-239",
+  "action": "quick_status"
 }

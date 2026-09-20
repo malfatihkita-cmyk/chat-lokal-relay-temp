@@ -23,6 +23,21 @@ jobs:
         run: |
           python3 relay/control_exec.py relay/request.json
 
+      - name: Commit control result
+        if: always()
+        shell: bash
+        run: |
+          set -e
+          if [ -f relay/result.json ]; then
+            git config user.name "chat-lokal-relay-bot"
+            git config user.email "chat-lokal-relay@users.noreply.github.com"
+            git add relay/result.json
+            if ! git diff --cached --quiet; then
+              git commit -m "relay: result $(python3 -c 'import json; print(json.load(open("relay/request.json")).get("id","unknown"))') [skip ci]"
+              git push
+            fi
+          fi
+
       - name: Upload control result
         if: always()
         uses: actions/upload-artifact@v4

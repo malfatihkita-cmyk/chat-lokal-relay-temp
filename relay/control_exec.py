@@ -275,6 +275,8 @@ tell application "System Events"
   click viewItem
   delay 0.3
   set devItem to menu item "Pengembang" of menu 1 of viewItem
+  click devItem
+  delay 0.4
   set targetItem to menu item "Izinkan JavaScript dari Apple Events" of menu 1 of devItem
   set en to enabled of targetItem
   set mk to ""
@@ -330,6 +332,8 @@ tell application "System Events"
    key code 53
    return "DEVELOPER_MENU_NOT_FOUND"
   end if
+  click devItem
+  delay 0.4
 
   set targetItem to missing value
   try

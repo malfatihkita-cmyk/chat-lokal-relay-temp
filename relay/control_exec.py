@@ -515,6 +515,41 @@ end tell'''
                 "start":(p1.stdout or "")[-8000:],"probe":data,
                 "stderr":(p1.stderr+p2.stderr)[-8000:]}
 
+    if a=="chrome_process_inventory":
+        script=r'''
+tell application "System Events"
+ set outText to ""
+ set ps to every process whose name is "Google Chrome"
+ set outText to "processes=" & (count of ps) & linefeed
+ repeat with p in ps
+  set pidText to ""
+  set fm to ""
+  try
+   set pidText to unix id of p as text
+  end try
+  try
+   set fm to frontmost of p as text
+  end try
+  set outText to outText & "PROCESS|pid=" & pidText & "|frontmost=" & fm & "|windows=" & (count of windows of p) & linefeed
+  repeat with wi from 1 to count of windows of p
+   set w to window wi of p
+   set wn to ""
+   set doc to ""
+   try
+    set wn to name of w as text
+   end try
+   try
+    set doc to value of attribute "AXDocument" of w as text
+   end try
+   set outText to outText & "WINDOW|pid=" & pidText & "|i=" & wi & "|name=" & wn & "|doc=" & doc & linefeed
+  end repeat
+ end repeat
+ return outText
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],60)
+        return {"ok":p.returncode==0,"returncode":p.returncode,"stdout":p.stdout[-50000:],"stderr":p.stderr[-12000:]}
+
     if a=="chrome_ax_probe":
         script=r'''
 tell application "Google Chrome" to activate

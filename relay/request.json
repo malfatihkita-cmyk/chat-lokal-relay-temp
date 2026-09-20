@@ -1,5 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-browser-probe-after-profile15-open-20260921-248",
-  "action": "browser_probe"
+  "id": "chatlokal-profile-inventory-20260921-249",
+  "action": "chrome_profile_inventory"
 }

@@ -1,14 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-read-tail-agent-logs-20260921-264",
-  "action": "read_files",
-  "paths": [
-    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/logs/agent-27.log",
-    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/logs/agent-37.log",
-    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/logs/agent-38.log",
-    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/state/agent-27.pid",
-    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/state/agent-37.pid",
-    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/state/agent-38.pid"
-  ],
-  "max_chars_each": 12000
+  "id": "chatlokal-chrome-process-inventory-tail-20260921-265",
+  "action": "chrome_process_inventory"
 }

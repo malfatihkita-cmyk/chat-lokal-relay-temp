@@ -1,5 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-main-chrome-debug-state-20260921-231",
-  "action": "main_chrome_state"
+  "id": "chatlokal-window-menu-current-target-20260921-232",
+  "action": "chrome_window_menu_inventory"
 }

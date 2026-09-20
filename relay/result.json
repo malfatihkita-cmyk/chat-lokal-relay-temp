@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "chatlokal-control-browser-open-20260920-134",
+  "action": "control_browser_open",
+  "completed_at": "2026-09-20T02:07:15Z",
+  "host": "MacBooks-MacBook-Pro.local",
+  "result": {
+    "ok": false,
+    "created": {
+      "description": "",
+      "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@58ae0c621a34b558c60db5c6209d9dd9063084b7/inspector.html?ws=127.0.0.1:19498/devtools/page/6B1DE0D2820725C1257BBC3AB53F037C",
+      "id": "6B1DE0D2820725C1257BBC3AB53F037C",
+      "title": "",
+      "type": "page",
+      "url": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b",
+      "webSocketDebuggerUrl": "ws://127.0.0.1:19498/devtools/page/6B1DE0D2820725C1257BBC3AB53F037C"
+    },
+    "error": "TimeoutError",
+    "message": "timed out"
+  }
+}

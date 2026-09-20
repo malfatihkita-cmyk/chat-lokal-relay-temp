@@ -1,8 +1,9 @@
 {
   "schema": 1,
-  "id": "chatlokal-profile33-live-window-20260920-178",
-  "action": "open_profile_window",
-  "profile": "Profile 33",
+  "id": "chatlokal-open-copy-profile-20260920-179",
+  "action": "open_profile_via_menu",
+  "menu_name": "Copy",
   "url": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b",
-  "wait": 8
+  "wait": 3,
+  "nav_wait": 7
 }

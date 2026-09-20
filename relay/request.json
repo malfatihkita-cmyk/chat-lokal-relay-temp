@@ -1,5 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-enable-test-active-js-20260921-234",
-  "action": "enable_chrome_js_apple_events"
+  "id": "chatlokal-read-v4-before-active-patch-20260921-235",
+  "action": "read_file",
+  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_transport_v4.py",
+  "max_chars": 50000
 }

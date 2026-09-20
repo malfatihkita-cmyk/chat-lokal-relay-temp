@@ -515,6 +515,63 @@ end tell'''
                 "start":(p1.stdout or "")[-8000:],"probe":data,
                 "stderr":(p1.stderr+p2.stderr)[-8000:]}
 
+    if a=="select_window_frontmost_probe":
+        wanted=str(req.get("title") or "Bootstrap Final Berhasil")
+        esc=wanted.replace("\\","\\\\").replace('"','\\"')
+        script=f'''
+tell application "System Events"
+ set chromePs to every process whose name is "Google Chrome"
+ set clicked to false
+ repeat with cp in chromePs
+  try
+   tell cp
+    if exists menu bar 1 then
+     set winMB to missing value
+     try
+      set winMB to menu bar item "Jendela" of menu bar 1
+     on error
+      try
+       set winMB to menu bar item "Window" of menu bar 1
+      end try
+     end try
+     if winMB is not missing value then
+      click winMB
+      delay 0.2
+      try
+       set mi to menu item "{esc}" of menu 1 of winMB
+       if exists mi then
+        click mi
+        set clicked to true
+        exit repeat
+       end if
+      end try
+      key code 53
+     end if
+    end if
+   end tell
+  end try
+ end repeat
+ delay 1
+ set fp to first process whose frontmost is true
+ set outText to "clicked=" & clicked & "|frontmost_name=" & (name of fp) & "|pid=" & (unix id of fp) & "|windows=" & (count of windows of fp) & linefeed
+ repeat with wi from 1 to count of windows of fp
+  set w to window wi of fp
+  set wn to ""
+  set doc to ""
+  try
+   set wn to name of w as text
+  end try
+  try
+   set doc to value of attribute "AXDocument" of w as text
+  end try
+  set outText to outText & "WINDOW|" & wi & "|name=" & wn & "|doc=" & doc & linefeed
+ end repeat
+ return outText
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],60)
+        return {"ok":p.returncode==0,"returncode":p.returncode,"stdout":p.stdout[-40000:],"stderr":p.stderr[-12000:]}
+
     if a=="chrome_process_inventory":
         script=r'''
 tell application "System Events"

@@ -1,9 +1,11 @@
 {
   "schema": 1,
-  "id": "chatlokal-write-patch-helper-20260920-198",
-  "action": "write_file",
+  "id": "chatlokal-run-v4-target-patch-20260920-199",
+  "action": "run_python_file",
   "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/patch_v4_target_once.py",
-  "content_b64": "IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwppbXBvcnQgc3lzLCB0aW1lCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aAoKcCA9IFBhdGgoIi9Vc2Vycy9TaGFyZWQvV29ya3NwYWNlQmVyc2FtYS9DaGF0R1BUSGVhZGxlc3NQb29sL0NoYXQtTG9rYWwvY2hhdF9sb2NhbF90cmFuc3BvcnRfdjQucHkiKQppZiBsZW4oc3lzLmFyZ3YpICE9IDM6CiAgICByYWlzZSBTeXN0ZW1FeGl0KCJ1c2FnZTogcGF0Y2hfdjRfdGFyZ2V0X29uY2UucHkgT0xEX1VSTCBORVdfVVJMIikKb2xkLCBuZXcgPSBzeXMuYXJndlsxXSwgc3lzLmFyZ3ZbMl0KcyA9IHAucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpCm5lZWRsZSA9IGYnVEFSR0VUX1VSTD0ie29sZH0iJwpyZXBsID0gZidUQVJHRVRfVVJMPSJ7bmV3fSInCmNvdW50ID0gcy5jb3VudChuZWVkbGUpCmlmIGNvdW50ICE9IDE6CiAgICByYWlzZSBTeXN0ZW1FeGl0KGYidGFyZ2V0X2NvdW50PXtjb3VudH07IHJlZnVzaW5nIHBhdGNoIikKYmFja3VwID0gcC53aXRoX25hbWUocC5uYW1lICsgIi5iYWstIiArIHRpbWUuc3RyZnRpbWUoIiVZJW0lZC0lSCVNJVMiKSkKYmFja3VwLndyaXRlX3RleHQocywgZW5jb2Rpbmc9InV0Zi04IikKcC53cml0ZV90ZXh0KHMucmVwbGFjZShuZWVkbGUsIHJlcGwsIDEpLCBlbmNvZGluZz0idXRmLTgiKQpwcmludChmIlBBVENIRUQ9MSBCQUNLVVA9e2JhY2t1cH0gTkVXPXtuZXd9IikKUGF0aChfX2ZpbGVfXykudW5saW5rKG1pc3Npbmdfb2s9VHJ1ZSkK",
-  "backup": false,
-  "mode": "755"
+  "args": [
+    "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b",
+    "https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba"
+  ],
+  "timeout": 60
 }

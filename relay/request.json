@@ -1,10 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-check-e2e243-20260921-244",
-  "action": "read_files",
-  "paths": [
-    "~/.copytolive-chat-lokal/transport-v4.log",
-    "~/.copytolive-chat-lokal/transport-v4-state.json"
-  ],
-  "max_chars_each": 12000
+  "id": "chatlokal-browser-probe-before-final-e2e-20260921-245",
+  "action": "browser_probe"
 }

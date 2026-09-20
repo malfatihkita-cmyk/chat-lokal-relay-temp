@@ -36,8 +36,12 @@ def action(req):
     if a=="open_profile_window":
         profile=str(req.get("profile") or "Profile 33")
         target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")
-        # Open an additional window in the existing user Chrome profile. Do not stop or replace Main Chrome.
-        p=run(["/usr/bin/open","-a","Google Chrome","--args","--profile-directory="+profile,"--new-window",target],30)
+        # Ask the existing Chrome singleton to open an additional window in this profile.
+        # This does not stop, replace, or relaunch Main Chrome.
+        chrome="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        p=run([chrome,"--profile-directory="+profile,"--new-window",target],30)
+        if p.returncode!=0:
+            p=run(["/usr/bin/open","-a","Google Chrome","--args","--profile-directory="+profile,"--new-window",target],30)
         time.sleep(float(req.get("wait",6)))
         js=r'''(() => {
  const cid=location.pathname.split('/').pop();

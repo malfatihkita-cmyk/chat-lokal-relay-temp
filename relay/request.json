@@ -1,9 +1,14 @@
 {
   "schema": 1,
-  "id": "chatlokal-stage-rerun-cd-20260921-264",
-  "action": "write_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/rerun_clusters_cd_once.py",
-  "content": "#!/usr/bin/env python3\nimport subprocess,time,json,urllib.request\nfrom pathlib import Path\nROOT=\"/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool\"\nrows=[]\nfor c in (\"C\",\"D\"):\n    p=subprocess.Popen([\"python3\",f\"{ROOT}/launch_cluster.py\",c,\"0\",\"0\",\"1792\",\"1120\"],cwd=ROOT,\n                       stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,start_new_session=True)\n    rows.append({\"cluster\":c,\"pid\":p.pid})\ndeadline=time.time()+55\nports=[19427,19437,19438]\nstate={}\nwhile time.time()<deadline:\n    for port in ports:\n        if state.get(port,{}).get(\"alive\"): continue\n        try:\n            with urllib.request.urlopen(f\"http://127.0.0.1:{port}/json/list\",timeout=1) as r:\n                pages=json.loads(r.read().decode())\n            state[port]={\"alive\":True,\"pages\":[{\"id\":x.get(\"id\"),\"title\":x.get(\"title\"),\"url\":x.get(\"url\")} for x in pages if x.get(\"type\")==\"page\"]}\n        except Exception as e:\n            state[port]={\"alive\":False,\"error\":type(e).__name__}\n    if all(state.get(p,{}).get(\"alive\") for p in ports): break\n    time.sleep(1)\nprint(json.dumps({\"launches\":rows,\"ports\":state},ensure_ascii=False))\nPath(__file__).unlink(missing_ok=True)\n",
-  "backup": false,
-  "mode": "755"
+  "id": "chatlokal-read-tail-agent-logs-20260921-264",
+  "action": "read_files",
+  "paths": [
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/logs/agent-27.log",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/logs/agent-37.log",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/logs/agent-38.log",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/state/agent-27.pid",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/state/agent-37.pid",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/state/agent-38.pid"
+  ],
+  "max_chars_each": 12000
 }

@@ -1,13 +1,20 @@
 {
   "schema": 1,
-  "id": "chatlokal-compile-v4-20260920-200",
-  "action": "py_compile",
-  "completed_at": "2026-09-20T17:03:08Z",
+  "id": "chatlokal-restart-v4-20260920-201",
+  "action": "restart_services",
+  "completed_at": "2026-09-20T17:03:40Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "returncode": 0,
-    "stdout": "",
-    "stderr": ""
+    "services": [
+      {
+        "label": "com.copytolive.chat-lokal-transport-v4",
+        "rc": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "health_raw": "{\"ok\": true, \"profile\": \"Chat - Lokal\", \"transport\": \"127.0.0.1 only\", \"third_party\": false, \"github\": false, \"workers\": 24, \"queued\": 0, \"time\": \"2026-09-20T17:03:40.993474+00:00\"}",
+    "health_err": ""
   }
 }

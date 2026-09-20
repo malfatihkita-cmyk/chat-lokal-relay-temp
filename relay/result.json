@@ -1,12 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-fix-disable-control-launcher-20260921-301",
-  "action": "write_file",
-  "completed_at": "2026-09-20T19:27:34Z",
+  "id": "chatlokal-run-disable-control-launcher-20260921-302",
+  "action": "run_python_file",
+  "completed_at": "2026-09-20T19:28:02Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/disable_control_launcher_once.py",
-    "bytes": 603
+    "returncode": 0,
+    "stdout": "{\"source\": \"/Users/antigravity1/Library/LaunchAgents/com.copytolive.chat-lokal-control-browser.plist\", \"exists_before\": true, \"disabled_path\": \"/Users/antigravity1/Library/LaunchAgents/com.copytolive.chat-lokal-control-browser.plist.DISABLED_FINAL\", \"active_after\": false}\n",
+    "stderr": ""
   }
 }

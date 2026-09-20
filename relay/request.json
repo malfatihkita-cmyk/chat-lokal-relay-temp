@@ -1,5 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-window-menu-current-target-20260921-232",
-  "action": "chrome_window_menu_inventory"
+  "id": "chatlokal-profile15-owner-probe-20260921-233",
+  "action": "profile_http_probe",
+  "profile": "Profile 15",
+  "conversation_id": "6ab010ca-ee50-83ec-beea-b410c17211ba"
 }

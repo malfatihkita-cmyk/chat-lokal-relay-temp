@@ -1,7 +1,6 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-main-window-helper-20260921-251",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/open_main_current_chat_once.py",
-  "timeout": 60
+  "id": "chatlokal-enable-js-current-target-20260921-252",
+  "action": "enable_js_for_target_url",
+  "url": "https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba"
 }

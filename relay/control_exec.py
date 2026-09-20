@@ -80,6 +80,8 @@ echo "=== SOURCE bridge_v3.py ==="; sed -n '1,320p' "$APP/chat_local_main_bridge
 echo "=== SOURCE transport_v4.py ==="; sed -n '1,320p' "$APP/chat_local_transport_v4.py" 2>&1 || true
 echo "=== STATUS bridge ==="; cat "$APP/main_bridge_status.json" 2>&1 || true; echo
 echo "=== STATUS bridge_v3 ==="; cat "$APP/main_bridge_v3_status.json" 2>&1 || true; echo
+echo "=== CONTROL BROWSER INSTALL ==="; /usr/local/bin/python3 relay/install_control_browser.py 2>&1 || true; echo
+echo "=== CONTROL BROWSER CDP ==="; curl -sS --max-time 4 http://127.0.0.1:19498/json/list 2>&1 || true; echo
 echo "=== CLUSTER ALIVE PROBE ==="; /usr/local/bin/python3 "$APP/cluster_alive_probe.py" 2>&1 || true; echo
 echo "=== SOURCE cluster_alive_probe.py ==="; sed -n '1,220p' "$APP/cluster_alive_probe.py" 2>&1 || true; echo
 echo "=== SOURCE launch_cluster.py ==="; sed -n '1,320p' "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/launch_cluster.py" 2>&1 || true; echo

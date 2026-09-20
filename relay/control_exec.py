@@ -581,6 +581,44 @@ end tell
         return {"ok":p.returncode==0,"returncode":p.returncode,
                 "stdout":(p.stdout or "")[-30000:],"stderr":p.stderr[-12000:]}
 
+    if a=="chrome_js_menu_state":
+        script=r'''
+tell application "Google Chrome" to activate
+delay 0.5
+tell application "System Events"
+ tell process "Google Chrome"
+  set viewItem to menu bar item "Lihat" of menu bar 1
+  click viewItem
+  delay 0.3
+  set devItem to menu item "Pengembang" of menu 1 of viewItem
+  try
+   perform action "AXShowMenu" of devItem
+  end try
+  delay 0.3
+  set targetItem to menu item "Izinkan JavaScript dari Apple Events" of menu 1 of devItem
+  set outText to "enabled=" & (enabled of targetItem as text)
+  try
+   set outText to outText & "|mark=" & (value of attribute "AXMenuItemMarkChar" of targetItem as text)
+  on error errText
+   set outText to outText & "|markerr=" & errText
+  end try
+  try
+   set outText to outText & "|role=" & (value of attribute "AXRole" of targetItem as text)
+  end try
+  try
+   set outText to outText & "|actions=" & (name of every action of targetItem as text)
+  on error errText
+   set outText to outText & "|actionerr=" & errText
+  end try
+  key code 53
+  return outText
+ end tell
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],45)
+        return {"ok":p.returncode==0,"returncode":p.returncode,
+                "stdout":(p.stdout or "")[-12000:],"stderr":p.stderr[-12000:]}
+
     if a=="enable_chrome_js_apple_events":
         script=r'''
 tell application "Google Chrome" to activate

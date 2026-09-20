@@ -1,8 +1,9 @@
 {
   "schema": 1,
-  "id": "chatlokal-open-current-profile33-20260921-250",
-  "action": "open_profile_window",
-  "profile": "Profile 33",
-  "url": "https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba",
-  "wait": 8
+  "id": "chatlokal-stage-main-window-helper-20260921-250",
+  "action": "write_file",
+  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/open_main_current_chat_once.py",
+  "content_b64": "IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwppbXBvcnQgc3VicHJvY2Vzcyxqc29uCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aAp0YXJnZXQ9Imh0dHBzOi8vY2hhdGdwdC5jb20vYy82YWIwMTBjYS1lZTUwLTgzZWMtYmVlYS1iNDEwYzE3MjExYmEiCnNjPWYnJyd0ZWxsIGFwcGxpY2F0aW9uICJHb29nbGUgQ2hyb21lIgogYWN0aXZhdGUKIGlmIChjb3VudCBvZiB3aW5kb3dzKSBpcyAwIHRoZW4KICBtYWtlIG5ldyB3aW5kb3cKIGVuZCBpZgogc2V0IFVSTCBvZiBhY3RpdmUgdGFiIG9mIGZyb250IHdpbmRvdyB0byAie3RhcmdldH0iCiBkZWxheSAyCiByZXR1cm4gIldJTkRPV1M9IiAmIChjb3VudCBvZiB3aW5kb3dzKSAmICJ8VVJMPSIgJiAoVVJMIG9mIGFjdGl2ZSB0YWIgb2YgZnJvbnQgd2luZG93KQplbmQgdGVsbCcnJwpwPXN1YnByb2Nlc3MucnVuKFsiL3Vzci9iaW4vb3Nhc2NyaXB0IiwiLWUiLHNjXSxjYXB0dXJlX291dHB1dD1UcnVlLHRleHQ9VHJ1ZSx0aW1lb3V0PTM1KQpwcmludChqc29uLmR1bXBzKHsib2siOnAucmV0dXJuY29kZT09MCwicmMiOnAucmV0dXJuY29kZSwic3Rkb3V0IjpwLnN0ZG91dC5zdHJpcCgpLCJzdGRlcnIiOnAuc3RkZXJyLnN0cmlwKCl9LGVuc3VyZV9hc2NpaT1GYWxzZSkpClBhdGgoX19maWxlX18pLnVubGluayhtaXNzaW5nX29rPVRydWUpCg==",
+  "backup": false,
+  "mode": "755"
 }

@@ -515,6 +515,89 @@ end tell'''
                 "start":(p1.stdout or "")[-8000:],"probe":data,
                 "stderr":(p1.stderr+p2.stderr)[-8000:]}
 
+    if a=="chrome_window_menu_inventory":
+        script=r'''
+tell application "System Events"
+ set cp to first process whose name is "Google Chrome"
+ tell cp
+  set winMB to missing value
+  try
+   set winMB to menu bar item "Jendela" of menu bar 1
+  on error
+   try
+    set winMB to menu bar item "Window" of menu bar 1
+   end try
+  end try
+  if winMB is missing value then return "WINDOW_MENU_NOT_FOUND"
+  click winMB
+  delay 0.4
+  set outText to ""
+  set idx to 0
+  repeat with mi in every menu item of menu 1 of winMB
+   set idx to idx + 1
+   set nm to ""
+   set en to ""
+   set mk to ""
+   set posText to ""
+   try set nm to name of mi as text
+   try set en to enabled of mi as text
+   try set mk to value of attribute "AXMenuItemMarkChar" of mi as text
+   try
+    set pp to position of mi
+    set posText to (item 1 of pp as text) & "," & (item 2 of pp as text)
+   end try
+   set outText to outText & idx & "|" & nm & "|enabled=" & en & "|mark=" & mk & "|pos=" & posText & linefeed
+  end repeat
+  key code 53
+  return outText
+ end tell
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],60)
+        return {"ok":p.returncode==0,"returncode":p.returncode,"stdout":p.stdout[-40000:],"stderr":p.stderr[-12000:]}
+
+    if a=="press_window_menu_item":
+        wanted=str(req.get("title") or "Bootstrap Final Berhasil")
+        esc=wanted.replace("\\","\\\\").replace('"','\\"')
+        script=f'''
+tell application "System Events"
+ set cp to first process whose name is "Google Chrome"
+ tell cp
+  set winMB to missing value
+  try
+   set winMB to menu bar item "Jendela" of menu bar 1
+  on error
+   set winMB to menu bar item "Window" of menu bar 1
+  end try
+  click winMB
+  delay 0.4
+  set mi to menu item "{esc}" of menu 1 of winMB
+  set beforeEn to enabled of mi
+  set beforeMark to ""
+  try set beforeMark to value of attribute "AXMenuItemMarkChar" of mi as text
+  try
+   perform action "AXPress" of mi
+  on error
+   click mi
+  end try
+ end tell
+ delay 1
+ set fp to first process whose frontmost is true
+ set outText to "before_enabled=" & beforeEn & "|before_mark=" & beforeMark & "|frontmost=" & (name of fp) & "|pid=" & (unix id of fp) & "|windows=" & (count of windows of fp) & linefeed
+ repeat with wi from 1 to count of windows of fp
+  set w to window wi of fp
+  set wn to ""
+  set doc to ""
+  try set wn to name of w as text
+  try set doc to value of attribute "AXDocument" of w as text
+  set outText to outText & "WINDOW|" & wi & "|name=" & wn & "|doc=" & doc & linefeed
+ end repeat
+ return outText
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],60)
+        return {"ok":p.returncode==0,"returncode":p.returncode,"stdout":p.stdout[-40000:],"stderr":p.stderr[-12000:]}
+
     if a=="select_window_frontmost_probe":
         wanted=str(req.get("title") or "Bootstrap Final Berhasil")
         esc=wanted.replace("\\","\\\\").replace('"','\\"')

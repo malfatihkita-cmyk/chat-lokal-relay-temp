@@ -49,6 +49,12 @@ echo "=== DAEMON ERR ==="; tail -n 180 "$RUN/daemon.err.log" 2>&1 || true
 echo "=== INJECTOR ERR ==="; tail -n 120 "$RUN/injector.err.log" 2>&1 || true
 echo "=== V4 LOG ==="; tail -n 100 "$RUN/transport-v4.log" 2>&1 || true
 echo "=== OLD GH RELAY LOG ==="; tail -n 100 "$RUN/github-relay-temp.log" 2>&1 || true
+echo "=== SOURCE chat_local.py ==="; sed -n '1,240p' "$APP/chat_local.py" 2>&1 || true
+echo "=== SOURCE injector.py ==="; sed -n '1,320p' "$APP/chat_local_injector.py" 2>&1 || true
+echo "=== SOURCE bridge_v3.py ==="; sed -n '1,320p' "$APP/chat_local_main_bridge_v3.py" 2>&1 || true
+echo "=== SOURCE transport_v4.py ==="; sed -n '1,320p' "$APP/chat_local_transport_v4.py" 2>&1 || true
+echo "=== STATUS bridge ==="; cat "$APP/main_bridge_status.json" 2>&1 || true; echo
+echo "=== STATUS bridge_v3 ==="; cat "$APP/main_bridge_v3_status.json" 2>&1 || true; echo
 '''
         p=run(["/bin/bash","-lc",s],180)
         return {"ok":p.returncode==0,"returncode":p.returncode,

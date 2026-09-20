@@ -53,15 +53,15 @@ tell application "System Events"
   if prof is missing value then return "PROFILE_MENU_NOT_FOUND"
   click prof
   delay 0.5
-  set it to missing value
+  set profItem to missing value
   try
-   set it to menu item "{profile_menu.replace('"','\\"')}" of menu 1 of prof
+   set profItem to menu item "{profile_menu.replace('"','\\"')}" of menu 1 of prof
   end try
-  if it is missing value then
+  if profItem is missing value then
    key code 53
    return "PROFILE_ITEM_NOT_FOUND"
   end if
-  click it
+  click profItem
   return "PROFILE_CLICKED"
  end tell
 end tell
@@ -1139,6 +1139,7 @@ end tell
                     j=json.loads(pref.read_text(errors="ignore"))
                     row["name"]=(j.get("profile") or {}).get("name")
                     row["account_info_count"]=len(j.get("account_info") or [])
+                    row["allow_js_apple_events"]=((j.get("browser") or {}).get("allow_javascript_apple_events"))
             except Exception as e:
                 row["pref_error"]=str(e)
             try:

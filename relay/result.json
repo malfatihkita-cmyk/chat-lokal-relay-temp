@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "id": "chatlokal-stage-stop-control-profile-20260921-297",
+  "id": "chatlokal-fix-disable-control-launcher-20260921-301",
   "action": "write_file",
-  "completed_at": "2026-09-20T19:26:20Z",
+  "completed_at": "2026-09-20T19:27:34Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/stop_control_profile_once.py",
-    "bytes": 752
+    "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/disable_control_launcher_once.py",
+    "bytes": 603
   }
 }

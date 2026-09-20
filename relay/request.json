@@ -1,7 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-oldrelay-run-runner-restart-20260920-171",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/restart_github_runner_temp.py",
-  "timeout": 60
+  "id": "chatlokal-relay-idle-20260920-172",
+  "action": "idle_hold"
 }

@@ -1,5 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-window-menu-inventory-20260920-166",
-  "action": "chrome_window_menu_inventory"
+  "id": "chatlokal-cdp-port-inventory-20260920-166",
+  "action": "cdp_port_inventory",
+  "start": 19417,
+  "end": 19438
 }

@@ -81,6 +81,14 @@ echo "=== SOURCE transport_v4.py ==="; sed -n '1,320p' "$APP/chat_local_transpor
 echo "=== STATUS bridge ==="; cat "$APP/main_bridge_status.json" 2>&1 || true; echo
 echo "=== STATUS bridge_v3 ==="; cat "$APP/main_bridge_v3_status.json" 2>&1 || true; echo
 echo "=== CLUSTER ALIVE PROBE ==="; /usr/local/bin/python3 "$APP/cluster_alive_probe.py" 2>&1 || true; echo
+echo "=== SOURCE cluster_alive_probe.py ==="; sed -n '1,220p' "$APP/cluster_alive_probe.py" 2>&1 || true; echo
+echo "=== SOURCE launch_cluster.py ==="; sed -n '1,320p' "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/launch_cluster.py" 2>&1 || true; echo
+echo "=== LIVE AGENT17-27 PAGES ==="
+for p in $(seq 19417 19427); do
+  echo "--- PORT $p ---"
+  curl -sS --max-time 3 "http://127.0.0.1:$p/json/list" 2>&1 || true
+  echo
+done
 echo "=== MAIN CHROME PROBE ==="; /usr/local/bin/python3 "$APP/main_chrome_probe.py" 2>&1 || true; echo
 echo "=== AGENT38 CDP ==="; curl -sS --max-time 4 http://127.0.0.1:19438/json/list 2>&1 || true; echo
 echo "=== AGENT38 VERSION ==="; curl -sS --max-time 4 http://127.0.0.1:19438/json/version 2>&1 || true; echo

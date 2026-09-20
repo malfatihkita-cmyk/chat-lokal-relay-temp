@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-stop-v4-live-20260921-228",
-  "action": "run_python_file",
-  "completed_at": "2026-09-20T17:46:59Z",
+  "id": "chatlokal-js-apple-events-state-20260921-229",
+  "action": "chrome_js_apple_events_state",
+  "completed_at": "2026-09-20T17:49:05Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
     "returncode": 0,
-    "stdout": "{\"ok\": true, \"bootout_rc\": 0, \"stdout\": \"\", \"stderr\": \"\", \"remaining\": []}\n",
+    "stdout": "MARK=✓|ENABLED=false",
     "stderr": ""
   }
 }

@@ -1,7 +1,10 @@
 {
   "schema": 1,
-  "id": "chatlokal-read-launch-cluster-20260921-262",
-  "action": "read_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/launch_cluster.py",
-  "max_chars": 30000
+  "id": "chatlokal-recheck-tail-ports-20260921-263",
+  "action": "cdp_port_inventory",
+  "ports": [
+    19427,
+    19437,
+    19438
+  ]
 }

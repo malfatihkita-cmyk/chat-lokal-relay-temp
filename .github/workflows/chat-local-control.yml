@@ -22,3 +22,12 @@ jobs:
       - name: Execute structured request
         run: |
           python3 relay/control_exec.py relay/request.json
+
+      - name: Upload control result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chat-local-result
+          path: relay/result.json
+          if-no-files-found: error
+          retention-days: 1

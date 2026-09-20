@@ -1,12 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-stage-recovery-live-20260920-191",
-  "action": "write_file",
-  "completed_at": "2026-09-20T15:58:24Z",
+  "id": "chatlokal-run-recovery-live-20260920-192",
+  "action": "run_python_file",
+  "completed_at": "2026-09-20T15:59:30Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/recovery_no_duplicate_live.py",
-    "bytes": 2201
+    "returncode": 0,
+    "stdout": "{\"enqueue_ok\": true, \"side_effect_seen\": true, \"killed_pid\": 64710, \"daemon_recovered\": true, \"result_ok\": true, \"exec_count\": 1, \"PASS\": true}\n",
+    "stderr": ""
   }
 }

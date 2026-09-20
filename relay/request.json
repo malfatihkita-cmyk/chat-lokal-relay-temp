@@ -1,5 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-refresh-control-profile-20260920-141",
-  "action": "refresh_control_profile"
+  "id": "chatlokal-conversation-api-20260920-142",
+  "action": "conversation_api_probe",
+  "url": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b",
+  "wait": 8
 }

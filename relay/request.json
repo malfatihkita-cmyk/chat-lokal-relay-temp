@@ -1,5 +1,6 @@
 {
   "schema": 1,
-  "id": "chatlokal-chrome-process-inventory-20260920-164",
-  "action": "chrome_process_inventory"
+  "id": "chatlokal-select-frontmost-probe-20260920-165",
+  "action": "select_window_frontmost_probe",
+  "title": "Bootstrap Final Berhasil"
 }

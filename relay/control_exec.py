@@ -58,6 +58,43 @@ end tell
         return {"ok":p.returncode==0,"returncode":p.returncode,
                 "stdout":p.stdout[-20000:],"stderr":p.stderr[-12000:]}
 
+    if a=="main_chrome_state":
+        out={}
+        p=run(["/bin/ps","-p","482","-o","pid=,ppid=,command="],15)
+        out["pid482"]=p.stdout.strip()
+        p2=run(["/bin/ps","-axo","pid=,ppid=,command="],20)
+        roots=[]
+        for line in p2.stdout.splitlines():
+            if "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" in line and "Helper" not in line:
+                roots.append(line.strip())
+        out["chrome_roots"]=roots
+        try:
+            ls=Path.home()/"Library/Application Support/Google/Chrome/Local State"
+            j=json.loads(ls.read_text(errors="ignore"))
+            prof=j.get("profile") or {}
+            out["profile_state"]={
+              "last_used":prof.get("last_used"),
+              "last_active_profiles":prof.get("last_active_profiles"),
+              "profiles_order":prof.get("profiles_order")
+            }
+        except Exception as e:
+            out["profile_state_error"]=str(e)
+        for prof in ["Default","Profile 33"]:
+            try:
+                pref=Path.home()/"Library/Application Support/Google/Chrome"/prof/"Preferences"
+                if pref.exists():
+                    j=json.loads(pref.read_text(errors="ignore"))
+                    out[prof]={
+                      "profile_name":(j.get("profile") or {}).get("name"),
+                      "exit_type":(j.get("profile") or {}).get("exit_type"),
+                      "exited_cleanly":(j.get("profile") or {}).get("exited_cleanly"),
+                      "account_info_count":len(j.get("account_info") or []),
+                      "has_network_cookies":(Path.home()/"Library/Application Support/Google/Chrome"/prof/"Network"/"Cookies").exists()
+                    }
+            except Exception as e:
+                out[prof+"_error"]=str(e)
+        return {"ok":True,"state":out}
+
     if a=="browser_inventory":
         out={}
         p=run(["/bin/ps","-axo","pid=,ppid=,command="],30)

@@ -1,5 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-enable-js-apple-events-20260920-157",
-  "action": "enable_chrome_js_apple_events"
+  "id": "chatlokal-chrome-ui-inventory-20260920-158",
+  "action": "chrome_ui_inventory"
 }

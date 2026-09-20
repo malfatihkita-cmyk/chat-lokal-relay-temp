@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "id": "chatlokal-refresh-control-profile-20260920-141",
+  "id": "chatlokal-refresh-control-profile-20260920-143",
   "action": "refresh_control_profile",
-  "completed_at": "2026-09-20T02:18:10Z",
+  "completed_at": "2026-09-20T02:29:50Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
@@ -10,26 +10,27 @@
     "data": {
       "ok": true,
       "killed": [
-        80883
+        21282
       ],
-      "source": "/Users/antigravity1/Library/Application Support/Google/Chrome/Profile 33",
+      "profile_name": "Profile 15",
+      "source": "/Users/antigravity1/Library/Application Support/Google/Chrome/Profile 15",
       "dest": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/chat-local-control-profile",
       "cookie_meta": [
         {
-          "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/chat-local-control-profile/Profile 33/Network/Cookies",
+          "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/chat-local-control-profile/Profile 15/Network/Cookies",
           "exists": false,
           "size": 0
         },
         {
-          "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/chat-local-control-profile/Profile 33/Cookies",
+          "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/chat-local-control-profile/Profile 15/Cookies",
           "exists": true,
-          "size": 851968
+          "size": 151552
         }
       ],
-      "page_count": 5,
+      "page_count": 4,
       "pages": [
         {
-          "id": "78CF5FAE61F57631F9B16B704FF7A45F",
+          "id": "5D3A9D0DFE248253E520302607D19746",
           "type": "page",
           "title": "",
           "url": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b"

@@ -1,0 +1,24 @@
+name: Chat-Lokal Temporary Control
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'relay/request.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chat-lokal-temp-control
+  cancel-in-progress: false
+
+jobs:
+  control:
+    runs-on: [self-hosted, macOS, X64, chat-lokal-temp]
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Execute structured request
+        run: |
+          python3 relay/control_exec.py relay/request.json

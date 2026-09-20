@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-js-menu-state-20260920-160",
-  "action": "chrome_js_menu_item_state",
-  "completed_at": "2026-09-20T02:57:10Z",
+  "id": "chatlokal-developer-menu-20260920-156",
+  "action": "developer_menu_inventory",
+  "completed_at": "2026-09-20T03:00:03Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
     "returncode": 0,
-    "stdout": "enabled=false|mark=missing value|pos=0,1120|size=0,0\n",
+    "stdout": "Lihat SumberDeveloper ToolsPeriksa ElemenKonsol JavaScriptIzinkan JavaScript dari Apple Events\n",
     "stderr": ""
   }
 }

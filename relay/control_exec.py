@@ -58,6 +58,63 @@ end tell
         return {"ok":p.returncode==0,"returncode":p.returncode,
                 "stdout":p.stdout[-20000:],"stderr":p.stderr[-12000:]}
 
+    if a=="conversation_probe_osa":
+        target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")
+        # Keep only the requested page in the dedicated CDP profile.
+        closed=[]
+        try:
+            with urllib.request.urlopen("http://127.0.0.1:19498/json/list",timeout=10) as r:
+                pages=json.load(r)
+            for p in pages:
+                if p.get("type")=="page" and (p.get("url") or "")!=target:
+                    try:
+                        with urllib.request.urlopen("http://127.0.0.1:19498/json/close/"+p["id"],timeout=3) as rr:
+                            rr.read()
+                        closed.append({"id":p.get("id"),"url":p.get("url")})
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+        js=r'''(() => {
+ const A=[...document.querySelectorAll('[data-message-author-role="assistant"]')];
+ const U=[...document.querySelectorAll('[data-message-author-role="user"]')];
+ const body=document.body?.innerText||"";
+ return JSON.stringify({
+   url:location.href,title:document.title,ready:document.readyState,
+   assistants:A.length,users:U.length,
+   composer:!!document.querySelector('#prompt-textarea,[contenteditable="true"][data-virtualkeyboard],[contenteditable="true"][data-testid="prompt-textarea"]'),
+   last_assistant:(A.at(-1)?.innerText||A.at(-1)?.textContent||"").slice(-5000),
+   last_user:(U.at(-1)?.innerText||U.at(-1)?.textContent||"").slice(-3000),
+   has_current_user:body.includes("lanjutkan sampai tuntas"),
+   has_112:body.includes("chatlokal-rendered-proof-20260920-112"),
+   has_117:body.includes("chatlokal-v4-proof-20260920-117"),
+   body_tail:body.slice(-8000)
+ });
+})()'''
+        b64=base64.b64encode(js.encode()).decode()
+        uq=target.replace("\\","\\\\").replace('"','\\"')
+        script=f'''
+tell application "Google Chrome"
+ repeat with wi from 1 to count of windows
+  repeat with ti from 1 to count of tabs of window wi
+   try
+    if URL of tab ti of window wi is "{uq}" then
+     return execute tab ti of window wi javascript "eval(atob('{b64}'))"
+    end if
+   end try
+  end repeat
+ end repeat
+ return "__TARGET_NOT_FOUND__"
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],35)
+        raw=(p.stdout or "").strip()
+        try:
+            dom=json.loads(raw)
+        except Exception:
+            dom={"raw":raw,"stderr":p.stderr[-12000:],"returncode":p.returncode}
+        return {"ok":p.returncode==0 and raw!="__TARGET_NOT_FOUND__","closed":closed,"dom":dom}
+
     if a=="conversation_probe":
         port=int(req.get("port",19498))
         target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")

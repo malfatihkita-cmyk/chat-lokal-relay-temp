@@ -133,6 +133,104 @@ end tell
             data={"raw":raw[-20000:],"stderr":p.stderr[-12000:]}
         return {"ok":p.returncode==0 and bool(data.get("ok")),"returncode":p.returncode,"data":data,"stderr":p.stderr[-12000:]}
 
+    if a=="profile_http_probe":
+        import sqlite3, hashlib, http.cookiejar
+        profile=str(req.get("profile") or "Profile 33")
+        cid=str(req.get("conversation_id") or "6aaf2627-1e20-83ec-b0c8-77bc60da329b")
+        base=Path.home()/"Library/Application Support/Google/Chrome"/profile
+        cp=None
+        for cand in (base/"Network"/"Cookies",base/"Cookies"):
+            if cand.exists():
+                cp=cand; break
+        if not cp:
+            return {"ok":False,"error":"COOKIE_DB_NOT_FOUND","profile":profile}
+        keypass=None
+        key_attempts=[
+          ["/usr/bin/security","find-generic-password","-w","-s","Chrome Safe Storage"],
+          ["/usr/bin/security","find-generic-password","-w","-a","Chrome","-s","Chrome Safe Storage"]
+        ]
+        key_error=[]
+        for cmd in key_attempts:
+            q=run(cmd,20)
+            if q.returncode==0 and (q.stdout or "").strip():
+                keypass=(q.stdout or "").strip()
+                break
+            key_error.append((q.stderr or q.stdout or "").strip()[-1000:])
+        if not keypass:
+            return {"ok":False,"error":"KEYCHAIN_KEY_UNAVAILABLE","details":key_error}
+        key=hashlib.pbkdf2_hmac("sha1",keypass.encode(),b"saltysalt",1003,16)
+        iv=b" "*16
+        def dec(host,enc):
+            if enc is None:return ""
+            if isinstance(enc,memoryview):enc=enc.tobytes()
+            if enc.startswith((b"v10",b"v11")):
+                raw=enc[3:]
+                q=subprocess.run(
+                    ["/usr/bin/openssl","enc","-d","-aes-128-cbc","-K",key.hex(),"-iv",iv.hex(),"-nopad"],
+                    input=raw,capture_output=True,timeout=10
+                )
+                if q.returncode!=0:return ""
+                pt=q.stdout
+                if not pt:return ""
+                pad=pt[-1]
+                if 1<=pad<=16 and pt.endswith(bytes([pad])*pad):
+                    pt=pt[:-pad]
+                hh=hashlib.sha256(host.encode()).digest()
+                if pt.startswith(hh):
+                    pt=pt[32:]
+                try:return pt.decode()
+                except Exception:return pt.decode("utf-8","ignore")
+            try:return enc.decode()
+            except Exception:return ""
+        cookies=[]
+        bad=0
+        con=sqlite3.connect("file:"+str(cp)+"?mode=ro",uri=True,timeout=3)
+        cur=con.cursor()
+        cur.execute("""select host_key,name,value,encrypted_value,path,is_secure,expires_utc
+                       from cookies
+                       where host_key like '%chatgpt.com' or host_key like '%openai.com'""")
+        for host,name,value,enc,path0,secure,exp in cur.fetchall():
+            val=value or dec(host,enc)
+            if not val:
+                bad+=1; continue
+            # Only cookies applicable to chatgpt.com request host.
+            h=host.lstrip(".")
+            if h!="chatgpt.com" and not "chatgpt.com".endswith("."+h):
+                continue
+            cookies.append((name,val))
+        con.close()
+        header="; ".join(k+"="+v for k,v in cookies)
+        ua="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
+        def get(url):
+            q=urllib.request.Request(url,headers={
+                "User-Agent":ua,"Accept":"application/json,text/plain,*/*",
+                "Cookie":header,"Referer":"https://chatgpt.com/"
+            })
+            try:
+                with urllib.request.urlopen(q,timeout=20) as r:
+                    body=r.read().decode(errors="ignore")
+                    return {"status":r.status,"len":len(body),"body":body}
+            except urllib.error.HTTPError as e:
+                body=e.read().decode(errors="ignore")
+                return {"status":e.code,"len":len(body),"body":body}
+            except Exception as e:
+                return {"status":None,"error":type(e).__name__,"message":str(e),"body":""}
+        me=get("https://chatgpt.com/backend-api/me")
+        conv=get("https://chatgpt.com/backend-api/conversation/"+cid)
+        def summarize(x):
+            b=x.get("body") or ""
+            return {
+                "status":x.get("status"),"len":x.get("len"),"error":x.get("error"),
+                "logged_out":("Log in to" in b or "conversation_inaccessible" in b),
+                "has_current_user":"lanjutkan sampai tuntas" in b,
+                "has_107":"chatlokal-bootstrap-final-20260920-107" in b,
+                "has_117":"chatlokal-v4-proof-20260920-117" in b,
+                "tail":b[-1200:] if x.get("status") not in (200,) else ""
+            }
+        return {"ok":True,"profile":profile,"keychain_ok":True,
+                "cookie_count_used":len(cookies),"decrypt_failures":bad,
+                "me":summarize(me),"conversation":summarize(conv)}
+
     if a=="chrome_profile_cookie_names":
         import sqlite3
         profile=str(req.get("profile") or "Profile 33")

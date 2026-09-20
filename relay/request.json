@@ -1,7 +1,8 @@
 {
   "schema": 1,
-  "id": "chatlokal-disable-v3-live-20260921-222",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/disable_mainbridge_v3_once.py",
-  "timeout": 60
+  "id": "chatlokal-restart-injector-owner-v4-20260921-223",
+  "action": "restart_services",
+  "labels": [
+    "com.copytolive.chat-lokal-injector"
+  ]
 }

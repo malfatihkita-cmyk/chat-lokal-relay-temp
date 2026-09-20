@@ -665,45 +665,40 @@ end tell
     if a=="enable_chrome_js_apple_events":
         script=r'''
 tell application "Google Chrome" to activate
-delay 0.7
+delay 1
 tell application "System Events"
  tell process "Google Chrome"
   set viewItem to missing value
-  repeat with nm in {"Lihat","View","Tampilan"}
+  try
+   set viewItem to menu bar item "Lihat" of menu bar 1
+  on error
    try
-    set viewItem to menu bar item nm of menu bar 1
-    exit repeat
+    set viewItem to menu bar item "View" of menu bar 1
    end try
-  end repeat
+  end try
   if viewItem is missing value then return "VIEW_MENU_NOT_FOUND"
   click viewItem
-  delay 0.4
+  delay 0.5
   set devItem to missing value
-  repeat with nm in {"Pengembang","Developer"}
+  try
+   set devItem to menu item "Pengembang" of menu 1 of viewItem
+  on error
    try
-    set devItem to menu item nm of menu 1 of viewItem
-    exit repeat
+    set devItem to menu item "Developer" of menu 1 of viewItem
    end try
-  end repeat
+  end try
   if devItem is missing value then
    key code 53
    return "DEVELOPER_MENU_NOT_FOUND"
   end if
+  set targetItem to missing value
   try
-   perform action "AXShowMenu" of devItem
+   set targetItem to menu item "Izinkan JavaScript dari Apple Events" of menu 1 of devItem
   on error
    try
-    click devItem
+    set targetItem to menu item "Allow JavaScript from Apple Events" of menu 1 of devItem
    end try
   end try
-  delay 0.5
-  set targetItem to missing value
-  repeat with nm in {"Izinkan JavaScript dari Apple Events","Allow JavaScript from Apple Events"}
-   try
-    set targetItem to menu item nm of menu 1 of devItem
-    exit repeat
-   end try
-  end repeat
   if targetItem is missing value then
    key code 53
    return "TARGET_ITEM_NOT_FOUND"
@@ -717,7 +712,7 @@ tell application "System Events"
    return "ALREADY_ENABLED|" & markChar
   end if
   click targetItem
-  delay 0.8
+  delay 1
   return "CLICKED"
  end tell
 end tell
@@ -732,6 +727,7 @@ end tell'''
         return {"ok":q.returncode==0,"toggle_rc":p.returncode,
                 "toggle":(p.stdout or "").strip(),"toggle_err":p.stderr[-8000:],
                 "test_rc":q.returncode,"test":(q.stdout or "").strip(),"test_err":q.stderr[-8000:]}
+
 
     if a=="main_tab_api_probe":
         start_js=r'''(() => {

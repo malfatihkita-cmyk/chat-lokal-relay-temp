@@ -1,7 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-stop-dc-targeted-20260921-294",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/stop_dc_once.py",
-  "timeout": 30
+  "id": "chatlokal-stop-control-browser-20260921-295",
+  "action": "stop_control_browser"
 }

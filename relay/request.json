@@ -1,5 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-ax-target-profile-20260921-234",
-  "action": "chrome_ax_probe"
+  "id": "chatlokal-enable-test-active-js-20260921-234",
+  "action": "enable_chrome_js_apple_events"
 }

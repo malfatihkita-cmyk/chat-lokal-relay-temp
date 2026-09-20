@@ -70,17 +70,13 @@ def launch():
         "--profile-directory=Profile 33",
         "--remote-debugging-address=127.0.0.1",
         f"--remote-debugging-port={PORT}",
-        "--headless=new",
         "--no-first-run",
         "--no-default-browser-check",
-        "--disable-background-networking",
-        "--disable-component-update",
-        "--disable-default-apps",
         "--disable-notifications",
         "--disable-session-crashed-bubble",
-        "--disable-background-mode",
         "--mute-audio",
         "--window-size=900,900",
+        "--window-position=10000,10000",
         URL
     ]
     lf=open(RUN/"control-browser.chrome.log","ab",buffering=0)
@@ -121,6 +117,16 @@ plist=f'''<?xml version="1.0" encoding="UTF-8"?>
 </dict></plist>
 '''
 PLIST.write_text(plist,encoding="utf-8")
+# Restart only the dedicated control Chrome; never touch Main Chrome or Agent roots.
+ps=subprocess.run(["/bin/ps","-axo","pid=,command="],capture_output=True,text=True)
+for line in ps.stdout.splitlines():
+    try:
+        pid_s,cmd=line.strip().split(None,1)
+        if cmd.startswith("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome ") and "--user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/chat-local-control-profile" in cmd:
+            os.kill(int(pid_s),15)
+    except Exception:
+        pass
+time.sleep(2)
 subprocess.run(["/usr/bin/plutil","-lint",str(PLIST)],check=True)
 uid=str(os.getuid())
 subprocess.run(["/bin/launchctl","bootout",f"gui/{uid}/{LABEL}"],capture_output=True,text=True)

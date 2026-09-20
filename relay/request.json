@@ -1,7 +1,6 @@
 {
   "schema": 1,
-  "id": "chatlokal-profile15-owner-probe-20260921-233",
-  "action": "profile_http_probe",
-  "profile": "Profile 15",
-  "conversation_id": "6ab010ca-ee50-83ec-beea-b410c17211ba"
+  "id": "chatlokal-select-current-window-exact-20260921-233",
+  "action": "select_chrome_window_by_title",
+  "title": "Lanjutkan E2E V4"
 }

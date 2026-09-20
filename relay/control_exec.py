@@ -133,6 +133,32 @@ end tell
             data={"raw":raw[-20000:],"stderr":p.stderr[-12000:]}
         return {"ok":p.returncode==0 and bool(data.get("ok")),"returncode":p.returncode,"data":data,"stderr":p.stderr[-12000:]}
 
+    if a=="chrome_profile_cookie_names":
+        import sqlite3
+        profile=str(req.get("profile") or "Profile 33")
+        base=Path.home()/"Library/Application Support/Google/Chrome"/profile
+        cp=None
+        for cand in (base/"Network"/"Cookies",base/"Cookies"):
+            if cand.exists():
+                cp=cand; break
+        if not cp:
+            return {"ok":False,"error":"COOKIE_DB_NOT_FOUND","profile":profile}
+        rows=[]
+        try:
+            con=sqlite3.connect("file:"+str(cp)+"?mode=ro",uri=True,timeout=3)
+            cur=con.cursor()
+            cur.execute("""select host_key,name,expires_utc,is_persistent,length(encrypted_value)
+                           from cookies
+                           where host_key like '%chatgpt.com' or host_key like '%openai.com'
+                           order by host_key,name""")
+            for host,name,exp,persist,enc_len in cur.fetchall():
+                rows.append({"host":host,"name":name,"expires_utc":exp,
+                             "persistent":persist,"encrypted_len":enc_len})
+            con.close()
+        except Exception as e:
+            return {"ok":False,"error":type(e).__name__,"message":str(e),"profile":profile}
+        return {"ok":True,"profile":profile,"cookie_db":str(cp),"cookies":rows}
+
     if a=="chrome_profile_inventory":
         import sqlite3
         base=Path.home()/"Library/Application Support/Google/Chrome"

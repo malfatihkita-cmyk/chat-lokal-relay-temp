@@ -33,6 +33,88 @@ def tail(path,n=30000):
 
 def action(req):
     a=req.get("action","")
+    if a=="open_profile_via_menu":
+        profile_menu=str(req.get("menu_name") or "Copy")
+        target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")
+        # Use Chrome's profile menu to open the requested existing user profile without killing Main Chrome.
+        script=f'''
+tell application "Google Chrome" to activate
+delay 0.7
+tell application "System Events"
+ tell process "Google Chrome"
+  set prof to missing value
+  try
+   set prof to menu bar item "Profil" of menu bar 1
+  on error
+   try
+    set prof to menu bar item "Profile" of menu bar 1
+   end try
+  end try
+  if prof is missing value then return "PROFILE_MENU_NOT_FOUND"
+  click prof
+  delay 0.5
+  set it to missing value
+  try
+   set it to menu item "{profile_menu.replace('"','\\"')}" of menu 1 of prof
+  end try
+  if it is missing value then
+   key code 53
+   return "PROFILE_ITEM_NOT_FOUND"
+  end if
+  click it
+  return "PROFILE_CLICKED"
+ end tell
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],45)
+        time.sleep(float(req.get("wait",3)))
+        # Ask Chrome to create a window in the now-selected profile if none exists.
+        mk=r'''tell application "Google Chrome"
+ activate
+ if (count of windows) is 0 then
+  make new window
+ end if
+ return count of windows
+end tell'''
+        m=run(["/usr/bin/osascript","-e",mk],35)
+        time.sleep(1)
+        nav_target=target.replace("\\","\\\\").replace('"','\\"')
+        nav=f'''tell application "Google Chrome"
+ if (count of windows) is 0 then return "__NO_WINDOWS__"
+ set URL of active tab of front window to "{nav_target}"
+ return URL of active tab of front window
+end tell'''
+        n=run(["/usr/bin/osascript","-e",nav],35)
+        time.sleep(float(req.get("nav_wait",6)))
+        # Now JS is enabled, so inspect all ChatGPT tabs.
+        js=r'''(() => JSON.stringify({
+ url:location.href,title:document.title,ready:document.readyState,
+ body:(document.body?.innerText||'').slice(-5000),
+ composer:!!document.querySelector('#prompt-textarea,[contenteditable="true"][data-virtualkeyboard],[contenteditable="true"][data-testid="prompt-textarea"]')
+}))()'''
+        b=base64.b64encode(js.encode()).decode()
+        probe=f'''tell application "Google Chrome"
+ set outText to ""
+ repeat with wi from 1 to count of windows
+  repeat with ti from 1 to count of tabs of window wi
+   try
+    set u to URL of tab ti of window wi
+    if u starts with "https://chatgpt.com/" then
+     set r to execute tab ti of window wi javascript "eval(atob('{b}'))"
+     set outText to outText & wi & ":" & ti & "|" & u & "|" & r & linefeed
+    end if
+   end try
+  end repeat
+ end repeat
+ return outText
+end tell'''
+        q=run(["/usr/bin/osascript","-e",probe],45)
+        return {"ok":p.returncode==0 and m.returncode==0 and n.returncode==0 and q.returncode==0,
+                "profile":(p.stdout or "").strip(),"profile_err":p.stderr[-4000:],
+                "windows":(m.stdout or "").strip(),"windows_err":m.stderr[-4000:],
+                "nav":(n.stdout or "").strip(),"nav_err":n.stderr[-4000:],
+                "probe":q.stdout[-20000:],"probe_err":q.stderr[-8000:]}
+
     if a=="open_profile_window":
         profile=str(req.get("profile") or "Profile 33")
         target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")

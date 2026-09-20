@@ -272,6 +272,64 @@ end tell
             dom={"raw":raw,"stderr":p.stderr[-12000:],"returncode":p.returncode}
         return {"ok":p.returncode==0 and raw!="__TARGET_NOT_FOUND__","closed":closed,"dom":dom}
 
+    if a=="cdp_session_probe":
+        port=int(req.get("port",19498))
+        try:
+            with urllib.request.urlopen("http://127.0.0.1:%d/json/list"%port,timeout=10) as r:
+                pages=json.load(r)
+        except Exception as e:
+            return {"ok":False,"error":type(e).__name__,"message":str(e)}
+        page=None
+        for p in pages:
+            if p.get("type")=="page" and "chatgpt.com" in (p.get("url") or ""):
+                page=p; break
+        if not page:
+            return {"ok":False,"error":"CHATGPT_PAGE_NOT_FOUND","pages":[{"title":p.get("title"),"url":p.get("url")} for p in pages]}
+        py=r'''
+import sys,json,time
+sys.path.insert(0,"/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal")
+from cdp_ws import WSClient
+p=json.loads(sys.stdin.read())
+expr="""(() => {
+ window.__CTL_SESSION__={done:false};
+ Promise.all([
+   fetch('/backend-api/me',{credentials:'include'}).then(async r=>({name:'me',status:r.status,text:(await r.text()).slice(0,12000)})).catch(e=>({name:'me',error:String(e)})),
+   fetch('/backend-api/conversations?offset=0&limit=5',{credentials:'include'}).then(async r=>({name:'conversations',status:r.status,text:(await r.text()).slice(0,16000)})).catch(e=>({name:'conversations',error:String(e)}))
+ ]).then(x=>window.__CTL_SESSION__={done:true,data:x}).catch(e=>window.__CTL_SESSION__={done:true,error:String(e)});
+ return JSON.stringify({url:location.href,title:document.title,ready:document.readyState,body:(document.body?.innerText||'').slice(-6000)});
+})()"""
+with WSClient(p["webSocketDebuggerUrl"],timeout=8) as ws:
+    ws.send_json({"id":1,"method":"Runtime.evaluate","params":{"expression":expr,"returnByValue":True,"userGesture":True}})
+    first=""
+    while True:
+        x=ws.recv_json()
+        if x.get("id")==1:
+            first=x.get("result",{}).get("result",{}).get("value","")
+            break
+time.sleep(3)
+with WSClient(p["webSocketDebuggerUrl"],timeout=8) as ws:
+    ws.send_json({"id":2,"method":"Runtime.evaluate","params":{"expression":"JSON.stringify(window.__CTL_SESSION__||{})","returnByValue":True}})
+    second=""
+    while True:
+        x=ws.recv_json()
+        if x.get("id")==2:
+            second=x.get("result",{}).get("result",{}).get("value","")
+            break
+print(json.dumps({"first":first,"second":second}))
+'''
+        p2=subprocess.run(["/usr/local/bin/python3","-c",py],input=json.dumps(page),capture_output=True,text=True,timeout=40)
+        try:
+            data=json.loads(p2.stdout)
+            if data.get("first"):
+                try:data["first"]=json.loads(data["first"])
+                except Exception:pass
+            if data.get("second"):
+                try:data["second"]=json.loads(data["second"])
+                except Exception:pass
+        except Exception:
+            data={"raw":p2.stdout[-16000:],"stderr":p2.stderr[-12000:]}
+        return {"ok":p2.returncode==0,"page":{"id":page.get("id"),"url":page.get("url"),"title":page.get("title")},"probe":data}
+
     if a=="conversation_probe":
         port=int(req.get("port",19498))
         target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")

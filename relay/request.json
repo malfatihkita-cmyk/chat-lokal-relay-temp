@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-clusters-cd-20260921-259",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/launch_clusters_cd_once.py",
-  "timeout": 180
+  "id": "chatlokal-cdp-inventory-cd-20260921-260",
+  "action": "cdp_port_inventory",
+  "start": 19417,
+  "end": 19438
 }

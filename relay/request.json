@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-tail-root-probe-20260921-267",
+  "id": "chatlokal-rerun-clusters-cd-20260921-268",
   "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/tail_root_probe_once.py",
-  "timeout": 60
+  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/launch_clusters_cd_once.py",
+  "timeout": 180
 }

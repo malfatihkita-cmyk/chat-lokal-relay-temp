@@ -608,6 +608,14 @@ tell application "System Events"
    key code 53
    return "DEVELOPER_MENU_NOT_FOUND"
   end if
+  try
+   perform action "AXShowMenu" of devItem
+  on error
+   try
+    click devItem
+   end try
+  end try
+  delay 0.5
   set targetItem to missing value
   repeat with nm in {"Izinkan JavaScript dari Apple Events","Allow JavaScript from Apple Events"}
    try

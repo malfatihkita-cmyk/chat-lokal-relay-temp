@@ -1,5 +1,12 @@
 {
   "schema": 1,
-  "id": "chatlokal-runtime-status-after-v4-owner-20260921-224",
-  "action": "quick_status"
+  "id": "chatlokal-check-fresh-e2e-225-20260921-226",
+  "action": "read_files",
+  "paths": [
+    "~/.copytolive-chat-lokal/transport-v4.log",
+    "~/.copytolive-chat-lokal/transport-v4-state.json",
+    "~/.copytolive-chat-lokal/requests.jsonl",
+    "~/.copytolive-chat-lokal/results.jsonl"
+  ],
+  "max_chars_each": 30000
 }

@@ -1,36 +1,372 @@
 {
   "schema": 1,
-  "id": "chatlokal-read-injector-bridges-20260921-207",
-  "action": "read_files",
-  "completed_at": "2026-09-20T17:10:32Z",
+  "id": "chatlokal-list-launchagents-20260921-208",
+  "action": "list_dir",
+  "completed_at": "2026-09-20T17:12:31Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "files": [
+    "path": "~/Library/LaunchAgents",
+    "entries": [
       {
-        "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_injector.py",
-        "ok": true,
-        "content": "#!/usr/bin/env python3\nimport base64,json,time,urllib.request,urllib.parse,threading,queue,subprocess,os\nfrom pathlib import Path\nfrom cdp_ws import WSClient\n\nHOME=Path.home()/\".copytolive-chat-lokal\"\nTOKEN=(HOME/\"token\").read_text().strip()\nBASE=\"http://127.0.0.1:8765\"\nPORTS=range(19401,19499)\nHEADERS={\"Content-Type\":\"application/json\",\"X-CopyToLive-Token\":TOKEN}\nseen=set(); seen_lock=threading.Lock(); jobs=queue.Queue(maxsize=10000)\napple_lock=threading.RLock()\nMAIN_HELPER=Path(__file__).resolve().with_name(\"chat_local_main_bridge.py\")\ntry:\n    _env=os.environ.copy(); _env[\"CHAT_LOCAL_INJECTOR_PID\"]=str(os.getpid())\n    subprocess.Popen([\"/usr/bin/python3\",str(MAIN_HELPER)],cwd=str(MAIN_HELPER.parent),env=_env,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)\nexcept Exception:\n    pass\n\ndef gj(url,timeout=1):\n    with urllib.request.urlopen(url,timeout=timeout) as r:return json.load(r)\ndef http_post(path,obj,timeout=10):\n    q=urllib.request.Request(BASE+path,data=json.dumps(obj,separators=(\",\",\":\")).encode(),method=\"POST\",headers=HEADERS)\n    with urllib.request.urlopen(q,timeout=timeout) as r:return json.load(r)\ndef http_get(path,timeout=10):\n    q=urllib.request.Request(BASE+path,headers={\"X-CopyToLive-Token\":TOKEN})\n    with urllib.request.urlopen(q,timeout=timeout) as r:return json.load(r)\ndef rpc(wsurl,method,params=None,timeout=4):\n    with WSClient(wsurl,timeout=timeout) as ws:\n        ws.send_json({\"id\":1,\"method\":method,\"params\":params or {}})\n        while True:\n            x=ws.recv_json()\n            if x.get(\"id\")==1:\n                if \"error\" in x:raise RuntimeError(x[\"error\"])\n                return x.get(\"result\",{})\ndef ev(wsurl,expr):\n    r=rpc(wsurl,\"Runtime.evaluate\",{\"expression\":expr,\"returnByValue\":True,\"userGesture\":True})\n    return r.get(\"result\",{}).get(\"value\")\n\nSCAN_JS=r'''(() => {\n const out=[];\n const nodes=[...document.querySelectorAll('[data-message-author-role=\"assistant\"]')];\n for(const n of nodes){\n   const text=n.textContent||n.innerText||'';\n   const re=/\\[\\[CHAT_LOCAL_REQUEST\\]\\]\\s*([\\s\\S]*?)\\s*\\[\\[\\/CHAT_LOCAL_REQUEST\\]\\]/g;\n   let m; while((m=re.exec(text)))out.push(m[1]);\n   for(const a of n.querySelectorAll('a')){\n     const h=a.getAttribute('href')||'';\n     if(h.includes('#chat-local=')){\n       const z=h.split('#chat-local=')[1]||'';\n       try{out.push(decodeURIComponent(z));}catch(e){}\n     }\n   }\n }\n return out;\n})()'''\n\nSCAN_MAIN_JS=r'''(() => {\n const out=[];\n const nodes=[...document.querySelectorAll('[data-message-author-role=\"assistant\"]')];\n for(const n of nodes){\n   const text=n.textContent||n.innerText||'';\n   const re=/\\[\\[CHAT_LOCAL_REQUEST\\]\\]\\s*([\\s\\S]*?)\\s*\\[\\[\\/CHAT_LOCAL_REQUEST\\]\\]/g;\n   let m; while((m=re.exec(text)))out.push(m[1]);\n   for(const a of n.querySelectorAll('a')){\n     const h=a.getAttribute('href')||'';\n     if(h.includes('#chat-local=')){\n       const z=h.split('#chat-local=')[1]||'';\n       try{out.push(decodeURIComponent(z));}catch(e){}\n     }\n   }\n }\n return JSON.stringify(out);\n})()'''\n\nSEND_FN=r'''async function(text){\n function composer(){return document.querySelector('#prompt-textarea,[contenteditable=\"true\"][data-virtualkeyboard],[contenteditable=\"true\"][data-testid=\"prompt-textarea\"]');}\n for(let i=0;i<60;i++){\n   const el=composer();\n   if(el){\n     el.focus();\n     if(el.isContentEditable){el.innerHTML='';document.execCommand('insertText',false,text);}\n     else el.value=text;\n     el.dispatchEvent(new InputEvent('input',{bubbles:true,inputType:'insertText',data:text}));\n     await new Promise(r=>setTimeout(r,120));\n     const b=document.querySelector('button[data-testid=\"send-button\"],button[aria-label*=\"Send\"],button[aria-label*=\"Kirim\"]');\n     if(b&&!b.disabled){b.click();return true;}\n   }\n   await new Promise(r=>setTimeout(r,150));\n }\n return false;\n}'''\n\ndef osa(script,timeout=20):\n    with apple_lock:\n        p=subprocess.run([\"/usr/bin/osascript\",\"-e\",script],capture_output=True,text=True,timeout=timeout)\n    if p.returncode: raise RuntimeError((p.stderr or p.stdout).strip())\n    return p.stdout.rstrip()\n\ndef scan_main_chrome():\n    b=base64.b64encode(SCAN_MAIN_JS.encode()).decode()\n    script=f'''\ntell application \"Google Chrome\"\n set outText to \"\"\n repeat with wi from 1 to count of windows\n  repeat with ti from 1 to count of tabs of window wi\n   set u to URL of tab ti of window wi\n   if u starts with \"https://chatgpt.com/\" then\n    try\n     set r to execute tab ti of window wi javascript \"eval(atob('{b}'))\"\n     set outText to outText & u & tab & r & linefeed\n    end try\n   end if\n  end repeat\n end repeat\n return outText\nend tell\n'''\n    out=osa(script,25)\n    rows=[]\n    for line in out.splitlines():\n        if \"\\t\" not in line: continue\n        url,raw=line.split(\"\\t\",1)\n        try: arr=json.loads(raw)\n        except Exception: continue\n        if isinstance(arr,list): rows.append((url,arr))\n    return rows\n\ndef main_ev_by_url(url,expr):\n    b=base64.b64encode(expr.encode()).decode()\n    uq=url.replace(\"\\\\\",\"\\\\\\\\\").replace('\"','\\\\\"')\n    script=f'''\ntell application \"Google Chrome\"\n repeat with wi from 1 to count of windows\n  repeat with ti from 1 to count of tabs of window wi\n   if URL of tab ti of window wi is \"{uq}\" then\n    return execute tab ti of window wi javascript \"eval(atob('{b}'))\"\n   end if\n  end repeat\n end repeat\n return \"__CHAT_LOCAL_TAB_NOT_FOUND__\"\nend tell\n'''\n    return osa(script,25)\n\ndef send_to_chat(wsurl,text):return bool(ev(wsurl,\"(\"+SEND_FN+\")(\"+json.dumps(text)+\")\"))\ndef send_to_main(url,text):\n    r=main_ev_by_url(url,\"(\"+SEND_FN+\")(\"+json.dumps(text)+\")\")\n    return str(r).lower()==\"true\"\ndef set_test_result(wsurl,obj):ev(wsurl,\"window.__CHAT_LOKAL_LAST_TEST__=\"+json.dumps(obj,separators=(\",\",\":\"))+\"; true\")\n\ndef process_job(job):\n    kind,locator,req=job\n    rid=req.get(\"id\") or f\"chat-local-{int(time.time()*1000)}\"; req[\"id\"]=rid\n    try:\n        qid=http_post(\"/v1/enqueue\",req)[\"id\"]; deadline=time.time()+120; result=None\n        while time.time()<deadline:\n            st=http_get(\"/v1/result/\"+urllib.parse.quote(qid,safe=\"\"))\n            if st.get(\"status\") in (\"done\",\"error\"):result=st.get(\"result\");break\n            time.sleep(.05)\n        if result is None:result={\"ok\":False,\"id\":rid,\"error\":\"Timeout\",\"message\":\"local task timeout\"}\n    except Exception as e:result={\"ok\":False,\"id\":rid,\"error\":type(e).__name__,\"message\":str(e)}\n    if req.get(\"_chat_local_test_only\") and kind==\"cdp\":\n        try:set_test_result(locator,result)\n        except Exception:pass\n        return\n    msg=\"CHAT_LOCAL_RESULT \"+rid+\"\\n\"+json.dumps(result,ensure_ascii=False)\n    try:\n        if kind==\"cdp\": send_to_chat(locator,msg)\n        else: send_to_main(locator,msg)\n    except Exception:pass\n\ndef worker():\n    while True:\n        j=jobs.get()\n        try:process_job(j)\n        finally:jobs.task_done()\n\nfor _ in range(16):threading.Thread(target=worker,daemon=True).start()\n\nlast_main_scan=float('inf')\nwhile True:\n    for port in PORTS:\n        try:arr=gj(f\"http://127.0.0.1:{port}/json/list\",.20)\n        except Exception:continue\n        for p in arr:\n            url=p.get(\"url\") or \"\"\n            if p.get(\"type\")!=\"page\" or not url.startswith(\"https://chatgpt.com/\"):continue\n            wsurl=p.get(\"webSocketDebuggerUrl\")\n            try:raws=ev(wsurl,SCAN_JS) or []\n            except Exception:continue\n            for raw in raws:\n                try:req=json.loads(raw)\n                except Exception:continue\n                if not isinstance(req,dict) or not req.get(\"op\"):continue\n                key=(url,str(req.get(\"id\") or \"\"),raw)\n                with seen_lock:\n                    if key in seen:continue\n                    seen.add(key)\n                try:jobs.put_nowait((\"cdp\",wsurl,req))\n                except queue.Full:\n                    with seen_lock:seen.discard(key)\n\n    now=time.time()\n    if now-last_main_scan>=0.8:\n        last_main_scan=now\n        try:\n            main_rows=scan_main_chrome()\n            (Path(__file__).with_name(\"injector_main_status.json\")).write_text(json.dumps({\"ok\":True,\"time\":time.time(),\"rows\":len(main_rows),\"urls\":[x[0] for x in main_rows]},ensure_ascii=False),encoding=\"utf-8\")\n        except Exception as e:\n            main_rows=[]\n            (Path(__file__).with_name(\"injector_main_status.json\")).write_text(json.dumps({\"ok\":False,\"time\":time.time(),\"error\":type(e).__name__,\"message\":str(e)},ensure_ascii=False),encoding=\"utf-8\")\n        for url,raws in main_rows:\n            for raw in raws:\n                try:req=json.loads(raw)\n                except Exception:continue\n                if not isinstance(req,dict) or not req.get(\"op\"):continue\n                key=(url,str(req.get(\"id\") or \"\"),raw)\n                with seen_lock:\n                    if key in seen:continue\n                    seen.add(key)\n                try:jobs.put_nowait((\"main\",url,req))\n                except queue.Full:\n                    with seen_lock:seen.discard(key)\n    time.sleep(.25)\n"
+        "name": ".opentrue-precanonical-20260830-072653",
+        "dir": true,
+        "size": 544
       },
       {
-        "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_main_bridge.py",
-        "ok": true,
-        "content": "#!/usr/bin/env python3\nimport base64,json,os,subprocess,time,urllib.request,urllib.parse\nfrom pathlib import Path\n\nHOME=Path.home()/\".copytolive-chat-lokal\"\nTOKEN=(HOME/\"token\").read_text().strip()\nBASE=\"http://127.0.0.1:8765\"\nHERE=Path(__file__).resolve().parent\nSTATE=HOME/\"main-bridge-seen.json\"\nSTATUS=HERE/\"main_bridge_status.json\"\nPARENT=int(os.environ.get(\"CHAT_LOCAL_INJECTOR_PID\",\"0\") or \"0\")\nHEADERS={\"Content-Type\":\"application/json\",\"X-CopyToLive-Token\":TOKEN}\n\nSCAN_JS=r'''(() => {\n const out=[];\n const nodes=[...document.querySelectorAll('[data-message-author-role=\"assistant\"]')];\n for(const n of nodes){\n   const text=n.textContent||n.innerText||'';\n   const re=/\\[\\[CHAT_LOCAL_REQUEST\\]\\]\\s*([\\s\\S]*?)\\s*\\[\\[\\/CHAT_LOCAL_REQUEST\\]\\]/g;\n   let m; while((m=re.exec(text))) out.push(m[1]);\n   for(const a of n.querySelectorAll('a')){\n     const h=a.getAttribute('href')||'';\n     if(h.includes('#chat-local=')){\n       const z=h.split('#chat-local=')[1]||'';\n       try{out.push(decodeURIComponent(z));}catch(e){}\n     }\n   }\n }\n return JSON.stringify(out);\n})()'''\n\ndef write_status(**kw):\n    d={\"online\":True,\"pid\":os.getpid(),\"parent\":PARENT,\"time\":time.time()}\n    d.update(kw)\n    try: STATUS.write_text(json.dumps(d,ensure_ascii=False),encoding=\"utf-8\")\n    except Exception: pass\n\ndef parent_alive():\n    if not PARENT:return True\n    try: os.kill(PARENT,0); return True\n    except OSError:return False\n\ndef osa(script,timeout=25):\n    p=subprocess.run([\"/usr/bin/osascript\",\"-e\",script],capture_output=True,text=True,timeout=timeout)\n    if p.returncode: raise RuntimeError((p.stderr or p.stdout).strip())\n    return p.stdout.rstrip()\n\ndef js_b64(code): return base64.b64encode(code.encode()).decode()\n\ndef scan_tabs():\n    b=js_b64(SCAN_JS)\n    script=f'''\ntell application \"Google Chrome\"\n set outText to \"\"\n repeat with wi from 1 to count of windows\n  repeat with ti from 1 to count of tabs of window wi\n   set u to URL of tab ti of window wi\n   if u starts with \"https://chatgpt.com/\" then\n    try\n     set r to execute tab ti of window wi javascript \"eval(atob('{b}'))\"\n     set outText to outText & u & \"|||CHATLOCAL|||\" & r & linefeed\n    end try\n   end if\n  end repeat\n end repeat\n return outText\nend tell\n'''\n    out=osa(script)\n    rows=[]\n    for line in out.splitlines():\n        if \"|||CHATLOCAL|||\" not in line:continue\n        url,raw=line.split(\"|||CHATLOCAL|||\",1)\n        try: arr=json.loads(raw)\n        except Exception:continue\n        if isinstance(arr,list):rows.append((url,arr))\n    return rows\n\ndef exec_url(url,code):\n    b=js_b64(code); uq=url.replace(\"\\\\\",\"\\\\\\\\\").replace('\"','\\\\\"')\n    script=f'''\ntell application \"Google Chrome\"\n repeat with wi from 1 to count of windows\n  repeat with ti from 1 to count of tabs of window wi\n   if URL of tab ti of window wi is \"{uq}\" then\n    return execute tab ti of window wi javascript \"eval(atob('{b}'))\"\n   end if\n  end repeat\n end repeat\n return \"__CHAT_LOCAL_TAB_NOT_FOUND__\"\nend tell\n'''\n    return osa(script)\n\ndef send_text(url,text):\n    payload=base64.b64encode(text.encode()).decode()\n    code=rf'''(() => {{\n const text=new TextDecoder().decode(Uint8Array.from(atob(\"{payload}\"),c=>c.charCodeAt(0)));\n const el=document.querySelector('#prompt-textarea,[contenteditable=\"true\"][data-virtualkeyboard],[contenteditable=\"true\"][data-testid=\"prompt-textarea\"]');\n if(!el) return \"NO_COMPOSER\";\n el.focus();\n if(el.isContentEditable){{el.innerHTML=\"\";document.execCommand(\"insertText\",false,text);}}\n else {{el.value=text;}}\n el.dispatchEvent(new InputEvent(\"input\",{{bubbles:true,inputType:\"insertText\",data:text}}));\n setTimeout(()=>{{\n   const b=document.querySelector('button[data-testid=\"send-button\"],button[aria-label*=\"Send\"],button[aria-label*=\"Kirim\"]');\n   if(b&&!b.disabled)b.click();\n }},350);\n return \"SCHEDULED\";\n}})()'''\n    return exec_url(url,code)\n\ndef post(path,obj):\n    q=urllib.request.Request(BASE+path,data=json.dumps(obj,separators=(\",\",\":\")).encode(),method=\"POST\",headers=HEADERS)\n    with urllib.request.urlopen(q,timeout=10) as r:return json.load(r)\ndef get(path):\n    q=urllib.request.Request(BASE+path,headers={\"X-CopyToLive-Token\":TOKEN})\n    with urllib.request.urlopen(q,timeout=10) as r:return json.load(r)\n\ndef execute(url,req):\n    rid=str(req.get(\"id\") or \"\")\n    if not rid or not req.get(\"op\"):return False\n    try:\n        qid=post(\"/v1/enqueue\",req)[\"id\"]; deadline=time.time()+180; result=None\n        while time.time()<deadline:\n            st=get(\"/v1/result/\"+urllib.parse.quote(qid,safe=\"\"))\n            if st.get(\"status\") in (\"done\",\"error\"):\n                result=st.get(\"result\");break\n            time.sleep(.08)\n        if result is None:result={\"ok\":False,\"id\":rid,\"error\":\"Timeout\"}\n    except Exception as e:\n        result={\"ok\":False,\"id\":rid,\"error\":type(e).__name__,\"message\":str(e)}\n    msg=\"CHAT_LOCAL_RESULT \"+rid+\"\\n\"+json.dumps(result,ensure_ascii=False)\n    sr=send_text(url,msg)\n    write_status(last_id=rid,last_url=url,last_send=sr)\n    return sr==\"SCHEDULED\"\n\ntry:\n    s=json.loads(STATE.read_text()) if STATE.exists() else {}\nexcept Exception:s={}\nif s.get(\"schema\") != 2:\n    s={}\nseen=set(s.get(\"seen\") or [])\ninitialized=bool(s.get(\"initialized\"))\n\nwhile parent_alive():\n    try:\n        rows=scan_tabs()\n        urls=[u for u,_ in rows]\n        current=[]\n        for url,raws in rows:\n            for raw in raws:\n                try:req=json.loads(raw)\n                except Exception:continue\n                if not isinstance(req,dict) or not req.get(\"op\"):continue\n                rid=str(req.get(\"id\") or \"\")\n                if not rid:continue\n                key=url+\"|\"+rid+\"|\"+raw\n                current.append(key)\n                if initialized and key not in seen:\n                    ok=execute(url,req)\n                    if ok:\n                        seen.add(key)\n                        STATE.write_text(json.dumps({\"schema\":2,\"initialized\":True,\"seen\":list(seen)[-5000:]},ensure_ascii=False))\n        if not initialized:\n            seen.update(current)\n            initialized=True\n            STATE.write_text(json.dumps({\"schema\":2,\"initialized\":True,\"seen\":list(seen)[-5000:]},ensure_ascii=False))\n        write_status(rows=len(rows),urls=urls,initialized=initialized,seen=len(seen))\n    except Exception as e:\n        write_status(ok=False,error=type(e).__name__,message=str(e),initialized=initialized,seen=len(seen))\n    time.sleep(.8)\n\nwrite_status(online=False,reason=\"parent-exited\",initialized=initialized,seen=len(seen))\n"
+        "name": ".opentrue-precanonical-20260830-072852",
+        "dir": true,
+        "size": 96
       },
       {
-        "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_main_bridge_v3.py",
-        "ok": true,
-        "content": "#!/usr/bin/env python3\nimport base64,json,os,subprocess,time,urllib.request,urllib.parse\nfrom pathlib import Path\n\nSECRET=\"9F6K2M7Q4R8V3X1Z\"\nROOT=Path(\"/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool\")\nAPP=ROOT/\"Chat-Lokal\"\nRUN=Path.home()/\".copytolive-chat-lokal\"\nTOKEN=(RUN/\"token\").read_text().strip()\nBASE=\"http://127.0.0.1:8765\"\nSTATE=RUN/\"main-bridge-v3-state.json\"\nSTATUS=APP/\"main_bridge_v3_status.json\"\nHEADERS={\"Content-Type\":\"application/json\",\"X-CopyToLive-Token\":TOKEN}\nDELIM=\"|||CTL3|||\"\n\nSCAN_JS=r'''(() => {\n const text=(document.body && (document.body.innerText||document.body.textContent)) || \"\";\n const out=[];\n const re=/\\[\\[CTL-9F6K2M7Q4R8V3X1Z\\]\\]\\s*([A-Za-z0-9_-]+)\\s*\\[\\[\\/CTL-9F6K2M7Q4R8V3X1Z\\]\\]/g;\n let m;\n while((m=re.exec(text))) out.push(m[1]);\n return JSON.stringify(out);\n})()'''\n\ndef write_status(**kw):\n    d={\"online\":True,\"pid\":os.getpid(),\"time\":time.time(),\"transport\":\"chrome-body-v3\",\"secret_id\":SECRET[-4:]}\n    d.update(kw)\n    try:\n        STATUS.write_text(json.dumps(d,ensure_ascii=False),encoding=\"utf-8\")\n    except Exception:\n        pass\n\ndef osa(script,timeout=20):\n    p=subprocess.run([\"/usr/bin/osascript\",\"-e\",script],capture_output=True,text=True,timeout=timeout)\n    if p.returncode:\n        raise RuntimeError((p.stderr or p.stdout).strip())\n    return p.stdout.rstrip()\n\ndef b64js(s):\n    return base64.b64encode(s.encode()).decode()\n\ndef scan():\n    b=b64js(SCAN_JS)\n    sc=f'''\ntell application \"Google Chrome\"\n set outText to \"\"\n repeat with wi from 1 to count of windows\n  repeat with ti from 1 to count of tabs of window wi\n   set u to URL of tab ti of window wi\n   if u starts with \"https://chatgpt.com/\" then\n    try\n     set r to execute tab ti of window wi javascript \"eval(atob('{b}'))\"\n     set outText to outText & wi & \"{DELIM}\" & ti & \"{DELIM}\" & u & \"{DELIM}\" & r & linefeed\n    end try\n   end if\n  end repeat\n end repeat\n return outText\nend tell\n'''\n    raw=osa(sc)\n    rows=[]\n    for line in raw.splitlines():\n        p=line.split(DELIM,3)\n        if len(p)!=4:\n            continue\n        try:\n            wi,ti=int(p[0]),int(p[1])\n            arr=json.loads(p[3])\n        except Exception:\n            continue\n        if isinstance(arr,list):\n            rows.append((wi,ti,p[2],arr))\n    return rows\n\ndef js_at(wi,ti,code):\n    b=b64js(code)\n    sc=f'''\ntell application \"Google Chrome\"\n if {wi} > (count of windows) then return \"__NO_WINDOW__\"\n if {ti} > (count of tabs of window {wi}) then return \"__NO_TAB__\"\n return execute tab {ti} of window {wi} javascript \"eval(atob('{b}'))\"\nend tell\n'''\n    return osa(sc)\n\ndef send_text(wi,ti,text):\n    payload=base64.b64encode(text.encode()).decode()\n    code=rf'''(() => {{\n const text=new TextDecoder().decode(Uint8Array.from(atob(\"{payload}\"),c=>c.charCodeAt(0)));\n const el=document.querySelector('#prompt-textarea,[contenteditable=\"true\"][data-virtualkeyboard],[contenteditable=\"true\"][data-testid=\"prompt-textarea\"]');\n if(!el) return \"NO_COMPOSER\";\n el.focus();\n if(el.isContentEditable){{\n   el.innerHTML=\"\";\n   document.execCommand(\"insertText\",false,text);\n }} else {{\n   el.value=text;\n }}\n el.dispatchEvent(new InputEvent(\"input\",{{bubbles:true,inputType:\"insertText\",data:text}}));\n setTimeout(()=>{{\n   const btn=document.querySelector('button[data-testid=\"send-button\"],button[aria-label*=\"Send\"],button[aria-label*=\"Kirim\"]');\n   if(btn && !btn.disabled) btn.click();\n }},500);\n return \"SCHEDULED\";\n}})()'''\n    return js_at(wi,ti,code)\n\ndef post(path,obj):\n    q=urllib.request.Request(BASE+path,data=json.dumps(obj,separators=(\",\",\":\")).encode(),method=\"POST\",headers=HEADERS)\n    with urllib.request.urlopen(q,timeout=10) as r:\n        return json.load(r)\n\ndef get(path):\n    q=urllib.request.Request(BASE+path,headers={\"X-CopyToLive-Token\":TOKEN})\n    with urllib.request.urlopen(q,timeout=10) as r:\n        return json.load(r)\n\ndef decode_payload(s):\n    s += \"=\"*((4-len(s)%4)%4)\n    return json.loads(base64.urlsafe_b64decode(s.encode()).decode())\n\ntry:\n    st=json.loads(STATE.read_text()) if STATE.exists() else {}\nexcept Exception:\n    st={}\nseen=set(st.get(\"seen\") or [])\n\nwrite_status(starting=True,seen=len(seen))\nwhile True:\n    try:\n        rows=scan()\n        for wi,ti,url,items in rows:\n            for carrier in items:\n                try:\n                    req=decode_payload(carrier)\n                except Exception:\n                    continue\n                if not isinstance(req,dict):\n                    continue\n                rid=str(req.get(\"id\") or \"\")\n                if not rid or not req.get(\"op\") or rid in seen:\n                    continue\n                seen.add(rid)\n                STATE.write_text(json.dumps({\"seen\":list(seen)[-5000:]},ensure_ascii=False))\n                try:\n                    qid=post(\"/v1/enqueue\",req)[\"id\"]\n                    deadline=time.time()+180\n                    result=None\n                    while time.time()<deadline:\n                        rr=get(\"/v1/result/\"+urllib.parse.quote(qid,safe=\"\"))\n                        if rr.get(\"status\") in (\"done\",\"error\"):\n                            result=rr.get(\"result\")\n                            break\n                        time.sleep(.08)\n                    if result is None:\n                        result={\"ok\":False,\"id\":rid,\"error\":\"Timeout\"}\n                except Exception as e:\n                    result={\"ok\":False,\"id\":rid,\"error\":type(e).__name__,\"message\":str(e)}\n                msg=\"CHAT_LOCAL_RESULT \"+rid+\"\\n\"+json.dumps(result,ensure_ascii=False)\n                sr=send_text(wi,ti,msg)\n                write_status(last_id=rid,last_url=url,last_send=sr,seen=len(seen),rows=len(rows))\n        write_status(rows=len(rows),seen=len(seen))\n    except Exception as e:\n        write_status(ok=False,error=type(e).__name__,message=str(e),seen=len(seen))\n    time.sleep(.7)\n"
+        "name": ".opentrue-precanonical-fixed-20260830-073729",
+        "dir": true,
+        "size": 128
       },
       {
-        "path": "/Users/antigravity1/Library/LaunchAgents/com.copytolive.chat-lokal-injector.plist",
-        "ok": true,
-        "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\"><dict>\n<key>Label</key><string>com.copytolive.chat-lokal-injector</string>\n<key>ProgramArguments</key><array><string>/usr/local/bin/python3</string><string>/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_injector.py</string></array>\n<key>RunAtLoad</key><true/><key>KeepAlive</key><true/>\n<key>ThrottleInterval</key><integer>2</integer>\n<key>StandardOutPath</key><string>/Users/antigravity1/.copytolive-chat-lokal/injector.out.log</string>\n<key>StandardErrorPath</key><string>/Users/antigravity1/.copytolive-chat-lokal/injector.err.log</string>\n</dict></plist>"
+        "name": "actions.runner.malfatihkita-cmyk-chat-lokal-relay-temp.Chat-Lokal-Temporary.plist",
+        "dir": false,
+        "size": 1246
       },
       {
-        "path": "/Users/antigravity1/Library/LaunchAgents/com.copytolive.chat-lokal-transport-v4.plist",
-        "ok": true,
-        "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\"\n\"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n  <key>Label</key>\n  <string>com.copytolive.chat-lokal-transport-v4</string>\n\n  <key>ProgramArguments</key>\n  <array>\n    <string>/usr/local/bin/python3</string>\n    <string>/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_transport_v4.py</string>\n  </array>\n\n  <key>RunAtLoad</key>\n  <true/>\n\n  <key>KeepAlive</key>\n  <true/>\n\n  <key>StandardOutPath</key>\n  <string>/Users/antigravity1/.copytolive-chat-lokal/transport-v4.out.log</string>\n\n  <key>StandardErrorPath</key>\n  <string>/Users/antigravity1/.copytolive-chat-lokal/transport-v4.err.log</string>\n</dict>\n</plist>\n"
+        "name": "com.adobe.ccxprocess.plist",
+        "dir": false,
+        "size": 491
+      },
+      {
+        "name": "com.automs.ai-marketing.autopilot.plist",
+        "dir": false,
+        "size": 1064
+      },
+      {
+        "name": "com.automs.ai-marketing.core.plist",
+        "dir": false,
+        "size": 1427
+      },
+      {
+        "name": "com.automs.ai-marketing.ui.plist",
+        "dir": false,
+        "size": 934
+      },
+      {
+        "name": "com.automs.whatsapp-ai-local-control.plist.disabled-20260917-000928",
+        "dir": false,
+        "size": 911
+      },
+      {
+        "name": "com.automs.whatsapp-transport.plist",
+        "dir": false,
+        "size": 1149
+      },
+      {
+        "name": "com.automs.whatsapp-transport.plist.bak-20260917-021446",
+        "dir": false,
+        "size": 804
+      },
+      {
+        "name": "com.copytolive.automs-autopilot.plist.disabled-20260915",
+        "dir": false,
+        "size": 1094
+      },
+      {
+        "name": "com.copytolive.chat-local-server-controller.plist",
+        "dir": false,
+        "size": 1410
+      },
+      {
+        "name": "com.copytolive.chat-local-server-controller.plist.bak_oneshot_20260908_0338",
+        "dir": false,
+        "size": 1328
+      },
+      {
+        "name": "com.copytolive.chat-local-server-controller.plist.pre_agent6_20260908.bak",
+        "dir": false,
+        "size": 1240
+      },
+      {
+        "name": "com.copytolive.chat-lokal-control-browser.plist",
+        "dir": false,
+        "size": 732
+      },
+      {
+        "name": "com.copytolive.chat-lokal-github-relay-temp.plist",
+        "dir": false,
+        "size": 776
+      },
+      {
+        "name": "com.copytolive.chat-lokal-injector.plist",
+        "dir": false,
+        "size": 747
+      },
+      {
+        "name": "com.copytolive.chat-lokal-mainbridge-v3.plist",
+        "dir": false,
+        "size": 828
+      },
+      {
+        "name": "com.copytolive.chat-lokal-transport-v4.plist",
+        "dir": false,
+        "size": 767
+      },
+      {
+        "name": "com.copytolive.chat-lokal.plist",
+        "dir": false,
+        "size": 725
+      },
+      {
+        "name": "com.copytolive.chatgpt-autoclose.plist",
+        "dir": false,
+        "size": 872
+      },
+      {
+        "name": "com.copytolive.chatgpt-autoclose.plist.bak_20260919_0902",
+        "dir": false,
+        "size": 538
+      },
+      {
+        "name": "com.copytolive.chrome-janitor.plist",
+        "dir": false,
+        "size": 816
+      },
+      {
+        "name": "com.copytolive.chrome-resource-governor.plist",
+        "dir": false,
+        "size": 876
+      },
+      {
+        "name": "com.copytolive.control-agent.plist",
+        "dir": false,
+        "size": 1028
+      },
+      {
+        "name": "com.copytolive.crypto-backtest.plist",
+        "dir": false,
+        "size": 900
+      },
+      {
+        "name": "com.copytolive.gold10b368.resume.plist",
+        "dir": false,
+        "size": 1015
+      },
+      {
+        "name": "com.copytolive.legacy-sleep-compute.plist",
+        "dir": false,
+        "size": 631
+      },
+      {
+        "name": "com.copytolive.local-commander.plist.DISABLED_BY_CHAT_LOKAL",
+        "dir": false,
+        "size": 1109
+      },
+      {
+        "name": "com.copytolive.localcommander.v2.plist.DISABLED_BY_CHAT_LOKAL",
+        "dir": false,
+        "size": 787
+      },
+      {
+        "name": "com.copytolive.pseudosleep.plist",
+        "dir": false,
+        "size": 730
+      },
+      {
+        "name": "com.copytolive.renko-control.plist",
+        "dir": false,
+        "size": 1048
+      },
+      {
+        "name": "com.copytolive.rwa.live-sync.plist",
+        "dir": false,
+        "size": 750
+      },
+      {
+        "name": "com.copytolive.whatsapp-ai-local-control.plist.disabled-20260915",
+        "dir": false,
+        "size": 799
+      },
+      {
+        "name": "com.google.GoogleUpdater.wake.plist",
+        "dir": false,
+        "size": 879
+      },
+      {
+        "name": "com.google.keystone.agent.plist",
+        "dir": false,
+        "size": 181
+      },
+      {
+        "name": "com.google.keystone.xpcservice.plist",
+        "dir": false,
+        "size": 181
+      },
+      {
+        "name": "com.gpt4free.autorefresh.plist",
+        "dir": false,
+        "size": 795
+      },
+      {
+        "name": "com.jupiter.chatgptbridge.v2.plist",
+        "dir": false,
+        "size": 1667
+      },
+      {
+        "name": "com.jupiter.chatgptgitops.v35.plist",
+        "dir": false,
+        "size": 1671
+      },
+      {
+        "name": "com.jupiter.release.v1.plist",
+        "dir": false,
+        "size": 1650
+      },
+      {
+        "name": "com.land.chatgptbridge.v2.plist",
+        "dir": false,
+        "size": 1785
+      },
+      {
+        "name": "com.land.chatgptgitops.v35.plist",
+        "dir": false,
+        "size": 1789
+      },
+      {
+        "name": "com.land.release.v1.plist",
+        "dir": false,
+        "size": 1768
+      },
+      {
+        "name": "com.opentrue.autorepost-autorun.plist",
+        "dir": false,
+        "size": 1013
+      },
+      {
+        "name": "com.opentrue.autorepost-backup.plist",
+        "dir": false,
+        "size": 1003
+      },
+      {
+        "name": "com.opentrue.autorepost-bridge.plist",
+        "dir": false,
+        "size": 997
+      },
+      {
+        "name": "com.opentrue.autorepost-caffeinate.plist",
+        "dir": false,
+        "size": 586
+      },
+      {
+        "name": "com.opentrue.autorepost-caffeinate.plist.bak_display_sleep_20260918_184956",
+        "dir": false,
+        "size": 565
+      },
+      {
+        "name": "com.opentrue.autorepost-dashboard.plist",
+        "dir": false,
+        "size": 963
+      },
+      {
+        "name": "com.opentrue.autorepost-poller.plist",
+        "dir": false,
+        "size": 937
+      },
+      {
+        "name": "com.opentrue.autorepost-tgalert.plist",
+        "dir": false,
+        "size": 984
+      },
+      {
+        "name": "com.opentrue.autorepost-tgbot-v2.plist",
+        "dir": false,
+        "size": 986
+      },
+      {
+        "name": "com.opentrue.autorepost-tgbot-v2.plist.bak.20260515_073307",
+        "dir": false,
+        "size": 1010
+      },
+      {
+        "name": "com.opentrue.autorepost-tgcmdbot.plist",
+        "dir": false,
+        "size": 820
+      },
+      {
+        "name": "com.opentrue.autorepost-tgsummary.plist",
+        "dir": false,
+        "size": 1045
+      },
+      {
+        "name": "com.opentrue.autorepost-tgtoday.plist",
+        "dir": false,
+        "size": 1037
+      },
+      {
+        "name": "com.opentrue.autorepost-watchdog.plist",
+        "dir": false,
+        "size": 798
+      },
+      {
+        "name": "com.opentrue.chatgptbridge.plist",
+        "dir": false,
+        "size": 691
+      },
+      {
+        "name": "com.opentrue.chatgptbridge.v2.plist",
+        "dir": false,
+        "size": 688
+      },
+      {
+        "name": "com.opentrue.chatgptgitops.v35.plist",
+        "dir": false,
+        "size": 797
+      },
+      {
+        "name": "com.opentrue.dual-agent-watcher.plist",
+        "dir": false,
+        "size": 1060
+      },
+      {
+        "name": "com.opentrue.gpt4free-server.plist",
+        "dir": false,
+        "size": 1428
+      },
+      {
+        "name": "com.opentrue.ollama-tunnel.plist",
+        "dir": false,
+        "size": 1252
+      },
+      {
+        "name": "com.opentrue.vps-g4f-tunnel.plist",
+        "dir": false,
+        "size": 1175
+      },
+      {
+        "name": "com.rwacode.copytolive-control.plist",
+        "dir": false,
+        "size": 1078
+      },
+      {
+        "name": "com.rwacode.land-control.plist",
+        "dir": false,
+        "size": 835
+      },
+      {
+        "name": "homebrew.mxcl.postgresql@16.plist",
+        "dir": false,
+        "size": 1015
+      },
+      {
+        "name": "homebrew.mxcl.redis.plist",
+        "dir": false,
+        "size": 865
+      },
+      {
+        "name": "org.opentrue.tapeout-hybrid-daemon.plist",
+        "dir": false,
+        "size": 848
+      },
+      {
+        "name": "org.opentrue.tapeout-hybrid-dashboard.plist",
+        "dir": false,
+        "size": 860
       }
     ]
   }

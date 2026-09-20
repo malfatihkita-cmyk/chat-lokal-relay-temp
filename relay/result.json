@@ -1,12 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-stage-disable-v3-20260921-241",
-  "action": "write_file",
-  "completed_at": "2026-09-20T18:11:08Z",
+  "id": "chatlokal-apply-disable-v3-20260921-242",
+  "action": "run_python_file",
+  "completed_at": "2026-09-20T18:11:41Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/disable_mainbridge_v3_once.py",
-    "bytes": 1115
+    "returncode": 0,
+    "stdout": "{\"ok\": true, \"rows\": [{\"stage\": \"bootout\", \"rc\": 3, \"stderr\": \"Boot-out failed: 3: No such process\\n\"}, {\"stage\": \"rename\", \"ok\": true, \"already_disabled\": true}], \"remaining\": []}\n",
+    "stderr": ""
   }
 }

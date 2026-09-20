@@ -1,7 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-control-open-current-20260921-229",
-  "action": "control_browser_open",
-  "url": "https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba",
-  "wait": 8
+  "id": "chatlokal-js-apple-events-state-20260921-229",
+  "action": "chrome_js_apple_events_state"
 }

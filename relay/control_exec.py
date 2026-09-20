@@ -1078,6 +1078,80 @@ end tell
             dom={"raw":raw,"stderr":p.stderr[-12000:],"returncode":p.returncode}
         return {"ok":p.returncode==0 and raw!="__TARGET_NOT_FOUND__","closed":closed,"dom":dom}
 
+    if a=="cdp_open_chat_probe":
+        port=int(req.get("port",19438))
+        target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")
+        try:
+            q=urllib.request.Request(
+                "http://127.0.0.1:%d/json/new?%s"%(port,urllib.parse.quote(target,safe=":/?=&")),
+                method="PUT"
+            )
+            with urllib.request.urlopen(q,timeout=8) as r:
+                created=json.load(r)
+        except Exception as e:
+            created={"error":type(e).__name__,"message":str(e)}
+        time.sleep(float(req.get("wait",8)))
+        try:
+            with urllib.request.urlopen("http://127.0.0.1:%d/json/list"%port,timeout=8) as r:
+                pages=json.load(r)
+        except Exception as e:
+            return {"ok":False,"created":created,"error":type(e).__name__,"message":str(e)}
+        page=None
+        for p in pages:
+            if p.get("type")=="page" and (p.get("url") or "").startswith(target):
+                page=p; break
+        if not page:
+            for p in pages:
+                if p.get("type")=="page" and "chatgpt.com" in (p.get("url") or ""):
+                    page=p; break
+        if not page:
+            return {"ok":False,"created":created,"pages":[{"title":p.get("title"),"url":p.get("url")} for p in pages]}
+        py=r'''
+import sys,json,time
+sys.path.insert(0,"/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal")
+from cdp_ws import WSClient
+p=json.loads(sys.stdin.read())
+expr="""(() => {
+ window.__CTL_AGENT_PROBE__={done:false};
+ const cid=location.pathname.split('/').pop();
+ Promise.all([
+  fetch('/backend-api/me',{credentials:'include'}).then(async r=>({name:'me',status:r.status,text:(await r.text()).slice(0,6000)})).catch(e=>({name:'me',error:String(e)})),
+  fetch('/backend-api/conversation/'+cid,{credentials:'include'}).then(async r=>({name:'conversation',status:r.status,text:(await r.text()).slice(-18000)})).catch(e=>({name:'conversation',error:String(e)}))
+ ]).then(x=>window.__CTL_AGENT_PROBE__={done:true,data:x}).catch(e=>window.__CTL_AGENT_PROBE__={done:true,error:String(e)});
+ return JSON.stringify({url:location.href,title:document.title,ready:document.readyState,body:(document.body?.innerText||'').slice(-6000)});
+})()"""
+with WSClient(p["webSocketDebuggerUrl"],timeout=8) as ws:
+    ws.send_json({"id":1,"method":"Runtime.evaluate","params":{"expression":expr,"returnByValue":True,"userGesture":True}})
+    first=""
+    while True:
+        x=ws.recv_json()
+        if x.get("id")==1:
+            first=x.get("result",{}).get("result",{}).get("value","")
+            break
+time.sleep(3)
+with WSClient(p["webSocketDebuggerUrl"],timeout=8) as ws:
+    ws.send_json({"id":2,"method":"Runtime.evaluate","params":{"expression":"JSON.stringify(window.__CTL_AGENT_PROBE__||{})","returnByValue":True}})
+    second=""
+    while True:
+        x=ws.recv_json()
+        if x.get("id")==2:
+            second=x.get("result",{}).get("result",{}).get("value","")
+            break
+print(json.dumps({"first":first,"second":second}))
+'''
+        p2=subprocess.run(["/usr/local/bin/python3","-c",py],input=json.dumps(page),capture_output=True,text=True,timeout=45)
+        try:
+            data=json.loads(p2.stdout)
+            for k in ("first","second"):
+                if isinstance(data.get(k),str) and data[k]:
+                    try:data[k]=json.loads(data[k])
+                    except Exception:pass
+        except Exception:
+            data={"raw":p2.stdout[-20000:],"stderr":p2.stderr[-12000:]}
+        return {"ok":p2.returncode==0,"port":port,"created":created,
+                "page":{"id":page.get("id"),"url":page.get("url"),"title":page.get("title")},
+                "probe":data}
+
     if a=="cdp_session_probe":
         port=int(req.get("port",19498))
         try:

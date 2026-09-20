@@ -1,9 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-oldrelay-write-runner-restart-20260920-170",
-  "action": "write_file",
+  "id": "chatlokal-oldrelay-run-runner-restart-20260920-171",
+  "action": "run_python_file",
   "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/restart_github_runner_temp.py",
-  "content_b64": "IyEvdXNyL2xvY2FsL2Jpbi9weXRob24zCmltcG9ydCBvcywgc3VicHJvY2VzcywgdGltZSwganNvbgpsYWJlbD0iYWN0aW9ucy5ydW5uZXIubWFsZmF0aWhraXRhLWNteWstY2hhdC1sb2thbC1yZWxheS10ZW1wLkNoYXQtTG9rYWwtVGVtcG9yYXJ5Igp1aWQ9c3RyKG9zLmdldHVpZCgpKQpyb3dzPVtdCmZvciBhcmdzIGluIFsKICAgIFsiL2Jpbi9sYXVuY2hjdGwiLCJraWNrc3RhcnQiLCItayIsZiJndWkve3VpZH0ve2xhYmVsfSJdLAogICAgWyIvYmluL2xhdW5jaGN0bCIsInByaW50IixmImd1aS97dWlkfS97bGFiZWx9Il0sCl06CiAgICBwPXN1YnByb2Nlc3MucnVuKGFyZ3MsY2FwdHVyZV9vdXRwdXQ9VHJ1ZSx0ZXh0PVRydWUpCiAgICByb3dzLmFwcGVuZCh7ImFyZ3MiOmFyZ3MsInJjIjpwLnJldHVybmNvZGUsIm91dCI6cC5zdGRvdXRbLTYwMDA6XSwiZXJyIjpwLnN0ZGVyclstNjAwMDpdfSkKdGltZS5zbGVlcCgyKQpvcGVuKG9zLnBhdGguZXhwYW5kdXNlcigifi8uY29weXRvbGl2ZS1jaGF0LWxva2FsL3J1bm5lci1yZXN0YXJ0LW1hcmtlci5qc29uIiksInciKS53cml0ZShqc29uLmR1bXBzKHJvd3MpKQpwcmludChqc29uLmR1bXBzKHJvd3MpKQo=",
-  "backup": true,
-  "mode": "700"
+  "timeout": 60
 }

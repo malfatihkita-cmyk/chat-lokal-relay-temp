@@ -1,6 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-profile33-cookie-names-20260920-151",
-  "action": "chrome_profile_cookie_names",
-  "profile": "Profile 33"
+  "id": "chatlokal-profile33-http-probe-20260920-152",
+  "action": "profile_http_probe",
+  "profile": "Profile 33",
+  "conversation_id": "6aaf2627-1e20-83ec-b0c8-77bc60da329b"
 }

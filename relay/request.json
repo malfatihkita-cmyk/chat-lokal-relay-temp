@@ -1,5 +1,6 @@
 {
   "schema": 1,
-  "id": "chatlokal-js-apple-events-state-20260921-229",
-  "action": "chrome_js_apple_events_state"
+  "id": "chatlokal-focus-current-chat-20260921-230",
+  "action": "select_window_frontmost_probe",
+  "title": "Lanjutkan Sampai Tuntas"
 }

@@ -1,7 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-oldrelay-run-fallback-installer-20260920-174",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/install_github_fallback.py",
-  "timeout": 120
+  "id": "chatlokal-dev-submenu-20260920-175",
+  "action": "chrome_dev_submenu_inventory"
 }

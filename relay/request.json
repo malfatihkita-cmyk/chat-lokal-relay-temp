@@ -1,9 +1,9 @@
 {
   "schema": 1,
-  "id": "chatlokal-stage-disable-control-launcher-20260921-300",
+  "id": "chatlokal-fix-disable-control-launcher-20260921-301",
   "action": "write_file",
   "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/disable_control_launcher_once.py",
-  "content_b64": "IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKaW1wb3J0IG9zLGpzb24sc3VicHJvY2VzcwpoPVBhdGguaG9tZSgpCiM=",
+  "content_b64": "IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKaW1wb3J0IG9zLGpzb24sc3VicHJvY2VzcwpsYT1QYXRoLmhvbWUoKS8iTGlicmFyeS9MYXVuY2hBZ2VudHMiCnA9bGEvImNvbS5jb3B5dG9saXZlLmNoYXQtbG9rYWwtY29udHJvbC1icm93c2VyLnBsaXN0Igp1aWQ9b3MuZ2V0dWlkKCkKc3VicHJvY2Vzcy5ydW4oWyIvYmluL2xhdW5jaGN0bCIsImJvb3RvdXQiLGYiZ3VpL3t1aWR9L2NvbS5jb3B5dG9saXZlLmNoYXQtbG9rYWwtY29udHJvbC1icm93c2VyIl0sY2FwdHVyZV9vdXRwdXQ9VHJ1ZSx0ZXh0PVRydWUpCm91dD17InNvdXJjZSI6c3RyKHApLCJleGlzdHNfYmVmb3JlIjpwLmV4aXN0cygpfQppZiBwLmV4aXN0cygpOgogICAgZHN0PXAud2l0aF9uYW1lKHAubmFtZSsiLkRJU0FCTEVEX0ZJTkFMIikKICAgIGlmIGRzdC5leGlzdHMoKTogZHN0LnVubGluaygpCiAgICBwLnJlcGxhY2UoZHN0KQogICAgb3V0WyJkaXNhYmxlZF9wYXRoIl09c3RyKGRzdCkKb3V0WyJhY3RpdmVfYWZ0ZXIiXT1wLmV4aXN0cygpCnByaW50KGpzb24uZHVtcHMob3V0KSkKUGF0aChfX2ZpbGVfXykudW5saW5rKG1pc3Npbmdfb2s9VHJ1ZSkK",
   "backup": false,
   "mode": "755"
 }

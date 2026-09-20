@@ -1,13 +1,58 @@
 {
   "schema": 1,
-  "id": "chatlokal-browser-probe-before-final-e2e-20260921-245",
-  "action": "browser_probe",
-  "completed_at": "2026-09-20T18:13:15Z",
+  "id": "chatlokal-main-chrome-state-20260921-246",
+  "action": "main_chrome_state",
+  "completed_at": "2026-09-20T18:14:02Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "returncode": 0,
-    "stdout": "WINDOWS=0\n\n",
-    "stderr": ""
+    "state": {
+      "pid482": "482     1 /usr/libexec/milod",
+      "chrome_roots": [
+        "434     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "2023  1818 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/chat-local-control-profile --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19498 --no-first-run --no-default-browser-check --disable-notifications --disable-session-crashed-bubble --mute-audio --window-size=900,900 --window-position=10000,10000 https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b"
+      ],
+      "profile_state": {
+        "last_used": "Profile 15",
+        "last_active_profiles": [
+          "Profile 15"
+        ],
+        "profiles_order": [
+          "Profile 3",
+          "Profile 4",
+          "Profile 5",
+          "Profile 6",
+          "Profile 7",
+          "Profile 8",
+          "Profile 9",
+          "Profile 10",
+          "Profile 13",
+          "Profile 14",
+          "Profile 15",
+          "Profile 17",
+          "Profile 18",
+          "Profile 19",
+          "Profile 20",
+          "Profile 21",
+          "Profile 24",
+          "Profile 25",
+          "Profile 26",
+          "Profile 28",
+          "Profile 29",
+          "Profile 31",
+          "Profile 33",
+          "Profile 34",
+          "Profile 35",
+          "Profile 36"
+        ]
+      },
+      "Profile 33": {
+        "profile_name": "Chrome Anda",
+        "exit_type": "Crashed",
+        "exited_cleanly": null,
+        "account_info_count": 1,
+        "has_network_cookies": false
+      }
+    }
   }
 }

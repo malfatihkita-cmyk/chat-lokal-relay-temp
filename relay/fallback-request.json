@@ -1,9 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-fallback-recover-20260921-218",
-  "action": "restart_services",
-  "labels": [
-    "com.copytolive.chat-lokal-injector",
-    "actions.runner.malfatihkita-cmyk-chat-lokal-relay-temp.Chat-Lokal-Temporary"
-  ]
+  "id": "chatlokal-fallback-shell-recover-20260921-219",
+  "action": "shell",
+  "script": "set -euo pipefail\nAPP=\"/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal\"\nU=\"$(id -u)\"\necho \"RECOVER_START\"\npython3 -m py_compile \"$APP/chat_local_injector.py\" \"$APP/chat_local_transport_v4.py\"\necho \"COMPILE=PASS\"\nlaunchctl bootout \"gui/$U/com.copytolive.chat-lokal-mainbridge-v3\" 2>/dev/null || true\nPL=\"$HOME/Library/LaunchAgents/com.copytolive.chat-lokal-mainbridge-v3.plist\"\nif [ -f \"$PL\" ]; then\n  DST=\"$PL.DISABLED_BY_V4\"\n  [ -e \"$DST\" ] && DST=\"$PL.DISABLED_BY_V4.$(date +%Y%m%d-%H%M%S)\"\n  mv \"$PL\" \"$DST\"\n  echo \"V3_PLIST_DISABLED=$DST\"\nfi\nlaunchctl kickstart -k \"gui/$U/com.copytolive.chat-lokal-injector\"\nsleep 3\nfor p in $(ps -axo pid=,command= | awk '/Chat-Lokal\\/chat_local_main_bridge\\.py$/ {print $1}'); do\n  kill \"$p\" 2>/dev/null || true\n  echo \"LEGACY_MAINBRIDGE_STOPPED=$p\"\ndone\nLABEL='actions.runner.malfatihkita-cmyk-chat-lokal-relay-temp.Chat-Lokal-Temporary'\nlaunchctl kickstart -k \"gui/$U/$LABEL\" 2>/dev/null || {\n  cd \"$HOME/.copytolive-chat-lokal/actions-runner-temp\"\n  ./svc.sh start\n}\nsleep 4\necho \"HEALTH=$(curl -fsS --max-time 5 http://127.0.0.1:8765/healthz || true)\"\necho \"---PROCESSES---\"\nps -axo pid=,ppid=,command= | grep -E 'chat_local_(injector|transport_v4|main_bridge|main_bridge_v3)\\.py|Runner\\.Listener|runsvc\\.sh' | grep -v grep || true\necho \"RECOVER_DONE\"",
+  "timeout": 120
 }

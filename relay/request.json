@@ -1,7 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-profile33-http-probe-20260920-152",
-  "action": "profile_http_probe",
-  "profile": "Profile 33",
-  "conversation_id": "6aaf2627-1e20-83ec-b0c8-77bc60da329b"
+  "id": "chatlokal-main-tab-api-20260920-153",
+  "action": "main_tab_api_probe"
 }

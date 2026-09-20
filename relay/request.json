@@ -1,7 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-core-live-gates-20260920-195",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/core_live_gates.py",
-  "timeout": 420
+  "id": "chatlokal-browser-probe-20260920-196",
+  "action": "browser_probe"
 }

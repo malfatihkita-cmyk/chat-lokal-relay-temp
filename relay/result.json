@@ -1,13 +1,16 @@
 {
   "schema": 1,
-  "id": "chatlokal-main-browser-after-control-stop-20260920-178",
-  "action": "browser_probe",
-  "completed_at": "2026-09-20T15:43:21Z",
+  "id": "chatlokal-enable-main-js-apple-events-20260920-179",
+  "action": "enable_chrome_js_apple_events",
+  "completed_at": "2026-09-20T15:44:15Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
-    "ok": true,
-    "returncode": 0,
-    "stdout": "WINDOWS=8\nWINDOW 1 TABS=1\nTAB 1:1 | Current chat ping | https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nWINDOW 2 TABS=1\nTAB 2:1 | Live Streaming Atletico Madrid vs Real Madrid - LaLiga - 20 September 2026 | https://www.vidio.com/live/6299?schedule_id=5321961\nWINDOW 3 TABS=1\nTAB 3:1 | GOLD10B Final Audit | https://chatgpt.com/c/6aa92ef0-aa24-83ec-ba1b-53758f0570d7\nWINDOW 4 TABS=4\nTAB 4:1 | opus - Google Dokumen | https://docs.google.com/document/d/1JgJVK1YZCmtb6d_xAS3myXnVXPr28P3QuJr9c3lO5_0/edit?pli=1&tab=t.3betlc6ds23a\nTAB 4:2 | Lanjutkan Evaluasi Nama | https://chatgpt.com/c/6aae9146-0cd8-83ec-9690-3e06dbf2fe3b\nTAB 4:3 | Tebak Masa Depan | https://chatgpt.com/c/6aadcd07-7728-83ec-a8db-da8c59245fe2\nTAB 4:4 | UpStory - Google Drive | https://drive.google.com/drive/folders/1c7BeJkJU7s3FEP39Lz8UPxccs8SRa968?hl=ID\nWINDOW 5 TABS=1\nTAB 5:1 | Lanjutkan Evaluasi Versi | https://chatgpt.com/c/6aaebded-8b14-83ec-9307-23d7f21c7643\nWINDOW 6 TABS=1\nTAB 6:1 | Tambah Cluster Agent 17-25 | https://chatgpt.com/c/6aaea4fd-1884-83ec-9274-37349b4c71a2\nWINDOW 7 TABS=1\nTAB 7:1 | Bootstrap Final Berhasil | https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b\nWINDOW 8 TABS=1\nTAB 8:1 | Bootstrap Final Berhasil | https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b\n\n",
-    "stderr": ""
+    "ok": false,
+    "toggle_rc": 0,
+    "toggle": "CLICKED",
+    "toggle_err": "",
+    "test_rc": 1,
+    "test": "",
+    "test_err": "98:210: execution error: Google Chrome mengalami kesalahan: Eksekusi JavaScript melalui AppleScript dinonaktifkan. Untuk mengaktifkannya, buka panel menu lalu pilih View > Developer > Allow JavaScript from Apple Events. Untuk informasi selengkapnya: https://support.google.com/chrome/?p=applescript (12)\n"
   }
 }

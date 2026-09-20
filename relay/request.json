@@ -1,7 +1,6 @@
 {
   "schema": 1,
-  "id": "chatlokal-conversation-cdp-20260920-145",
-  "action": "conversation_probe",
-  "port": 19498,
-  "url": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b"
+  "id": "chatlokal-cdp-session-20260920-146",
+  "action": "cdp_session_probe",
+  "port": 19498
 }

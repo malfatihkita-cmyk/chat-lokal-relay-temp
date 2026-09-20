@@ -99,6 +99,68 @@ end tell
         return {"ok":s1.returncode==0 and s2.returncode==0,"open_rc":p.returncode,
                 "open_stderr":p.stderr[-4000:],"start":(s1.stdout or "")[-12000:],"probe":probe}
 
+    if a=="enable_chrome_js_apple_events":
+        # Toggle Chrome's own scriptability menu only if it is currently off.
+        script=r'''
+tell application "Google Chrome" to activate
+delay 1
+tell application "System Events"
+ tell process "Google Chrome"
+  set targetItem to missing value
+  set viewItem to missing value
+  try
+   set viewItem to menu bar item "View" of menu bar 1
+  on error
+   try
+    set viewItem to menu bar item "Tampilan" of menu bar 1
+   end try
+  end try
+  if viewItem is missing value then return "VIEW_MENU_NOT_FOUND"
+  click viewItem
+  delay 0.5
+  set devItem to missing value
+  try
+   set devItem to menu item "Developer" of menu 1 of viewItem
+  on error
+   try
+    set devItem to menu item "Pengembang" of menu 1 of viewItem
+   end try
+  end try
+  if devItem is missing value then
+   key code 53
+   return "DEVELOPER_MENU_NOT_FOUND"
+  end if
+  try
+   set targetItem to menu item "Allow JavaScript from Apple Events" of menu 1 of devItem
+  on error
+   key code 53
+   return "TARGET_ITEM_NOT_FOUND"
+  end try
+  set markChar to ""
+  try
+   set markChar to value of attribute "AXMenuItemMarkChar" of targetItem
+  end try
+  if markChar is not missing value and markChar is not "" then
+   key code 53
+   return "ALREADY_ENABLED|" & markChar
+  end if
+  click targetItem
+  delay 1
+  return "CLICKED"
+ end tell
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],45)
+        time.sleep(1)
+        test=r'''tell application "Google Chrome"
+ if (count of windows) is 0 then return "__NO_WINDOWS__"
+ return execute active tab of front window javascript "JSON.stringify({url:location.href,title:document.title,ok:true})"
+end tell'''
+        q=run(["/usr/bin/osascript","-e",test],35)
+        return {"ok":q.returncode==0,"toggle_rc":p.returncode,
+                "toggle":(p.stdout or "").strip(),"toggle_err":p.stderr[-8000:],
+                "test_rc":q.returncode,"test":(q.stdout or "").strip(),"test_err":q.stderr[-8000:]}
+
     if a=="main_tab_api_probe":
         start_js=r'''(() => {
  window.__CTL_MAIN_PROBE__={done:false};

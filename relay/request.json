@@ -1,5 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-chrome-process-inventory-tail-20260921-265",
-  "action": "chrome_process_inventory"
+  "id": "chatlokal-cdp-full-recheck-20260921-265",
+  "action": "cdp_port_inventory",
+  "start": 19417,
+  "end": 19438
 }

@@ -58,6 +58,64 @@ end tell
         return {"ok":p.returncode==0,"returncode":p.returncode,
                 "stdout":p.stdout[-20000:],"stderr":p.stderr[-12000:]}
 
+    if a=="browser_inventory":
+        out={}
+        p=run(["/bin/ps","-axo","pid=,ppid=,command="],30)
+        keep=[]
+        for line in p.stdout.splitlines():
+            low=line.lower()
+            if any(k in low for k in [
+                "google chrome","chromium","opera","microsoft edge","brave browser",
+                "arc.app","safari.app","chatgpt.app","electron"
+            ]):
+                keep.append(line)
+        out["processes"]="\n".join(keep)[-50000:]
+        scripts={
+          "visible_apps":'''tell application "System Events" to get name of every process whose visible is true''',
+          "chrome":'''tell application "Google Chrome"
+set outText to "windows=" & (count of windows) & linefeed
+repeat with wi from 1 to count of windows
+ set outText to outText & "window " & wi & " tabs=" & (count of tabs of window wi) & linefeed
+ repeat with ti from 1 to count of tabs of window wi
+  try
+   set outText to outText & "TAB|" & wi & "|" & ti & "|" & title of tab ti of window wi & "|" & URL of tab ti of window wi & linefeed
+  end try
+ end repeat
+end repeat
+return outText
+end tell''',
+          "safari":'''tell application "Safari"
+set outText to "windows=" & (count of windows) & linefeed
+repeat with wi from 1 to count of windows
+ repeat with ti from 1 to count of tabs of window wi
+  try
+   set outText to outText & "TAB|" & wi & "|" & ti & "|" & name of tab ti of window wi & "|" & URL of tab ti of window wi & linefeed
+  end try
+ end repeat
+end repeat
+return outText
+end tell'''
+        }
+        for k,s in scripts.items():
+            try:
+                q=run(["/usr/bin/osascript","-e",s],25)
+                out[k]={"rc":q.returncode,"stdout":q.stdout[-30000:],"stderr":q.stderr[-12000:]}
+            except Exception as e:
+                out[k]={"error":type(e).__name__,"message":str(e)}
+        # Non-secret profile metadata only.
+        try:
+            ls=Path.home()/"Library/Application Support/Google/Chrome/Local State"
+            if ls.exists():
+                j=json.loads(ls.read_text(errors="ignore"))
+                info=(j.get("profile") or {}).get("info_cache") or {}
+                out["chrome_profiles"]={k:{
+                    "name":v.get("name"),"user_name":v.get("user_name"),
+                    "gaia_name":v.get("gaia_name"),"is_using_default_name":v.get("is_using_default_name")
+                } for k,v in info.items()}
+        except Exception as e:
+            out["chrome_profiles_error"]=str(e)
+        return {"ok":True,"inventory":out}
+
     if a=="conversation_api_probe":
         target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")
         cid=target.rstrip("/").split("/")[-1]

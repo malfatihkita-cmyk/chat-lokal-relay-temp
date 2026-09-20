@@ -58,6 +58,68 @@ end tell
         return {"ok":p.returncode==0,"returncode":p.returncode,
                 "stdout":p.stdout[-20000:],"stderr":p.stderr[-12000:]}
 
+    if a=="control_browser_open":
+        port=19498
+        url=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")
+        endpoint="http://127.0.0.1:%d/json/new?%s"%(port,urllib.parse.quote(url,safe=":/?=&"))
+        q=urllib.request.Request(endpoint,method="PUT")
+        created=None
+        try:
+            with urllib.request.urlopen(q,timeout=5) as r:
+                created=json.load(r)
+        except Exception as e:
+            created={"error":type(e).__name__,"message":str(e)}
+        time.sleep(float(req.get("wait",8)))
+        try:
+            with urllib.request.urlopen("http://127.0.0.1:%d/json/list"%port,timeout=5) as r:
+                pages=json.load(r)
+        except Exception as e:
+            return {"ok":False,"created":created,"error":type(e).__name__,"message":str(e)}
+        probe=[]
+        py=r'''
+import sys,json
+sys.path.insert(0,"/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal")
+from cdp_ws import WSClient
+pages=json.loads(sys.stdin.read())
+out=[]
+for p in pages:
+    wsurl=p.get("webSocketDebuggerUrl")
+    row={"id":p.get("id"),"url":p.get("url"),"title":p.get("title")}
+    if not wsurl:
+        out.append(row); continue
+    try:
+        with WSClient(wsurl,timeout=5) as ws:
+            ws.send_json({"id":1,"method":"Runtime.evaluate","params":{
+                "expression":"""(() => JSON.stringify({
+                  url:location.href,
+                  title:document.title,
+                  ready:document.readyState,
+                  assistants:document.querySelectorAll('[data-message-author-role="assistant"]').length,
+                  users:document.querySelectorAll('[data-message-author-role="user"]').length,
+                  composer:!!document.querySelector('#prompt-textarea,[contenteditable="true"][data-virtualkeyboard],[contenteditable="true"][data-testid="prompt-textarea"]'),
+                  body:(document.body?.innerText||"").slice(-5000)
+                }))()""",
+                "returnByValue":True
+            }})
+            while True:
+                x=ws.recv_json()
+                if x.get("id")==1:
+                    row["eval"]=x.get("result",{}).get("result",{}).get("value")
+                    break
+    except Exception as e:
+        row["eval_error"]=type(e).__name__+": "+str(e)
+    out.append(row)
+print(json.dumps(out,ensure_ascii=False))
+'''
+        p=run(["/usr/local/bin/python3","-c",py],30)
+        # Re-run with stdin via subprocess because helper run() has no stdin parameter.
+        p2=subprocess.run(["/usr/local/bin/python3","-c",py],input=json.dumps(pages),capture_output=True,text=True,timeout=30)
+        try:
+            probe=json.loads(p2.stdout)
+        except Exception:
+            probe=[{"stdout":p2.stdout[-12000:],"stderr":p2.stderr[-12000:]}]
+        return {"ok":True,"created":created,"pages":pages,"probe":probe}
+
     if a=="quick_status":
         out={}
         try:

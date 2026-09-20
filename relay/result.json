@@ -1,18 +1,17 @@
 {
   "schema": 1,
-  "id": "chatlokal-open-copy-profile-fixed-20260920-185",
-  "action": "open_profile_via_menu",
-  "completed_at": "2026-09-20T15:10:32Z",
+  "id": "chatlokal-main-tab-api-copy-20260920-186",
+  "action": "main_tab_api_probe",
+  "completed_at": "2026-09-20T15:11:32Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
-    "ok": true,
-    "profile": "PROFILE_CLICKED",
-    "profile_err": "",
-    "windows": "1",
-    "windows_err": "",
-    "nav": "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b",
-    "nav_err": "",
-    "probe": "\n",
-    "probe_err": ""
+    "ok": false,
+    "start": "",
+    "probe": {
+      "raw": "",
+      "stderr": "98:236: execution error: Google Chrome mengalami kesalahan: Eksekusi JavaScript melalui AppleScript dinonaktifkan. Untuk mengaktifkannya, buka panel menu lalu pilih View > Developer > Allow JavaScript from Apple Events. Untuk informasi selengkapnya: https://support.google.com/chrome/?p=applescript (12)\n",
+      "rc": 1
+    },
+    "stderr": "98:1100: execution error: Google Chrome mengalami kesalahan: Eksekusi JavaScript melalui AppleScript dinonaktifkan. Untuk mengaktifkannya, buka panel menu lalu pilih View > Developer > Allow JavaScript from Apple Events. Untuk informasi selengkapnya: https://support.google.com/chrome/?p=applescript (12)\n98:236: execution error: Google Chrome mengalami kesalahan: Eksekusi JavaScript melalui AppleScript dinonaktifkan. Untuk mengaktifkannya, buka panel menu lalu pilih View > Developer > Allow JavaScript from Apple Events. Untuk informasi selengkapnya: https://support.google.com/chrome/?p=applescript (12)\n"
   }
 }

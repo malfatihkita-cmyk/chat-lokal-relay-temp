@@ -1,10 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-read-v4-postrestart-20260921-240",
-  "action": "read_files",
-  "paths": [
-    "~/.copytolive-chat-lokal/transport-v4.log",
-    "~/.copytolive-chat-lokal/transport-v4-state.json"
-  ],
-  "max_chars_each": 30000
+  "id": "chatlokal-disable-v3-run-20260921-240",
+  "action": "run_python_file",
+  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/disable_mainbridge_v3_once.py",
+  "timeout": 60
 }

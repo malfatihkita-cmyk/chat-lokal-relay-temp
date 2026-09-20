@@ -1,5 +1,9 @@
 {
   "schema": 1,
-  "id": "chatlokal-fallback-private-20260920-175",
-  "action": "repo_private"
+  "id": "chatlokal-fallback-recover-20260921-218",
+  "action": "restart_services",
+  "labels": [
+    "com.copytolive.chat-lokal-injector",
+    "actions.runner.malfatihkita-cmyk-chat-lokal-relay-temp.Chat-Lokal-Temporary"
+  ]
 }

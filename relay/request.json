@@ -1,5 +1,8 @@
 {
   "schema": 1,
-  "id": "chatlokal-profile-inventory-20260921-249",
-  "action": "chrome_profile_inventory"
+  "id": "chatlokal-open-current-profile33-20260921-250",
+  "action": "open_profile_window",
+  "profile": "Profile 33",
+  "url": "https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba",
+  "wait": 8
 }

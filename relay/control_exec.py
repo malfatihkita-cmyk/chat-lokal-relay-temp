@@ -224,34 +224,35 @@ tell application "System Events"
    end try
    try
     set outText to outText & "BUTTONS|"
-    repeat with b in every button of w
+    repeat with btn in every button of w
      try
-      set outText to outText & (name of b) & "|"
+      set outText to outText & (name of btn) & "|"
      end try
     end repeat
     set outText to outText & linefeed
    end try
    try
-    set outText to outText & "SHEETS|" & (count of sheets of w) & linefeed
+    set sc to count of sheets of w
+    set outText to outText & "SHEETS|" & sc & linefeed
     repeat with sh in every sheet of w
+     set outText to outText & "SHEET_BUTTONS|"
      try
-      set outText to outText & "SHEET_BUTTONS|"
-      repeat with b in every button of sh
+      repeat with btn in every button of sh
        try
-        set outText to outText & (name of b) & "|"
+        set outText to outText & (name of btn) & "|"
        end try
       end repeat
-      set outText to outText & linefeed
      end try
+     set outText to outText & linefeed
+     set outText to outText & "SHEET_TEXT|"
      try
-      set outText to outText & "SHEET_TEXT|"
-      repeat with st in every static text of sh
+      repeat with txtItem in every static text of sh
        try
-        set outText to outText & (value of st as text) & "|"
+        set outText to outText & (value of txtItem as text) & "|"
        end try
       end repeat
-      set outText to outText & linefeed
      end try
+     set outText to outText & linefeed
     end repeat
    end try
   end repeat
@@ -262,6 +263,7 @@ end tell
         p=run(["/usr/bin/osascript","-e",script],45)
         return {"ok":p.returncode==0,"returncode":p.returncode,
                 "stdout":p.stdout[-20000:],"stderr":p.stderr[-8000:]}
+
 
     if a=="enable_chrome_js_apple_events":
         script=r'''

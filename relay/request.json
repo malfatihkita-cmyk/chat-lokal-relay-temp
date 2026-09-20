@@ -1,13 +1,6 @@
 {
   "schema": 1,
-  "id": "chatlokal-read-injector-bridges-20260921-207",
-  "action": "read_files",
-  "paths": [
-    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_injector.py",
-    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_main_bridge.py",
-    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_main_bridge_v3.py",
-    "~/Library/LaunchAgents/com.copytolive.chat-lokal-injector.plist",
-    "~/Library/LaunchAgents/com.copytolive.chat-lokal-transport-v4.plist"
-  ],
-  "max_chars_each": 40000
+  "id": "chatlokal-list-launchagents-20260921-208",
+  "action": "list_dir",
+  "path": "~/Library/LaunchAgents"
 }

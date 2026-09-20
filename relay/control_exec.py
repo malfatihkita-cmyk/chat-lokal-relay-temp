@@ -539,9 +539,9 @@ tell application "System Events"
    set en to ""
    set mk to ""
    set posText to ""
-   try set nm to name of mi as text
-   try set en to enabled of mi as text
-   try set mk to value of attribute "AXMenuItemMarkChar" of mi as text
+   try\n    set nm to name of mi as text\n   end try
+   try\n    set en to enabled of mi as text\n   end try
+   try\n    set mk to value of attribute "AXMenuItemMarkChar" of mi as text\n   end try
    try
     set pp to position of mi
     set posText to (item 1 of pp as text) & "," & (item 2 of pp as text)
@@ -574,7 +574,7 @@ tell application "System Events"
   set mi to menu item "{esc}" of menu 1 of winMB
   set beforeEn to enabled of mi
   set beforeMark to ""
-  try set beforeMark to value of attribute "AXMenuItemMarkChar" of mi as text
+  try\n   set beforeMark to value of attribute "AXMenuItemMarkChar" of mi as text\n  end try
   try
    perform action "AXPress" of mi
   on error
@@ -588,8 +588,8 @@ tell application "System Events"
   set w to window wi of fp
   set wn to ""
   set doc to ""
-  try set wn to name of w as text
-  try set doc to value of attribute "AXDocument" of w as text
+  try\n   set wn to name of w as text\n  end try
+  try\n   set doc to value of attribute "AXDocument" of w as text\n  end try
   set outText to outText & "WINDOW|" & wi & "|name=" & wn & "|doc=" & doc & linefeed
  end repeat
  return outText

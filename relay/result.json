@@ -1,13 +1,15 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-main-window-helper-20260921-251",
-  "action": "run_python_file",
-  "completed_at": "2026-09-20T18:19:06Z",
+  "id": "chatlokal-enable-js-current-target-20260921-252",
+  "action": "enable_js_for_target_url",
+  "completed_at": "2026-09-20T18:19:55Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "returncode": 0,
-    "stdout": "{\"ok\": true, \"rc\": 0, \"stdout\": \"WINDOWS=1|URL=https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba\", \"stderr\": \"\"}\n",
+    "focus": "FOUND|1|1",
+    "toggle": "CLICKED",
+    "test_rc": 0,
+    "test": "{\"url\":\"https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba\",\"title\":\"Lanjutkan E2E V4\",\"ok\":true}",
     "stderr": ""
   }
 }

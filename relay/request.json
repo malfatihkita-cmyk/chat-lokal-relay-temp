@@ -1,5 +1,5 @@
 {
   "schema":1,
-  "id":"chatlokal-main-tab-api-copy-20260920-186",
-  "action":"main_tab_api_probe"
+  "id":"chatlokal-stop-control-browser-20260920-187",
+  "action":"stop_control_browser"
 }

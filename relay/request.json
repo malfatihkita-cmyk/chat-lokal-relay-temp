@@ -4,9 +4,7 @@
   "action": "read_files",
   "paths": [
     "~/.copytolive-chat-lokal/transport-v4.log",
-    "~/.copytolive-chat-lokal/transport-v4-state.json",
-    "~/.copytolive-chat-lokal/requests.jsonl",
-    "~/.copytolive-chat-lokal/results.jsonl"
+    "~/.copytolive-chat-lokal/transport-v4-state.json"
   ],
   "max_chars_each": 30000
 }

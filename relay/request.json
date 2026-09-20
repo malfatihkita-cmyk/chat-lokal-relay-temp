@@ -1,7 +1,10 @@
 {
   "schema": 1,
-  "id": "chatlokal-apply-v4-selfrecover-20260921-280",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/patch_v4_selfrecover_once.py",
-  "timeout": 60
+  "id": "chatlokal-compile-selfrecover-20260921-281",
+  "action": "py_compile",
+  "paths": [
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_injector.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_transport_v4.py"
+  ]
 }

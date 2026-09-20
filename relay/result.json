@@ -1,13 +1,48 @@
 {
   "schema": 1,
-  "id": "chatlokal-js-apple-events-state-20260921-229",
-  "action": "chrome_js_apple_events_state",
-  "completed_at": "2026-09-20T17:49:05Z",
+  "id": "chatlokal-cdp-current-backend-probe-20260921-230",
+  "action": "cdp_open_chat_probe",
+  "completed_at": "2026-09-20T17:50:48Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "returncode": 0,
-    "stdout": "MARK=✓|ENABLED=false",
-    "stderr": ""
+    "port": 19498,
+    "created": {
+      "description": "",
+      "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@58ae0c621a34b558c60db5c6209d9dd9063084b7/inspector.html?ws=127.0.0.1:19498/devtools/page/7AB463A799D151ABDD76F707DF461B66",
+      "id": "7AB463A799D151ABDD76F707DF461B66",
+      "title": "",
+      "type": "page",
+      "url": "https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba",
+      "webSocketDebuggerUrl": "ws://127.0.0.1:19498/devtools/page/7AB463A799D151ABDD76F707DF461B66"
+    },
+    "page": {
+      "id": "7AB463A799D151ABDD76F707DF461B66",
+      "url": "https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba",
+      "title": "ChatGPT"
+    },
+    "probe": {
+      "first": {
+        "url": "https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba",
+        "title": "ChatGPT",
+        "ready": "interactive",
+        "body": "Skip to content\nChat history\nChatGPT\nNew chat\nLibrary\nScheduled\nPlugins\nMore\nCopy Tolive\nPlus\nShare"
+      },
+      "second": {
+        "done": true,
+        "data": [
+          {
+            "name": "me",
+            "status": 200,
+            "text": "{\"object\":\"\",\"id\":\"ua-8efa2f84-a26d-4cb6-927b-00c2c5d2d0c5\",\"email\":\"\",\"name\":\"\",\"picture\":\"\",\"created\":1789926645,\"phone_number\":\"\",\"email_domain_type\":\"unknown\",\"country\":\"ID\",\"region\":\"Jakarta\",\"region_code\":\"JK\"}"
+          },
+          {
+            "name": "conversation",
+            "status": 404,
+            "text": "{\"detail\":{\"message\":\"Log in to view this conversation.\",\"code\":\"conversation_inaccessible\",\"can_retry\":false,\"conversation_id\":\"6ab010ca-ee50-83ec-beea-b410c17211ba\"}}"
+          }
+        ]
+      }
+    }
   }
 }

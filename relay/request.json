@@ -1,7 +1,9 @@
 {
   "schema": 1,
-  "id": "chatlokal-cdp-full-recheck-20260921-265",
-  "action": "cdp_port_inventory",
-  "start": 19417,
-  "end": 19438
+  "id": "chatlokal-stage-tail-root-probe-20260921-266",
+  "action": "write_file",
+  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/tail_root_probe_once.py",
+  "content_b64": "IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwppbXBvcnQgb3MsIHN1YnByb2Nlc3MsIGpzb24KdGFyZ2V0cyA9IHsKICAiMjciOiAiL1VzZXJzL1NoYXJlZC9Xb3Jrc3BhY2VCZXJzYW1hL0NoYXRHUFQvSGVhZGxlc3NQb29sL2FnZW50cy9BZ2VudC0yNyIsCiAgIjM3IjogIi9Vc2Vycy9TaGFyZWQvV29ya3NwYWNlQmVyc2FtYS9DaGF0R1BUL0hlYWRsZXNzUG9vbC9hZ2VudHMvQWdlbnQtMzciLAogICIzOCI6ICIvVXNlcnMvU2hhcmVkL1dvcmtzcGFjZUJlcnNhbWEvQ2hhdEdQVC9IZWFkbGVzc1Bvb2wvYWdlbnRzL0FnZW50LTM4IiwKfQpvdXQgPSBzdWJwcm9jZXNzLmNoZWNrX291dHB1dChbIi9iaW4vcHMiLCItYXhvIiwicGlkPSxwcGlkPSxjb21tYW5kPSJdLCB0ZXh0PVRydWUsIGVycm9ycz0icmVwbGFjZSIpCnJvd3M9e30KZm9yIG4scHJvZiBpbiB0YXJnZXRzLml0ZW1zKCk6CiAgICBuZWVkbGU9Ii0tdXNlci1kYXRhLWRpcj0iK3Byb2YKICAgIGhpdHM9W10KICAgIGZvciBsaW5lIGluIG91dC5zcGxpdGxpbmVzKCk6CiAgICAgICAgaWYgbmVlZGxlIGluIGxpbmUgYW5kICIvQXBwbGljYXRpb25zL0dvb2dsZSBDaHJvbWUuYXBwL0NvbnRlbnRzL01hY09TL0dvb2dsZSBDaHJvbWUiIGluIGxpbmUgYW5kICJIZWxwZXIiIG5vdCBpbiBsaW5lOgogICAgICAgICAgICBoaXRzLmFwcGVuZChsaW5lLnN0cmlwKCkpCiAgICByb3dzW25dPWhpdHMKcHJpbnQoanNvbi5kdW1wcyhyb3dzLGVuc3VyZV9hc2NpaT1GYWxzZSkpCnRyeTogb3MudW5saW5rKF9fZmlsZV9fKQpleGNlcHQ6IHBhc3MK",
+  "backup": false,
+  "mode": "755"
 }

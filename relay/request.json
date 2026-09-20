@@ -1,5 +1,5 @@
 {
   "schema": 1,
-  "id": "chatlokal-chrome-developer-menu-20260920-156",
-  "action": "chrome_developer_menu_inventory"
+  "id": "chatlokal-chrome-devsubmenu-20260920-156",
+  "action": "chrome_developer_submenu"
 }

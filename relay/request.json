@@ -1,9 +1,7 @@
 {
   "schema": 1,
-  "id": "chatlokal-restart-v4-20260920-201",
-  "action": "restart_services",
-  "labels": [
-    "com.copytolive.chat-lokal-transport-v4"
-  ],
-  "wait": 2
+  "id": "chatlokal-read-v4-log-20260920-202",
+  "action": "read_file",
+  "path": "~/.copytolive-chat-lokal/transport-v4.log",
+  "max_chars": 12000
 }

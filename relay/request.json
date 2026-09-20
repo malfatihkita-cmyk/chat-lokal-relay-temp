@@ -1,7 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-recovery-live-20260920-192",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/recovery_no_duplicate_live.py",
-  "timeout": 300
+  "id": "chatlokal-read-core-gates-20260920-193",
+  "action": "read_files",
+  "max_chars_each": 20000,
+  "paths": [
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/ctl.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/_gate_process.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/_interactive_gate.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/base_commander.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local.py"
+  ]
 }

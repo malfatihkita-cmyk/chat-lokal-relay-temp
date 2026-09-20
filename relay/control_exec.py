@@ -99,6 +99,36 @@ end tell
         return {"ok":s1.returncode==0 and s2.returncode==0,"open_rc":p.returncode,
                 "open_stderr":p.stderr[-4000:],"start":(s1.stdout or "")[-12000:],"probe":probe}
 
+    if a=="main_tab_api_probe":
+        start_js=r'''(() => {
+ window.__CTL_MAIN_PROBE__={done:false};
+ Promise.all([
+   fetch('/backend-api/me',{credentials:'include'}).then(async r=>({name:'me',status:r.status,text:(await r.text()).slice(0,8000)})).catch(e=>({name:'me',error:String(e)})),
+   fetch('/backend-api/conversations?offset=0&limit=5',{credentials:'include'}).then(async r=>({name:'conversations',status:r.status,text:(await r.text()).slice(0,16000)})).catch(e=>({name:'conversations',error:String(e)}))
+ ]).then(x=>window.__CTL_MAIN_PROBE__={done:true,data:x}).catch(e=>window.__CTL_MAIN_PROBE__={done:true,error:String(e)});
+ return JSON.stringify({url:location.href,title:document.title,body:(document.body?.innerText||'').slice(-5000)});
+})()'''
+        b=base64.b64encode(start_js.encode()).decode()
+        s1=f'''tell application "Google Chrome"
+ if (count of windows) is 0 then return "__NO_WINDOWS__"
+ return execute active tab of front window javascript "eval(atob('{b}'))"
+end tell'''
+        p1=run(["/usr/bin/osascript","-e",s1],35)
+        time.sleep(3)
+        read_js=r'''(() => JSON.stringify(window.__CTL_MAIN_PROBE__||{}))()'''
+        rb=base64.b64encode(read_js.encode()).decode()
+        s2=f'''tell application "Google Chrome"
+ if (count of windows) is 0 then return "__NO_WINDOWS__"
+ return execute active tab of front window javascript "eval(atob('{rb}'))"
+end tell'''
+        p2=run(["/usr/bin/osascript","-e",s2],35)
+        raw=(p2.stdout or "").strip()
+        try:data=json.loads(raw)
+        except Exception:data={"raw":raw,"stderr":p2.stderr[-8000:],"rc":p2.returncode}
+        return {"ok":p1.returncode==0 and p2.returncode==0,
+                "start":(p1.stdout or "")[-8000:],"probe":data,
+                "stderr":(p1.stderr+p2.stderr)[-8000:]}
+
     if a=="browser_probe":
         script=r'''
 tell application "Google Chrome"

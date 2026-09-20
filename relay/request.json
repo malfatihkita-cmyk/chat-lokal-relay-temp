@@ -1,8 +1,9 @@
 {
   "schema": 1,
-  "id": "chatlokal-compile-v4-20260920-184",
-  "action": "py_compile",
-  "files": [
-    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_transport_v4.py"
-  ]
+  "id": "chatlokal-restart-v4-20260920-185",
+  "action": "restart_services",
+  "labels": [
+    "com.copytolive.chat-lokal-transport-v4"
+  ],
+  "wait": 2
 }

@@ -1,9 +1,10 @@
 {
   "schema": 1,
-  "id": "chatlokal-restart-v4-20260920-185",
-  "action": "restart_services",
-  "labels": [
-    "com.copytolive.chat-lokal-transport-v4"
-  ],
-  "wait": 2
+  "id": "chatlokal-v4-ready-check-20260920-186",
+  "action": "read_files",
+  "max_chars_each": 12000,
+  "paths": [
+    "/Users/antigravity1/.copytolive-chat-lokal/transport-v4.log",
+    "/Users/antigravity1/.copytolive-chat-lokal/transport-v4-state.json"
+  ]
 }

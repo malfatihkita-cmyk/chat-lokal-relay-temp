@@ -1,12 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-stage-core-live-gates-20260920-194",
-  "action": "write_file",
-  "completed_at": "2026-09-20T16:02:19Z",
+  "id": "chatlokal-run-core-live-gates-20260920-195",
+  "action": "run_python_file",
+  "completed_at": "2026-09-20T16:03:13Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/core_live_gates.py",
-    "bytes": 3884
+    "returncode": 0,
+    "stdout": "{\"ops\": {\"file\": true, \"process\": true, \"system\": true}, \"daemon_recovery\": {\"old\": 71767, \"new\": 74747, \"ok\": true}, \"injector_recovery\": {\"old\": 1851, \"new\": 74768, \"ok\": true}, \"health\": {\"ok\": true, \"profile\": \"Chat - Lokal\", \"transport\": \"127.0.0.1 only\", \"third_party\": false, \"github\": false, \"workers\": 24, \"queued\": 0, \"time\": \"2026-09-20T16:03:13.059428+00:00\"}, \"PASS\": true}\n",
+    "stderr": ""
   }
 }

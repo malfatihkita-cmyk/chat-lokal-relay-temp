@@ -1,5 +1,9 @@
 {
   "schema": 1,
-  "id": "chatlokal-refresh-control-profile-20260921-227",
-  "action": "refresh_control_profile"
+  "id": "chatlokal-stage-stop-v4-20260921-227",
+  "action": "write_file",
+  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/stop_v4_once.py",
+  "content_b64": "IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwppbXBvcnQgb3Msc3VicHJvY2Vzcyxqc29uCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aApsYWJlbD0iY29tLmNvcHl0b2xpdmUuY2hhdC1sb2thbC10cmFuc3BvcnQtdjQiCnRhcmdldD1mImd1aS97b3MuZ2V0dWlkKCl9L3tsYWJlbH0iCnA9c3VicHJvY2Vzcy5ydW4oWyIvYmluL2xhdW5jaGN0bCIsImJvb3RvdXQiLHRhcmdldF0sY2FwdHVyZV9vdXRwdXQ9VHJ1ZSx0ZXh0PVRydWUsdGltZW91dD0zMCkKcHM9c3VicHJvY2Vzcy5ydW4oWyIvYmluL3BzIiwiLWF4byIsInBpZD0scHBpZD0sY29tbWFuZD0iXSxjYXB0dXJlX291dHB1dD1UcnVlLHRleHQ9VHJ1ZSx0aW1lb3V0PTIwKQpyZW1haW5pbmc9W3guc3RyaXAoKSBmb3IgeCBpbiBwcy5zdGRvdXQuc3BsaXRsaW5lcygpIGlmICJjaGF0X2xvY2FsX3RyYW5zcG9ydF92NC5weSIgaW4geF0KcHJpbnQoanNvbi5kdW1wcyh7Im9rIjpsZW4ocmVtYWluaW5nKT09MCwiYm9vdG91dF9yYyI6cC5yZXR1cm5jb2RlLCJzdGRvdXQiOnAuc3Rkb3V0Wy0yMDAwOl0sInN0ZGVyciI6cC5zdGRlcnJbLTIwMDA6XSwicmVtYWluaW5nIjpyZW1haW5pbmd9KSkKUGF0aChfX2ZpbGVfXykudW5saW5rKG1pc3Npbmdfb2s9VHJ1ZSkK",
+  "backup": false,
+  "mode": "755"
 }

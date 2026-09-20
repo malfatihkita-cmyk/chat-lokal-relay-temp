@@ -58,6 +58,59 @@ end tell
         return {"ok":p.returncode==0,"returncode":p.returncode,
                 "stdout":p.stdout[-20000:],"stderr":p.stderr[-12000:]}
 
+    if a=="conversation_api_probe":
+        target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")
+        cid=target.rstrip("/").split("/")[-1]
+        start_js=f'''(() => {{
+ window.__CHATLOCAL_API_PROBE__={{done:false,status:null,len:0,error:null,text:""}};
+ fetch("/backend-api/conversation/{cid}",{{credentials:"include"}})
+  .then(async r=>{{
+    const t=await r.text();
+    window.__CHATLOCAL_API_PROBE__={{done:true,status:r.status,len:t.length,error:null,text:t.slice(-25000)}};
+  }})
+  .catch(e=>{{window.__CHATLOCAL_API_PROBE__={{done:true,status:null,len:0,error:String(e),text:""}};}});
+ return "STARTED";
+}})()'''
+        read_js=r'''(() => {
+ const x=window.__CHATLOCAL_API_PROBE__||{};
+ const t=x.text||"";
+ return JSON.stringify({
+   done:!!x.done,status:x.status,len:x.len||0,error:x.error||null,
+   has_current_user:t.includes("lanjutkan sampai tuntas"),
+   has_112:t.includes("chatlokal-rendered-proof-20260920-112"),
+   has_117:t.includes("chatlokal-v4-proof-20260920-117"),
+   has_bootstrap107:t.includes("chatlokal-bootstrap-final-20260920-107"),
+   tail:t.slice(-4000)
+ });
+})()'''
+        def osa_for(code):
+            b=base64.b64encode(code.encode()).decode()
+            uq=target.replace("\\","\\\\").replace('"','\\"')
+            sc=f'''
+tell application "Google Chrome"
+ repeat with wi from 1 to count of windows
+  repeat with ti from 1 to count of tabs of window wi
+   try
+    if URL of tab ti of window wi is "{uq}" then
+     return execute tab ti of window wi javascript "eval(atob('{b}'))"
+    end if
+   end try
+  end repeat
+ end repeat
+ return "__TARGET_NOT_FOUND__"
+end tell
+'''
+            return run(["/usr/bin/osascript","-e",sc],35)
+        p1=osa_for(start_js)
+        time.sleep(float(req.get("wait",5)))
+        p2=osa_for(read_js)
+        raw=(p2.stdout or "").strip()
+        try:
+            data=json.loads(raw)
+        except Exception:
+            data={"raw":raw,"stderr":p2.stderr[-12000:],"returncode":p2.returncode}
+        return {"ok":p1.returncode==0 and p2.returncode==0,"start":(p1.stdout or "").strip(),"probe":data}
+
     if a=="conversation_probe_osa":
         target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")
         # Keep only the requested page in the dedicated CDP profile.

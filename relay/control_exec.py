@@ -58,6 +58,37 @@ end tell
         return {"ok":p.returncode==0,"returncode":p.returncode,
                 "stdout":p.stdout[-20000:],"stderr":p.stderr[-12000:]}
 
+    if a=="quick_status":
+        out={}
+        try:
+            h=run(["/usr/bin/curl","-sS","--max-time","4","http://127.0.0.1:8765/health"],10)
+            out["health_raw"]=h.stdout
+            out["health_rc"]=h.returncode
+        except Exception as e:
+            out["health_error"]=str(e)
+        for name,path in {
+            "injector_main_status": APP/"injector_main_status.json",
+            "main_bridge_status": APP/"main_bridge_status.json",
+            "main_bridge_v3_status": APP/"main_bridge_v3_status.json",
+            "daemon_err": RUN/"daemon.err.log",
+            "injector_err": RUN/"injector.err.log",
+            "requests_tail": RUN/"requests.jsonl",
+            "results_tail": RUN/"results.jsonl"
+        }.items():
+            try:
+                out[name]=tail(path,12000)
+            except Exception as e:
+                out[name+"_error"]=str(e)
+        try:
+            with urllib.request.urlopen("http://127.0.0.1:19498/json/list",timeout=3) as r:
+                out["control_pages"]=json.load(r)
+        except Exception as e:
+            out["control_pages_error"]=str(e)
+        p=run(["/bin/ps","-axo","pid=,ppid=,command="],20)
+        out["processes"]="\n".join(line for line in p.stdout.splitlines()
+            if "chat_local" in line or "chat-lokal" in line or "actions.runner" in line)[-20000:]
+        return {"ok":True,"status":out}
+
     if a=="diagnose":
         s=r'''
 APP="/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal"

@@ -1,7 +1,9 @@
 {
   "schema": 1,
-  "id": "chatlokal-apply-v4-active-patch-20260921-236",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/patch_v4_active_tab_once.py",
-  "timeout": 60
+  "id": "chatlokal-compile-v4-active-patch-20260921-237",
+  "action": "py_compile",
+  "files": [
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_transport_v4.py",
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_injector.py"
+  ]
 }

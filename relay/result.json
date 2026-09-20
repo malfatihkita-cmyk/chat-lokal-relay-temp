@@ -1,16 +1,20 @@
 {
   "schema": 1,
-  "id": "chatlokal-enable-js-apple-events-20260920-176",
-  "action": "enable_chrome_js_apple_events",
-  "completed_at": "2026-09-20T15:41:06Z",
+  "id": "chatlokal-stop-control-browser-20260920-177",
+  "action": "stop_control_browser",
+  "completed_at": "2026-09-20T15:42:34Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
-    "ok": false,
-    "toggle_rc": 0,
-    "toggle": "CLICKED",
-    "toggle_err": "",
-    "test_rc": 1,
-    "test": "",
-    "test_err": "98:210: execution error: Google Chrome mengalami kesalahan: Eksekusi JavaScript melalui AppleScript dinonaktifkan. Untuk mengaktifkannya, buka panel menu lalu pilih View > Developer > Allow JavaScript from Apple Events. Untuk informasi selengkapnya: https://support.google.com/chrome/?p=applescript (12)\n"
+    "ok": true,
+    "killed": [],
+    "remaining": [],
+    "rows": [
+      {
+        "stage": "bootout",
+        "rc": 3,
+        "stdout": "",
+        "stderr": "Boot-out failed: 3: No such process\n"
+      }
+    ]
   }
 }

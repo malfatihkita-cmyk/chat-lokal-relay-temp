@@ -1,13 +1,16 @@
 {
   "schema": 1,
-  "id": "chatlokal-chrome-process-inventory-20260920-164",
-  "action": "chrome_process_inventory",
-  "completed_at": "2026-09-20T03:03:05Z",
+  "id": "chatlokal-agent38-current-chat-probe-20260920-165",
+  "action": "cdp_open_chat_probe",
+  "completed_at": "2026-09-20T03:05:03Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
-    "ok": true,
-    "returncode": 0,
-    "stdout": "processes=13\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\nPROCESS|pid=482|frontmost=false|windows=3\nWINDOW|pid=482|i=1|name=|doc=\nWINDOW|pid=482|i=2|name=|doc=\nWINDOW|pid=482|i=3|name=Current chat ping - Disematkan - Google Chrome - Fx (Fx Capiral estate)|doc=https://chatgpt.com/c/6aaee5d4-8d5c-83ec-9617-76a5421ca592\n\n",
-    "stderr": ""
+    "ok": false,
+    "created": {
+      "error": "URLError",
+      "message": "<urlopen error [Errno 61] Connection refused>"
+    },
+    "error": "URLError",
+    "message": "<urlopen error [Errno 61] Connection refused>"
   }
 }

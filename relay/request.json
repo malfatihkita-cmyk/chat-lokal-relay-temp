@@ -1,11 +1,8 @@
 {
   "schema": 1,
-  "id": "chatlokal-run-v4-target-patch-20260920-199",
-  "action": "run_python_file",
-  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/patch_v4_target_once.py",
-  "args": [
-    "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b",
-    "https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba"
-  ],
-  "timeout": 60
+  "id": "chatlokal-compile-v4-20260920-200",
+  "action": "py_compile",
+  "files": [
+    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_transport_v4.py"
+  ]
 }

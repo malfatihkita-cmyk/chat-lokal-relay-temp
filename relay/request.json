@@ -1,10 +1,6 @@
 {
   "schema": 1,
-  "id": "chatlokal-check-v4-after-203-20260921-204",
-  "action": "read_files",
-  "paths": [
-    "~/.copytolive-chat-lokal/transport-v4.log",
-    "~/.copytolive-chat-lokal/transport-v4-state.json"
-  ],
-  "max_chars_each": 20000
+  "id": "chatlokal-conversation-probe-osa-20260921-205",
+  "action": "conversation_probe_osa",
+  "url": "https://chatgpt.com/c/6ab010ca-ee50-83ec-beea-b410c17211ba"
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os, sys, json, base64, time, subprocess, urllib.request, urllib.error
+import os, sys, json, base64, time, subprocess, urllib.request, urllib.error, urllib.parse
 from pathlib import Path
 
 REPO=os.environ.get("GITHUB_REPOSITORY","malfatihkita-cmyk/chat-lokal-relay-temp")
@@ -111,8 +111,6 @@ for p in pages:
     out.append(row)
 print(json.dumps(out,ensure_ascii=False))
 '''
-        p=run(["/usr/local/bin/python3","-c",py],30)
-        # Re-run with stdin via subprocess because helper run() has no stdin parameter.
         p2=subprocess.run(["/usr/local/bin/python3","-c",py],input=json.dumps(pages),capture_output=True,text=True,timeout=30)
         try:
             probe=json.loads(p2.stdout)

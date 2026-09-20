@@ -7,7 +7,7 @@ on:
       - 'relay/request.json'
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: chat-lokal-temp-control

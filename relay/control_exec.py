@@ -99,6 +99,42 @@ end tell
         return {"ok":s1.returncode==0 and s2.returncode==0,"open_rc":p.returncode,
                 "open_stderr":p.stderr[-4000:],"start":(s1.stdout or "")[-12000:],"probe":probe}
 
+    if a=="chrome_menu_inventory":
+        script=r'''
+tell application "Google Chrome" to activate
+delay 1
+tell application "System Events"
+ tell process "Google Chrome"
+  set outText to "MENUBAR:"
+  repeat with mbi in every menu bar item of menu bar 1
+   try
+    set outText to outText & "|" & (name of mbi)
+   end try
+  end repeat
+  set outText to outText & linefeed
+  repeat with mbi in every menu bar item of menu bar 1
+   try
+    set nm to name of mbi
+    click mbi
+    delay 0.2
+    set outText to outText & "MENU[" & nm & "]:"
+    repeat with mi in every menu item of menu 1 of mbi
+     try
+      set outText to outText & "|" & (name of mi)
+     end try
+    end repeat
+    set outText to outText & linefeed
+    key code 53
+   end try
+  end repeat
+  return outText
+ end tell
+end tell
+'''
+        p=run(["/usr/bin/osascript","-e",script],60)
+        return {"ok":p.returncode==0,"returncode":p.returncode,
+                "stdout":p.stdout[-30000:],"stderr":p.stderr[-12000:]}
+
     if a=="enable_chrome_js_apple_events":
         # Toggle Chrome's own scriptability menu only if it is currently off.
         script=r'''

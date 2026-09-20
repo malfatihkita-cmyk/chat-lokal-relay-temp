@@ -1,5 +1,5 @@
 {
-  "schema":1,
-  "id":"chatlokal-stop-control-browser-20260920-187",
-  "action":"stop_control_browser"
+  "schema": 1,
+  "id": "chatlokal-devsubmenu-inventory-20260920-175",
+  "action": "chrome_developer_submenu_inventory"
 }

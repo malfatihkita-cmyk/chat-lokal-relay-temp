@@ -30,6 +30,12 @@ CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 PORT=19498
 URL="https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b"
 LOG=RUN/"control-browser.log"
+try:
+    import json
+    _ls=json.loads((PROFILE/"Local State").read_text(errors="ignore"))
+    PROFILE_NAME=((_ls.get("profile") or {}).get("last_used") or "Default")
+except Exception:
+    PROFILE_NAME="Default"
 
 def log(*x):
     s=time.strftime("%Y-%m-%d %H:%M:%S")+" "+" ".join(map(str,x))
@@ -67,7 +73,7 @@ def launch():
     args=[
         CHROME,
         f"--user-data-dir={PROFILE}",
-        "--profile-directory=Profile 33",
+        f"--profile-directory={PROFILE_NAME}",
         "--remote-debugging-address=127.0.0.1",
         f"--remote-debugging-port={PORT}",
         "--no-first-run",

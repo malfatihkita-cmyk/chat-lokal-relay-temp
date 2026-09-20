@@ -1,5 +1,14 @@
 {
   "schema": 1,
-  "id": "chatlokal-cluster-preflight-20260921-256",
-  "action": "quick_status"
+  "id": "chatlokal-launch-cluster-c-20260921-257",
+  "action": "run_python_file",
+  "path": "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/launch_cluster.py",
+  "args": [
+    "C",
+    "0",
+    "0",
+    "1792",
+    "1120"
+  ],
+  "timeout": 180
 }

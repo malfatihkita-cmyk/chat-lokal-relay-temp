@@ -1161,6 +1161,20 @@ end tell
             dom={"raw":raw,"stderr":p.stderr[-12000:],"returncode":p.returncode}
         return {"ok":p.returncode==0 and raw!="__TARGET_NOT_FOUND__","closed":closed,"dom":dom}
 
+    if a=="cdp_port_inventory":
+        rows=[]
+        for port in range(int(req.get("start",19417)),int(req.get("end",19438))+1):
+            row={"port":port,"alive":False,"pages":[]}
+            try:
+                with urllib.request.urlopen("http://127.0.0.1:%d/json/list"%port,timeout=2) as r:
+                    pages=json.load(r)
+                row["alive"]=True
+                row["pages"]=[{"id":p.get("id"),"type":p.get("type"),"title":p.get("title"),"url":p.get("url")} for p in pages if p.get("type")=="page"][:8]
+            except Exception as e:
+                row["error"]=type(e).__name__+": "+str(e)
+            rows.append(row)
+        return {"ok":True,"rows":rows}
+
     if a=="cdp_open_chat_probe":
         port=int(req.get("port",19438))
         target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")

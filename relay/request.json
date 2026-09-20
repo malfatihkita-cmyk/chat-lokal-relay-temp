@@ -1,9 +1,9 @@
 {
   "schema": 1,
-  "id": "chatlokal-compile-v4-active-patch-20260921-237",
-  "action": "py_compile",
-  "files": [
-    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_transport_v4.py",
-    "/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/Chat-Lokal/chat_local_injector.py"
+  "id": "chatlokal-restart-injector-v4-20260921-238",
+  "action": "restart_services",
+  "labels": [
+    "com.copytolive.chat-lokal-injector",
+    "com.copytolive.chat-lokal-transport-v4"
   ]
 }

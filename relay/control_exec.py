@@ -60,6 +60,21 @@ echo "=== OLD GH RELAY LOG ==="; tail -n 100 "$RUN/github-relay-temp.log" 2>&1 |
             return {"ok":False,"error":"READ_PATH_DENIED","path":path}
         return {"ok":True,"path":path,"content":tail(path,int(req.get("max_chars",40000)))}
 
+    if a=="read_files":
+        paths=[str(x) for x in req.get("paths",[])][:20]
+        rows=[]
+        for path in paths:
+            if not allowed_read(path):
+                rows.append({"path":path,"ok":False,"error":"READ_PATH_DENIED"})
+                continue
+            p=Path(path).expanduser()
+            rows.append({
+                "path":str(p),
+                "ok":p.exists(),
+                "content":tail(p,int(req.get("max_chars_each",30000))) if p.exists() else ""
+            })
+        return {"ok":True,"files":rows}
+
     if a=="list_dir":
         path=str(req.get("path",""))
         if not allowed_read(path):

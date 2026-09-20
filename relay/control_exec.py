@@ -502,49 +502,41 @@ end tell
     if a=="enable_chrome_js_apple_events":
         script=r'''
 tell application "Google Chrome" to activate
-delay 1
+delay 0.7
 tell application "System Events"
  tell process "Google Chrome"
   set viewItem to missing value
-  try
-   set viewItem to menu bar item "Lihat" of menu bar 1
-  on error
+  repeat with nm in {"Lihat","View","Tampilan"}
    try
-    set viewItem to menu bar item "View" of menu bar 1
+    set viewItem to menu bar item nm of menu bar 1
+    exit repeat
    end try
-  end try
+  end repeat
   if viewItem is missing value then return "VIEW_MENU_NOT_FOUND"
   click viewItem
   delay 0.4
-
   set devItem to missing value
-  try
-   set devItem to menu item "Pengembang" of menu 1 of viewItem
-  on error
+  repeat with nm in {"Pengembang","Developer"}
    try
-    set devItem to menu item "Developer" of menu 1 of viewItem
+    set devItem to menu item nm of menu 1 of viewItem
+    exit repeat
    end try
-  end try
+  end repeat
   if devItem is missing value then
    key code 53
    return "DEVELOPER_MENU_NOT_FOUND"
   end if
-  click devItem
-  delay 0.4
-
   set targetItem to missing value
-  try
-   set targetItem to menu item "Izinkan JavaScript dari Apple Events" of menu 1 of devItem
-  on error
+  repeat with nm in {"Izinkan JavaScript dari Apple Events","Allow JavaScript from Apple Events"}
    try
-    set targetItem to menu item "Allow JavaScript from Apple Events" of menu 1 of devItem
+    set targetItem to menu item nm of menu 1 of devItem
+    exit repeat
    end try
-  end try
+  end repeat
   if targetItem is missing value then
    key code 53
    return "TARGET_ITEM_NOT_FOUND"
   end if
-
   set markChar to ""
   try
    set markChar to value of attribute "AXMenuItemMarkChar" of targetItem
@@ -553,31 +545,13 @@ tell application "System Events"
    key code 53
    return "ALREADY_ENABLED|" & markChar
   end if
-
   click targetItem
-  delay 1
-
-  set dialogResult to ""
-  try
-   repeat with w in windows
-    try
-     set btnNames to name of every button of w
-     repeat with bn in btnNames
-      if (bn as text) is "Izinkan" or (bn as text) is "Allow" then
-       click button (bn as text) of w
-       set dialogResult to "|CONFIRMED:" & (bn as text)
-       exit repeat
-      end if
-     end repeat
-    end try
-   end repeat
-  end try
-  delay 1
-  return "CLICKED" & dialogResult
+  delay 0.8
+  return "CLICKED"
  end tell
 end tell
 '''
-        p=run(["/usr/bin/osascript","-e",script],60)
+        p=run(["/usr/bin/osascript","-e",script],45)
         time.sleep(1)
         test=r'''tell application "Google Chrome"
  if (count of windows) is 0 then return "__NO_WINDOWS__"
@@ -587,7 +561,6 @@ end tell'''
         return {"ok":q.returncode==0,"toggle_rc":p.returncode,
                 "toggle":(p.stdout or "").strip(),"toggle_err":p.stderr[-8000:],
                 "test_rc":q.returncode,"test":(q.stdout or "").strip(),"test_err":q.stderr[-8000:]}
-
 
     if a=="main_tab_api_probe":
         start_js=r'''(() => {

@@ -1,70 +1,13 @@
 {
   "schema": 1,
-  "id": "chatlokal-main-chrome-debug-state-20260921-231",
-  "action": "main_chrome_state",
-  "completed_at": "2026-09-20T17:52:15Z",
+  "id": "chatlokal-window-menu-current-target-20260921-232",
+  "action": "chrome_window_menu_inventory",
+  "completed_at": "2026-09-20T17:53:26Z",
   "host": "MacBooks-MacBook-Pro.local",
   "result": {
     "ok": true,
-    "state": {
-      "pid482": "482     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-      "chrome_roots": [
-        "482     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-        "21998     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/agents/Agent-17 --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19417 --no-first-run --no-default-browser-check --disable-extensions --disable-sync --disable-features=Glic,GlicChromeStatusIcon --disable-background-networking --disable-component-update --disable-default-apps --disable-notifications --disable-session-crashed-bubble --disable-background-mode --mute-audio --disk-cache-size=33554432 --renderer-process-limit=2 --window-size=252,496 --window-position=0,24 --blink-settings=imagesEnabled=false --load-extension=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/LocalCommanderV2Extension --app=https://chatgpt.com/",
-        "22026     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/agents/Agent-18 --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19418 --no-first-run --no-default-browser-check --disable-extensions --disable-sync --disable-features=Glic,GlicChromeStatusIcon --disable-background-networking --disable-component-update --disable-default-apps --disable-notifications --disable-session-crashed-bubble --disable-background-mode --mute-audio --disk-cache-size=33554432 --renderer-process-limit=2 --window-size=252,496 --window-position=255,24 --blink-settings=imagesEnabled=false --load-extension=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/LocalCommanderV2Extension --app=https://chatgpt.com/",
-        "22048     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/agents/Agent-19 --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19419 --no-first-run --no-default-browser-check --disable-extensions --disable-sync --disable-features=Glic,GlicChromeStatusIcon --disable-background-networking --disable-component-update --disable-default-apps --disable-notifications --disable-session-crashed-bubble --disable-background-mode --mute-audio --disk-cache-size=33554432 --renderer-process-limit=2 --window-size=252,496 --window-position=510,24 --blink-settings=imagesEnabled=false --load-extension=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/LocalCommanderV2Extension --app=https://chatgpt.com/",
-        "22065     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/agents/Agent-20 --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19420 --no-first-run --no-default-browser-check --disable-extensions --disable-sync --disable-features=Glic,GlicChromeStatusIcon --disable-background-networking --disable-component-update --disable-default-apps --disable-notifications --disable-session-crashed-bubble --disable-background-mode --mute-audio --disk-cache-size=33554432 --renderer-process-limit=2 --window-size=252,496 --window-position=765,24 --blink-settings=imagesEnabled=false --load-extension=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/LocalCommanderV2Extension --app=https://chatgpt.com/",
-        "22092     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/agents/Agent-21 --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19421 --no-first-run --no-default-browser-check --disable-extensions --disable-sync --disable-features=Glic,GlicChromeStatusIcon --disable-background-networking --disable-component-update --disable-default-apps --disable-notifications --disable-session-crashed-bubble --disable-background-mode --mute-audio --disk-cache-size=33554432 --renderer-process-limit=2 --window-size=252,496 --window-position=1020,24 --blink-settings=imagesEnabled=false --load-extension=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/LocalCommanderV2Extension --app=https://chatgpt.com/",
-        "22117     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/agents/Agent-22 --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19422 --no-first-run --no-default-browser-check --disable-extensions --disable-sync --disable-features=Glic,GlicChromeStatusIcon --disable-background-networking --disable-component-update --disable-default-apps --disable-notifications --disable-session-crashed-bubble --disable-background-mode --mute-audio --disk-cache-size=33554432 --renderer-process-limit=2 --window-size=252,496 --window-position=0,524 --blink-settings=imagesEnabled=false --load-extension=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/LocalCommanderV2Extension --app=https://chatgpt.com/",
-        "22143     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/agents/Agent-23 --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19423 --no-first-run --no-default-browser-check --disable-extensions --disable-sync --disable-features=Glic,GlicChromeStatusIcon --disable-background-networking --disable-component-update --disable-default-apps --disable-notifications --disable-session-crashed-bubble --disable-background-mode --mute-audio --disk-cache-size=33554432 --renderer-process-limit=2 --window-size=252,496 --window-position=255,524 --blink-settings=imagesEnabled=false --load-extension=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/LocalCommanderV2Extension --app=https://chatgpt.com/",
-        "22169     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/agents/Agent-24 --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19424 --no-first-run --no-default-browser-check --disable-extensions --disable-sync --disable-features=Glic,GlicChromeStatusIcon --disable-background-networking --disable-component-update --disable-default-apps --disable-notifications --disable-session-crashed-bubble --disable-background-mode --mute-audio --disk-cache-size=33554432 --renderer-process-limit=2 --window-size=252,496 --window-position=510,524 --blink-settings=imagesEnabled=false --load-extension=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/LocalCommanderV2Extension --app=https://chatgpt.com/",
-        "22188     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/agents/Agent-25 --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19425 --no-first-run --no-default-browser-check --disable-extensions --disable-sync --disable-features=Glic,GlicChromeStatusIcon --disable-background-networking --disable-component-update --disable-default-apps --disable-notifications --disable-session-crashed-bubble --disable-background-mode --mute-audio --disk-cache-size=33554432 --renderer-process-limit=2 --window-size=252,496 --window-position=765,524 --blink-settings=imagesEnabled=false --load-extension=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/LocalCommanderV2Extension --app=https://chatgpt.com/",
-        "22206     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/agents/Agent-26 --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19426 --no-first-run --no-default-browser-check --disable-extensions --disable-sync --disable-features=Glic,GlicChromeStatusIcon --disable-background-networking --disable-component-update --disable-default-apps --disable-notifications --disable-session-crashed-bubble --disable-background-mode --mute-audio --disk-cache-size=33554432 --renderer-process-limit=2 --window-size=252,496 --window-position=1020,524 --blink-settings=imagesEnabled=false --load-extension=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/LocalCommanderV2Extension --app=https://chatgpt.com/",
-        "22243     1 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/agents/Agent-27 --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19427 --no-first-run --no-default-browser-check --disable-extensions --disable-sync --disable-features=Glic,GlicChromeStatusIcon --disable-background-networking --disable-component-update --disable-default-apps --disable-notifications --disable-session-crashed-bubble --disable-background-mode --mute-audio --disk-cache-size=33554432 --renderer-process-limit=2 --window-size=500,996 --window-position=1282,24 --blink-settings=imagesEnabled=false --load-extension=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/LocalCommanderV2Extension https://chatgpt.com/",
-        "57542 57535 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/Users/Shared/WorkspaceBersama/ChatGPTHeadlessPool/chat-local-control-profile --profile-directory=Profile 33 --remote-debugging-address=127.0.0.1 --remote-debugging-port=19498 --no-first-run --no-default-browser-check --disable-notifications --disable-session-crashed-bubble --mute-audio --window-size=900,900 --window-position=10000,10000 https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b"
-      ],
-      "profile_state": {
-        "last_used": "Profile 33",
-        "last_active_profiles": [
-          "Profile 33",
-          "Profile 15"
-        ],
-        "profiles_order": [
-          "Profile 3",
-          "Profile 4",
-          "Profile 5",
-          "Profile 6",
-          "Profile 7",
-          "Profile 8",
-          "Profile 9",
-          "Profile 10",
-          "Profile 13",
-          "Profile 14",
-          "Profile 15",
-          "Profile 17",
-          "Profile 18",
-          "Profile 19",
-          "Profile 20",
-          "Profile 21",
-          "Profile 24",
-          "Profile 25",
-          "Profile 26",
-          "Profile 28",
-          "Profile 29",
-          "Profile 31",
-          "Profile 33",
-          "Profile 34",
-          "Profile 35",
-          "Profile 36"
-        ]
-      },
-      "Profile 33": {
-        "profile_name": "Chrome Anda",
-        "exit_type": "Crashed",
-        "exited_cleanly": null,
-        "account_info_count": 1,
-        "has_network_cookies": false
-      }
-    }
+    "returncode": 0,
+    "stdout": "1|Perkecil|enabled=false|mark=missing value|pos=471,30\n2|Minikan Semua|enabled=true|mark=missing value|pos=471,30\n3|Zoom|enabled=false|mark=missing value|pos=471,52\n4|Zoom Semua|enabled=true|mark=missing value|pos=471,52\n5|Isi|enabled=false|mark=missing value|pos=471,74\n6|Tengah|enabled=false|mark=missing value|pos=471,96\n7|missing value|enabled=false|mark=missing value|pos=471,118\n8|Pindahkan & Ubah Ukuran|enabled=true|mark=missing value|pos=471,129\n9|Kotak Layar Penuh|enabled=true|mark=missing value|pos=471,151\n10|missing value|enabled=false|mark=missing value|pos=471,173\n11|Hapus Jendela dari Kumpulan|enabled=false|mark=missing value|pos=471,184\n12|missing value|enabled=false|mark=missing value|pos=471,206\n13|Pindahkan ke Layar Retina Internal|enabled=false|mark=missing value|pos=471,217\n14|missing value|enabled=false|mark=missing value|pos=471,239\n15|Tampilkan Sebagai Tab|enabled=false|mark=missing value|pos=471,250\n16|Namai Jendela …|enabled=true|mark=missing value|pos=471,272\n17|missing value|enabled=false|mark=missing value|pos=471,294\n18|Download|enabled=true|mark=missing value|pos=471,305\n19|Ekstensi|enabled=true|mark=missing value|pos=471,327\n20|Pengelola Tugas|enabled=true|mark=missing value|pos=471,349\n21|missing value|enabled=false|mark=missing value|pos=471,371\n22|Pindahkan Semua ke Depan|enabled=true|mark=missing value|pos=471,382\n23|Atur di Depan|enabled=true|mark=missing value|pos=471,382\n24|missing value|enabled=false|mark=missing value|pos=471,404\n25|GOLD10B Final Audit|enabled=true|mark=missing value|pos=471,415\n26|Lanjutkan E2E V4|enabled=true|mark=missing value|pos=471,437\n27|Lanjutkan Evaluasi Versi|enabled=true|mark=missing value|pos=471,459\n28|Tambah Cluster Agent 17-25|enabled=true|mark=missing value|pos=471,481\n29|UpStory - Google Drive|enabled=true|mark=✓|pos=471,503\n\n",
+    "stderr": ""
   }
 }

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "id": "chatlokal-restart-injector-v4-20260921-238",
+  "id": "chatlokal-restart-v4-injector-20260921-238",
   "action": "restart_services",
   "labels": [
     "com.copytolive.chat-lokal-injector",

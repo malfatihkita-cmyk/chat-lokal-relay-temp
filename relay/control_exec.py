@@ -662,6 +662,96 @@ end tell
         p=run(["/usr/bin/osascript","-e",script],45)
         return {"ok":p.returncode==0,"returncode":p.returncode,"stdout":p.stdout[-20000:],"stderr":p.stderr[-12000:]}
 
+    if a=="enable_js_for_target_url":
+        target=str(req.get("url") or "https://chatgpt.com/c/6aaf2627-1e20-83ec-b0c8-77bc60da329b")
+        uq=target.replace("\\","\\\\").replace('"','\\"')
+        focus=f'''
+tell application "Google Chrome"
+ activate
+ repeat with wi from 1 to count of windows
+  repeat with ti from 1 to count of tabs of window wi
+   try
+    if URL of tab ti of window wi is "{uq}" then
+     set active tab index of window wi to ti
+     set index of window wi to 1
+     return "FOUND|" & wi & "|" & ti
+    end if
+   end try
+  end repeat
+ end repeat
+ return "TARGET_NOT_FOUND"
+end tell
+'''
+        p0=run(["/usr/bin/osascript","-e",focus],35)
+        if "FOUND|" not in (p0.stdout or ""):
+            return {"ok":False,"stage":"focus","stdout":p0.stdout[-8000:],"stderr":p0.stderr[-8000:]}
+        time.sleep(1)
+        toggle=r'''
+tell application "System Events"
+ tell process "Google Chrome"
+  set viewItem to missing value
+  try
+   set viewItem to menu bar item "Lihat" of menu bar 1
+  on error
+   try
+    set viewItem to menu bar item "View" of menu bar 1
+   end try
+  end try
+  if viewItem is missing value then return "VIEW_MENU_NOT_FOUND"
+  click viewItem
+  delay 0.5
+  set devItem to missing value
+  try
+   set devItem to menu item "Pengembang" of menu 1 of viewItem
+  on error
+   try
+    set devItem to menu item "Developer" of menu 1 of viewItem
+   end try
+  end try
+  if devItem is missing value then
+   key code 53
+   return "DEVELOPER_MENU_NOT_FOUND"
+  end if
+  set targetItem to missing value
+  try
+   set targetItem to menu item "Izinkan JavaScript dari Apple Events" of menu 1 of devItem
+  on error
+   try
+    set targetItem to menu item "Allow JavaScript from Apple Events" of menu 1 of devItem
+   end try
+  end try
+  if targetItem is missing value then
+   key code 53
+   return "TARGET_ITEM_NOT_FOUND"
+  end if
+  click targetItem
+  delay 1
+  return "CLICKED"
+ end tell
+end tell
+'''
+        p1=run(["/usr/bin/osascript","-e",toggle],45)
+        time.sleep(1)
+        test=f'''
+tell application "Google Chrome"
+ repeat with wi from 1 to count of windows
+  repeat with ti from 1 to count of tabs of window wi
+   try
+    if URL of tab ti of window wi is "{uq}" then
+     return execute tab ti of window wi javascript "JSON.stringify({{url:location.href,title:document.title,ok:true}})"
+    end if
+   end try
+  end repeat
+ end repeat
+ return "__TARGET_NOT_FOUND__"
+end tell
+'''
+        p2=run(["/usr/bin/osascript","-e",test],35)
+        return {"ok":p2.returncode==0 and "__TARGET_NOT_FOUND__" not in (p2.stdout or ""),
+                "focus":(p0.stdout or "").strip(),"toggle":(p1.stdout or "").strip(),
+                "test_rc":p2.returncode,"test":(p2.stdout or "").strip(),
+                "stderr":(p0.stderr+p1.stderr+p2.stderr)[-12000:]}
+
     if a=="chrome_js_apple_events_state":
         script=r'''
 tell application "Google Chrome" to activate
